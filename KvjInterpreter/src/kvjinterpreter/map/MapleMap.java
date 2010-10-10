@@ -17,8 +17,8 @@
  */
 package kvjinterpreter.map;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Map.Entry;
 import kvjinterpreter.map.structure.Area;
 import kvjinterpreter.map.structure.Foothold;
@@ -46,11 +46,11 @@ public class MapleMap {
 	
 	public MapleMap(int id) {
 		mapid = id;
-		portals = new HashMap<Integer, Portal>();
-		areas = new HashMap<String, Area>();
-		footholds = new HashMap<Integer, Foothold>();
-		life = new HashMap<Integer, Life>();
-		reactors = new HashMap<Integer, Reactor>();
+		portals = new TreeMap<Integer, Portal>();
+		areas = new TreeMap<String, Area>();
+		footholds = new TreeMap<Integer, Foothold>();
+		life = new TreeMap<Integer, Life>();
+		reactors = new TreeMap<Integer, Reactor>();
 	}
 	
 	public void setTown() {
@@ -129,8 +129,10 @@ public class MapleMap {
 		ret.append("\nAreas:");
 		for (Entry<String, Area> area : areas.entrySet())
 			ret.append("\n\t").append(area.getKey()).append(": ").append(area.getValue());
+		ret.append("\nFootholds:");
 		for (Entry<Integer, Foothold> foothold : footholds.entrySet())
 			ret.append("\n\t").append(foothold.getKey()).append(": ").append(foothold.getValue());
+		ret.append("\nPortals:");
 		for (Entry<Integer, Portal> portal : portals.entrySet())
 			ret.append("\n\t").append(portal.getKey()).append(": ").append(portal.getValue());
 		

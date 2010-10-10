@@ -56,7 +56,9 @@ public class Portal {
 	
 	public String toString() {
 		StringBuilder ret = new StringBuilder();
-		ret.append("Name=").append(pn).append(", Type=").append(pt).append(", (").append(x).append(", ").append(y).append("), target=").append(tm).append(" (").append(tn).append(")");
+		ret.append("Name=").append(pn).append(", Type=").append(pt).append(", (").append(x).append(", ").append(y).append("), target=").append(tm);
+		if (!tn.isEmpty())
+			ret.append(" (").append(tn).append(")");
 		if (!script.isEmpty())
 			ret.append(", Script=").append(script);
 		return ret.toString();

@@ -17,10 +17,11 @@
  */
 package kvjinterpreter.map;
 
+import kvjinterpreter.DataReader;
 import kvjinterpreter.LittleEndianReader;
 import kvjinterpreter.map.structure.*;
 
-public class MapDataReader {
+public class MapDataReader extends DataReader {
 	private static final byte
 		TOWN = 1,
 		RETURN_MAP = 2,
@@ -42,7 +43,14 @@ public class MapDataReader {
 	private MapleMap map;
 	private LittleEndianReader reader;
 	
-	public MapDataReader(int mapid, LittleEndianReader reader) {
+	public MapDataReader() {
+	}
+	
+	public WzType getWzType() {
+		return WzType.MAP;
+	}
+	
+	public void initialize(int mapid, LittleEndianReader reader) {
 		this.map = new MapleMap(mapid);
 		this.reader = reader;
 	}
