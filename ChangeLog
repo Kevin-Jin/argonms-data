@@ -1,0 +1,8 @@
+2010-10-10  GoldenKevin  (revision 1)
+
+	* Initial import, with fully working Map.wz compiling and a fully
+	working sample interpreter for map data.
+
+Copyright 2010 GoldenKevin
+Copying and distribution of this file, with or without modification, are
+permitted provided the copyright notice and this notice are preserved.
