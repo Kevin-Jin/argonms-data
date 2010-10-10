@@ -3,6 +3,22 @@
 	* Initial import, with fully working Map.wz compiling and a fully
 	working sample interpreter for map data.
 
+2010-10-10  GoldenKevin  (revision 2)
+
+	* Modified existing code to add an executable class for KvjInterpreter:
+	kvjinterpreter.WzInterpreter. (MapDataReader, WzInterpreter, DataReader)
+	* Replaced HashMaps in MapleMap with TreeMaps to keep the structures in
+	the order of the keys. Added label to signify start of Footholds and
+	Portals list in MapleMap.toString().
+	* Modifed Portal.toString() to only add parenthesis after the target
+	map id (tm) if the target string (tn) was not empty.
+	* Changed LittleEndianReader into an abstract class with two
+	implementations: LittleEndianByteArrayReader for reading a byte array,
+	and LittleEndianFileStreamReader for reading a file input stream.
+	* Fixed problems with LittleEndianReader that were due to discrepancies
+	between the unsigned bytes stored in the files and Java's signed bytes.
+	* Changed the default path constants in the WzCompiler source file.
+
 Copyright 2010 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

@@ -29,8 +29,8 @@ import kvjcompiler.Converter.WzType;
 
 public class WzCompiler {
 	private static final String log = "wzlog.txt";
-	private static final String outPath = "/home/kevin/workspace/KvjCompiler/out/"; //MUST HAVE TRAILING SLASH!
-	private static final String wzPath = "/home/kevin/workspace/KvjCompiler/wz/"; //MUST HAVE TRAILING SLASH!
+	private static final String outPath = "/home/kevin/KvjBin/out/"; //MUST HAVE TRAILING SLASH!
+	private static final String wzPath = "/home/kevin/KvjBin/wz/"; //MUST HAVE TRAILING SLASH!
 	private static final String wzFile = "Map.wz";
 	
 	public static void main(String[] args) throws Exception {

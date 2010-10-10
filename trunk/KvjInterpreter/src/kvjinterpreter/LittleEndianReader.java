@@ -17,22 +17,16 @@
  */
 package kvjinterpreter;
 
-public class LittleEndianReader {
-	private byte[] bytes;
-	private int index;
-	
-	public LittleEndianReader(byte[] bytes) {
-		this.bytes = bytes;
-		this.index = 0;
-	}
+public abstract class LittleEndianReader {
+	protected abstract int read();
 	
 	public int readInt() {
 		int b1, b2, b3, b4;
 		
-		b1 = readByte();
-		b2 = readByte();
-		b3 = readByte();
-		b4 = readByte();
+		b1 = read();
+		b2 = read();
+		b3 = read();
+		b4 = read();
 		
 		return (b4 << 24) + (b3 << 16) + (b2 << 8) + b1;
 	}
@@ -40,16 +34,14 @@ public class LittleEndianReader {
 	public short readShort() {
 		int b1, b2;
 		
-		b1 = readByte();
-		b2 = readByte();
+		b1 = read();
+		b2 = read();
 		
 		return (short) ((b2 << 8) + b1);
 	}
 	
 	public byte readByte() {
-		if (index >= bytes.length)
-			return -1;
-		return bytes[index++];
+		return (byte) read();
 	}
 	
 	public float readFloat() {
@@ -78,26 +70,5 @@ public class LittleEndianReader {
 		for (int i = 0; i < size; i++)
 			bArray[i] = readByte();
 		return bArray;
-	}
-	
-	//Copies the remaining portion of the packet stream to a byte array
-	public byte[] toArray() {
-		byte[] trimmed = new byte[bytes.length - index];
-		System.arraycopy(bytes, index, trimmed, 0, bytes.length - index);
-		return trimmed;
-	}
-	
-	public String toString() {
-		String all = "", now = "";
-		
-		for (int i = 0; i < bytes.length; i++)
-			all += bytes[i] + " ";
-		all = all.substring(0, all.length() - 1);
-		
-		for (int i = index; i < bytes.length; i++)
-			now += bytes[i] + " ";
-		now = now.substring(0, now.length() - 1);
-		
-		return "All: " + all + "\nNow: " + now;
 	}
 }
