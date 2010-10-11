@@ -21,12 +21,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import kvjinterpreter.DataReader.WzType;
-import kvjinterpreter.map.MapDataReader;
 
 public class WzInterpreter {
-	private static final String binPath = "/home/kevin/KvjBin/out/"; //MUST HAVE TRAILING SLASH!
-	private static final String wzFile = "Map.wz";
-	private static final int id = 102020100;
+	private static final String binPath = "C:\\Users\\Kevin\\KvjBin\\out\\"; //MUST HAVE TRAILING SLASH!
+	private static final String wzFile = "Mob.wz";
+	private static final int id = 100100;
 	
 	public static void main(String[] args) throws IOException {
 		DataReader reader = DataReader.getReader(wzFile);
@@ -35,17 +34,24 @@ public class WzInterpreter {
 			throw new IllegalStateException("ERROR: Wz type '" + wzFile + "' is not recognized. Please try again.");
 		}
 		
-		if (reader.getWzType() == WzType.MAP) {
-			File f = new File(getMapPath());
-			FileInputStream fis = new FileInputStream(f);
-			((MapDataReader) reader).initialize(id, new LittleEndianByteArrayReader(fis));
-			System.out.println(((MapDataReader) reader).doWork());
-		}
+		File f = new File(getPath(reader.getWzType()));
+		FileInputStream fis = new FileInputStream(f);
+		reader.initialize(id, new LittleEndianByteArrayReader(fis));
+		System.out.println(reader.doWork());
+		fis.close();
 	}
-	
-	private static String getMapPath() {
-		String paddedId = String.format("%09d", id);
-		return new StringBuilder(binPath).append(wzFile).append(File.separator).append("Map").append(File.separator)
-				.append("Map").append(paddedId.charAt(0)).append(File.separator).append(paddedId).append(".img.kvj").toString();
+
+	private static String getPath(WzType type) {
+		String paddedId;
+		switch (type) {
+			case MAP:
+				paddedId = String.format("%09d", id);
+				return new StringBuilder(binPath).append(wzFile).append(File.separator).append("Map").append(File.separator).append("Map").append(paddedId.charAt(0)).append(File.separator).append(paddedId).append(".img.kvj").toString();
+			case MOB:
+				paddedId = String.format("%07d", id);
+				return new StringBuilder(binPath).append(wzFile).append(File.separator).append(paddedId).append(".img.kvj").toString();
+			default:
+				return null;
+		}
 	}
 }

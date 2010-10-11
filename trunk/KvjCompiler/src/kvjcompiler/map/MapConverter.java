@@ -17,9 +17,8 @@
  */
 package kvjcompiler.map;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import kvjcompiler.Converter;
@@ -50,132 +49,163 @@ public class MapConverter extends Converter {
 		return WzType.MAP;
 	}
 	
-	public byte[] handleSpecial(String name, XMLStreamReader r) throws XMLStreamException {
+	public boolean handleDir(String name, XMLStreamReader r, FileOutputStream fos) throws XMLStreamException, IOException {
 		if (name.equals("portal")) {
-			int portalid = Integer.parseInt(r.getAttributeValue(0));
-			Portal p = new Portal(portalid);
-			int open = 1;
-			int event;
-			while (open > 0) {
+			Portal p;
+			LittleEndianWriter lew;
+			for (int open1 = 1, event; open1 > 0;) {
 				event = r.next();
 				if (event == XMLStreamReader.START_ELEMENT) {
-					open++;
-					p.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
-				} else if (event == XMLStreamReader.END_ELEMENT) {
-					open--;
+					open1++;
+					p = new Portal(Integer.parseInt(r.getAttributeValue(0)));
+					for (int open = 1; open > 0;) {
+						event = r.next();
+						if (event == XMLStreamReader.START_ELEMENT) {
+							open++;
+							p.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
+						} else if (event == XMLStreamReader.END_ELEMENT) {
+							open--;
+						}
+					}
+					lew = new LittleEndianWriter(p.size() + Size.BYTE, PORTAL);
+					p.writeBytes(lew);
+					fos.write(lew.toArray());
+				}
+				if (event == XMLStreamReader.END_ELEMENT) {
+					open1--;
 				}
 			}
-			LittleEndianWriter lew = new LittleEndianWriter(p.size() + Size.BYTE, PORTAL);
-			p.writeBytes(lew);
-			return lew.toArray();
+			return true;
 		} else if (name.equals("life")) {
-			int lifeid = Integer.parseInt(r.getAttributeValue(0));
-			Life l = new Life(lifeid);
-			int open = 1;
-			int event;
-			while (open > 0) {
+			Life l;
+			LittleEndianWriter lew;
+			for (int open1 = 1, event; open1 > 0;) {
 				event = r.next();
 				if (event == XMLStreamReader.START_ELEMENT) {
-					open++;
-					l.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
-				} else if (event == XMLStreamReader.END_ELEMENT) {
-					open--;
+					open1++;
+					l = new Life(Integer.parseInt(r.getAttributeValue(0)));
+					for (int open = 1; open > 0;) {
+						event = r.next();
+						if (event == XMLStreamReader.START_ELEMENT) {
+							open++;
+							l.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
+						} else if (event == XMLStreamReader.END_ELEMENT) {
+							open--;
+						}
+					}
+					lew = new LittleEndianWriter(l.size() + Size.BYTE, LIFE);
+					l.writeBytes(lew);
+					fos.write(lew.toArray());
+				}
+				if (event == XMLStreamReader.END_ELEMENT) {
+					open1--;
 				}
 			}
-			LittleEndianWriter lew = new LittleEndianWriter(l.size() + Size.BYTE, LIFE);
-			l.writeBytes(lew);
-			return lew.toArray();
+			return true;
 		} else if (name.equals("area")) {
-			String areaid = r.getAttributeValue(0);
-			Area a = new Area(areaid);
-			int open = 1;
-			int event;
-			while (open > 0) {
+			Area a;
+			LittleEndianWriter lew;
+			for (int open1 = 1, event; open1 > 0;) {
 				event = r.next();
 				if (event == XMLStreamReader.START_ELEMENT) {
-					open++;
-					a.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
-				} else if (event == XMLStreamReader.END_ELEMENT) {
-					open--;
+					open1++;
+					a = new Area(r.getAttributeValue(0));
+					for (int open = 1; open > 0;) {
+						event = r.next();
+						if (event == XMLStreamReader.START_ELEMENT) {
+							open++;
+							a.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
+						} else if (event == XMLStreamReader.END_ELEMENT) {
+							open--;
+						}
+					}
+					lew = new LittleEndianWriter(a.size() + Size.BYTE, AREA);
+					a.writeBytes(lew);
+					fos.write(lew.toArray());
+				}
+				if (event == XMLStreamReader.END_ELEMENT) {
+					open1--;
 				}
 			}
-			LittleEndianWriter lew = new LittleEndianWriter(a.size() + Size.BYTE, AREA);
-			a.writeBytes(lew);
-			return lew.toArray();
+			return true;
 		} else if (name.equals("reactor")) {
-			int reactorid = Integer.parseInt(r.getAttributeValue(0));
-			Reactor rt = new Reactor(reactorid);
-			int open = 1;
-			int event;
-			while (open > 0) {
+			LittleEndianWriter lew;
+			Reactor rt;
+			for (int open1 = 1, event; open1 > 0;) {
 				event = r.next();
 				if (event == XMLStreamReader.START_ELEMENT) {
-					open++;
-					rt.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
-				} else if (event == XMLStreamReader.END_ELEMENT) {
-					open--;
+					open1++;
+					rt = new Reactor(Integer.parseInt(r.getAttributeValue(0)));
+					for (int open = 1; open > 0;) {
+						event = r.next();
+						if (event == XMLStreamReader.START_ELEMENT) {
+							open++;
+							rt.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
+						} else if (event == XMLStreamReader.END_ELEMENT) {
+							open--;
+						}
+					}
+					lew = new LittleEndianWriter(rt.size() + Size.BYTE, REACTOR);
+					rt.writeBytes(lew);
+					fos.write(lew.toArray());
+				}
+				if (event == XMLStreamReader.END_ELEMENT) {
+					open1--;
 				}
 			}
-			LittleEndianWriter lew = new LittleEndianWriter(rt.size() + Size.BYTE, REACTOR);
-			rt.writeBytes(lew);
-			return lew.toArray();
+			return true;
 		} else if (name.equals("foothold")) {
-			Map<Integer, Foothold> footholds = new HashMap<Integer, Foothold>();
-			int size = 0;
-			int open = 1;
-			int event;
 			Foothold f;
-			int footholdid;
+			LittleEndianWriter lew;
 			
-			int open2 = 1, open1 = 1;
-			while (open2 > 0) {
+			for (int open3 = 1, open2, open1, open, event; open3 > 0;) {
 				event = r.next();
 				if (event == XMLStreamReader.START_ELEMENT) {
-					open2++;
-					if (r.getLocalName().equals("imgdir")) {
-						open1 = 1;
-						while (open1 > 0) {
-							event = r.next();
-							if (event == XMLStreamReader.START_ELEMENT) {
-								open1++;
-								if (r.getLocalName().equals("imgdir")) {
-									open = 1;
-									footholdid = Integer.parseInt(r.getAttributeValue(0));
-									f = new Foothold(footholdid);
-									while (open > 0) {
-										event = r.next();
-										if (event == XMLStreamReader.START_ELEMENT) {
-											open++;
-											f.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
-										}
-										if (event == XMLStreamReader.END_ELEMENT) {
-											open--;
+					open3++;
+					for (open2 = 1; open2 > 0;) {
+						event = r.next();
+						if (event == XMLStreamReader.START_ELEMENT) {
+							open2++;
+							if (r.getLocalName().equals("imgdir")) {
+								for (open1 = 1; open1 > 0;) {
+									event = r.next();
+									if (event == XMLStreamReader.START_ELEMENT) {
+										open1++;
+										if (r.getLocalName().equals("imgdir")) {
+											f = new Foothold(Integer.parseInt(r.getAttributeValue(0)));
+											for (open = 1; open > 0;) {
+												event = r.next();
+												if (event == XMLStreamReader.START_ELEMENT) {
+													open++;
+													f.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
+												}
+												if (event == XMLStreamReader.END_ELEMENT) {
+													open--;
+												}
+											}
+											lew = new LittleEndianWriter(Size.HEADER + f.size(), FOOTHOLD);
+											f.writeBytes(lew);
+											fos.write(lew.toArray());
 										}
 									}
-									size += f.size() + Size.HEADER;
-									footholds.put(Integer.valueOf(footholdid), f);
+									if (event == XMLStreamReader.END_ELEMENT) {
+										open1--;
+									}
 								}
 							}
-							if (event == XMLStreamReader.END_ELEMENT) {
-								open1--;
-							}
+						}
+						if (event == XMLStreamReader.END_ELEMENT) {
+							open2--;
 						}
 					}
 				}
 				if (event == XMLStreamReader.END_ELEMENT) {
-					open2--;
+					open3--;
 				}
 			}
-				
-			LittleEndianWriter lew = new LittleEndianWriter(size);
-			for (Entry<Integer, Foothold> pair : footholds.entrySet()) {
-				lew.writeByte(FOOTHOLD);
-				pair.getValue().writeBytes(lew);
-			}
-			return lew.toArray();
-		} else {
-			return null;
+			return true;
 		}
+		return false;
 	}
 	
 	public byte[] getEncodedBytes(String key, String value) {
@@ -208,6 +238,6 @@ public class MapConverter extends Converter {
 		return null;
 	}
 	
-	public void finished() {
+	public void finished(FileOutputStream fos) throws IOException {
 	}
 }

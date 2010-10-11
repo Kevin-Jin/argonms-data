@@ -73,4 +73,19 @@ public class Life {
 	public void setRx1(int rx1) {
 		this.rx1 = rx1;
 	}
+	
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("type=").append(type);
+		builder.append(", id=").append(id);
+		builder.append(", loc=(").append(x).append(", ").append(y).append(')');
+		builder.append(", mobtime=").append(mobTime);
+		builder.append(", f=").append(f);
+		builder.append(", hide=").append(hide);
+		builder.append(", fh=").append(fh);
+		builder.append(", cy=").append(cy);
+		builder.append(", rx0=").append(rx0);
+		builder.append(", rx1=").append(rx1);
+		return builder.toString();
+	}
 }
