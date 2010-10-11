@@ -25,13 +25,12 @@ import java.io.PrintStream;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import kvjcompiler.Converter.WzType;
 
 public class WzCompiler {
 	private static final String log = "wzlog.txt";
-	private static final String outPath = "/home/kevin/KvjBin/out/"; //MUST HAVE TRAILING SLASH!
-	private static final String wzPath = "/home/kevin/KvjBin/wz/"; //MUST HAVE TRAILING SLASH!
-	private static final String wzFile = "Map.wz";
+	private static final String outPath = "C:\\Users\\Kevin\\KvjBin\\out\\"; //MUST HAVE TRAILING SLASH!
+	private static final String wzPath = "C:\\Users\\Kevin\\Documents\\KiniroMS\\wz\\"; //MUST HAVE TRAILING SLASH!
+	private static final String wzFile = "Mob.wz";
 	
 	public static void main(String[] args) throws Exception {
 		//System.out.println("Using " + new File(".").getCanonicalPath() + " as the working directory...");
@@ -58,19 +57,28 @@ public class WzCompiler {
 		long start, end;
 		start = System.currentTimeMillis();
 		try {
-			if (converter.getWzType() == WzType.MAP) {
-				for (String mapDir : new File(path + "/Map").list()) {
-					dir = new File(path + '/', "Map/" + mapDir);
-					if (dir.isDirectory()) {
-						absDir = "Map" + File.separatorChar + mapDir + File.separatorChar;
-						for (String fileName : dir.list()) {
-							comp.compile(path, absDir + fileName);
-							i++;
+			switch (converter.getWzType()) {
+				case MAP:
+					for (String mapDir : new File(path + "/Map").list()) {
+						dir = new File(path + '/', "Map/" + mapDir);
+						if (dir.isDirectory()) {
+							absDir = "Map" + File.separatorChar + mapDir + File.separatorChar;
+							for (String fileName : dir.list()) {
+								comp.compile(path, absDir + fileName);
+								i++;
+							}
+						} else {
+							System.out.println("Skipping " + dir.getPath());
 						}
-					} else {
-						System.out.println("Skipping " + dir.getPath());
 					}
-				}
+					break;
+				case MOB:
+					dir = new File(path);
+					for (String fileName : dir.list()) {
+						comp.compile(path, fileName);
+						i++;
+					}
+					break;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -110,13 +118,17 @@ public class WzCompiler {
 				throw new IllegalStateException("ERROR: Could not create compiled directory " + binDir.getAbsolutePath());
 			}
 		}
-		XmlReader traverser = new XmlReader(converter, r, new FileOutputStream(binFile));
+		FileOutputStream fos = new FileOutputStream(binFile);
+		XmlReader traverser = new XmlReader(converter, r, fos);
 		
 		while (r.hasNext())
 			if (r.next() == XMLStreamReader.START_ELEMENT)
 				traverser.traverseBlock();
 		
-		converter.finished();
+		converter.finished(fos);
+		fos.close();
+		r.close();
+		
 		System.out.println(binFile + " done.");
 		System.err.println("Complete.");
 	}

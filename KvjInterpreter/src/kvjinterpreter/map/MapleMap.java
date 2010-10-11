@@ -124,17 +124,28 @@ public class MapleMap {
 		ret.append("\nHas Boat:\t").append(boat);
 		ret.append("\nForced Return:\t").append(forcedReturn);
 		ret.append("\nProtect item:\t").append(protectItem);
-		ret.append("\nDec HP:\t").append(decHp);
+		ret.append("\nDec HP:\t\t").append(decHp);
 		ret.append("\nTime Limit:\t").append(timeLimit);
-		ret.append("\nAreas:");
+		if (!areas.isEmpty())
+			ret.append("\nAreas:");
 		for (Entry<String, Area> area : areas.entrySet())
 			ret.append("\n\t").append(area.getKey()).append(": ").append(area.getValue());
-		ret.append("\nFootholds:");
+		if (!footholds.isEmpty())
+			ret.append("\nFootholds:");
 		for (Entry<Integer, Foothold> foothold : footholds.entrySet())
 			ret.append("\n\t").append(foothold.getKey()).append(": ").append(foothold.getValue());
-		ret.append("\nPortals:");
+		if (!portals.isEmpty())
+			ret.append("\nPortals:");
 		for (Entry<Integer, Portal> portal : portals.entrySet())
 			ret.append("\n\t").append(portal.getKey()).append(": ").append(portal.getValue());
+		if (!reactors.isEmpty())
+			ret.append("\nReactors:");
+		for (Entry<Integer, Reactor> reactor : reactors.entrySet())
+			ret.append("\n\t").append(reactor.getKey()).append(": ").append(reactor.getValue());
+		if (!life.isEmpty())
+			ret.append("\nLife:");
+		for (Entry<Integer, Life> l : life.entrySet())
+			ret.append("\n\t").append(l.getKey()).append(": ").append(l.getValue());
 		
 		return ret.toString();
 	}

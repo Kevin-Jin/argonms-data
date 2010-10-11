@@ -1,5 +1,5 @@
 /*
- *  Sample interpreter for data files compiled from XML using KvJ
+ *  KvJ Compiler for XML WZ data files
  *  Copyright (C) 2010  GoldenKevin
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -15,26 +15,30 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package kvjinterpreter;
+package kvjinterpreter.mob.structure;
 
-import kvjinterpreter.map.MapDataReader;
-import kvjinterpreter.mob.MobDataReader;
-
-public abstract class DataReader {
-	public abstract WzType getWzType();
-	public abstract void initialize(int id, LittleEndianReader reader);
-	public abstract Object doWork();
+public class SelfDestruct {
+	private int action;
+	private int hp;
+	private int removeAfter;
 	
-	public static DataReader getReader(String source) {
-		if (source.equals("Map.wz")) {
-			return new MapDataReader();
-		} else if (source.equals("Mob.wz")) {
-			return new MobDataReader();
-		}
-		return null;
+	public void setAction(int action) {
+		this.action = action;
 	}
 	
-	public enum WzType {
-		MAP, MOB
+	public void setHp(int points) {
+		this.hp = points;
+	}
+	
+	public void setRemoveAfter(int time) {
+		this.removeAfter = time;
+	}
+	
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Action=").append(action);
+		builder.append(", Hp=").append(hp);
+		builder.append(", RemoveAfter=").append(removeAfter);
+		return builder.toString();
 	}
 }

@@ -48,7 +48,7 @@ public class Foothold implements IStructure {
 		} else if (key.equals("next")) {
 			this.next = Integer.parseInt(value);
 		} else {
-			System.out.println("WARNING: Unhandled property " + key + " in foothold.");
+			System.out.println("WARNING: Unhandled property " + key + " in foothold " + footholdid + ".");
 		}
 	}
 	

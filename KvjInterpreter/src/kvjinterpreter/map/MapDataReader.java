@@ -43,9 +43,6 @@ public class MapDataReader extends DataReader {
 	private MapleMap map;
 	private LittleEndianReader reader;
 	
-	public MapDataReader() {
-	}
-	
 	public WzType getWzType() {
 		return WzType.MAP;
 	}

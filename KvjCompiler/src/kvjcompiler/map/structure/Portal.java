@@ -51,7 +51,7 @@ public class Portal implements IStructure {
 		} else if (key.equals("script")) {
 			this.script = value;
 		} else {
-			System.out.println("WARNING: Unhandled property " + key + " in portal.");
+			System.out.println("WARNING: Unhandled property " + key + " in portal " + portalid + ".");
 		}
 	}
 	

@@ -19,6 +19,21 @@
 	between the unsigned bytes stored in the files and Java's signed bytes.
 	* Changed the default path constants in the WzCompiler source file.
 
+2010-10-11  GoldenKevin  (revision 3)
+
+	* Modified XmlReader.traverseBlock so that it doesn't skip the first
+	element. This was necessary for the addition of mob compiling. However,
+	it came with a performance penalty and more complex code for map
+	compiling. Now I really need to refactor that huge method.
+	* Renamed Converter.handleSpecial to handleDir. Modified the parameters
+	and return type so the data is written in the method itself and it
+	doesn't return it as a byte array.
+	* Cleaned up MapleMap.toString() in the interpreter. It now prints
+	reactors and life as well.
+	* Added mob compiling and mob interpreting.
+	* Changed the default path (I'm now developing on a Windows environment)
+ 	and the default wz file to Mob.wz.
+
 Copyright 2010 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

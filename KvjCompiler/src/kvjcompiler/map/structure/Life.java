@@ -68,7 +68,7 @@ public class Life implements IStructure {
 		} else if (key.equals("rx1")) {
 			this.rx1 = Integer.parseInt(value);
 		} else {
-			System.out.println("WARNING: Unhandled property " + key + " in life.");
+			System.out.println("WARNING: Unhandled property " + key + " in life " + lifeid + ".");
 		}
 	}
 	

@@ -47,7 +47,7 @@ public class Reactor implements IStructure {
 		} else if (key.equals("name")) {
 			this.name = value;
 		} else {
-			System.out.println("WARNING: Unhandled property " + key + " in reactor.");
+			System.out.println("WARNING: Unhandled property " + key + " in reactor " + reactorid + ".");
 		}
 	}
 	

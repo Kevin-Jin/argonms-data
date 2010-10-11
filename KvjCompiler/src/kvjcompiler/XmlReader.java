@@ -38,20 +38,16 @@ public class XmlReader {
 	public void traverseBlock() throws XMLStreamException, IOException {
 		String tag = r.getLocalName();
 		String name = r.getAttributeValue(0);
-		int event;
+		int event = r.getEventType();
 		
 		int open = 1;
 		while (open > 0) {
-			event = r.next();
 			if (event == XMLStreamReader.START_ELEMENT) {
 				open++;
 				
-				if (r.getLocalName().equals("imgdir")) {
-					byte[] bytes = c.handleSpecial(name, r);
-					if (bytes == null) {
-						traverseInner(name);
-					} else {
-						fos.write(bytes);
+				if (r.getLocalName().equals("imgdir") || r.getLocalName().equals("canvas")) {
+					if (!c.handleDir(name, r, fos)) {
+						traverseInner("");
 					}
 					event = r.getEventType();
 				} else {
@@ -84,6 +80,7 @@ public class XmlReader {
 		String tag = r.getLocalName();
 		String name = r.getAttributeValue(0);
 		int event;
+		String path;
 		
 		int open = 1;
 		while (open > 0) {
@@ -91,14 +88,15 @@ public class XmlReader {
 			if (event == XMLStreamReader.START_ELEMENT) {
 				open++;
 				
-				if (r.getLocalName().equals("imgdir")) {
-					traverseInner(prev + '/' + name);
+				path = (prev.isEmpty() ? "" : prev + "/") + name;
+				if (r.getLocalName().equals("imgdir") || r.getLocalName().equals("canvas")) {
+					traverseInner(path);
 					event = r.getEventType();
 				} else {
 					String type = r.getLocalName();
-					String key = prev + '/' + name + '/' + r.getAttributeValue(0);
+					String key = path + '/' + r.getAttributeValue(0);
 					String value = r.getAttributeValue(1);
-		    		
+
 					byte[] bytes = c.getEncodedBytes(key, value);
 					if (bytes != null)
 						fos.write(bytes);

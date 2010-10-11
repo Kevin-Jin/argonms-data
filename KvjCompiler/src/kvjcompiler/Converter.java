@@ -17,25 +17,29 @@
  */
 package kvjcompiler;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-
 import kvjcompiler.map.MapConverter;
+import kvjcompiler.mob.MobConverter;
 
 public abstract class Converter {
-	public abstract byte[] handleSpecial(String name, XMLStreamReader r) throws XMLStreamException;
+	public abstract boolean handleDir(String parent, XMLStreamReader r, FileOutputStream fos) throws XMLStreamException, IOException;
 	public abstract byte[] getEncodedBytes(String key, String value);
 	public abstract WzType getWzType();
-	public abstract void finished();
+	public abstract void finished(FileOutputStream fos) throws IOException;
 	
 	public static Converter getConverter(String source) {
 		if (source.equals("Map.wz")) {
 			return new MapConverter();
+		} else if (source.equals("Mob.wz")) {
+			return new MobConverter();
 		}
 		return null;
 	}
 	
 	public enum WzType {
-		MAP
+		MAP, MOB
 	}
 }

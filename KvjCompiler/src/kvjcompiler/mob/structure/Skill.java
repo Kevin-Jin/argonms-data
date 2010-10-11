@@ -15,51 +15,41 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package kvjcompiler.map.structure;
+package kvjcompiler.mob.structure;
 
 import kvjcompiler.IStructure;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 
-public class Area implements IStructure {
-	private String areaid;
-	private int x1;
-	private int y1;
-	private int x2;
-	private int y2;
+public class Skill implements IStructure {
+	private int skillid;
+	private int skill;
+	private int level;
 	
-	public Area(String id) {
-		this.areaid = id;
+	public Skill(int id) {
+		this.skillid = id;
 	}
 	
 	public void setProperty(String key, String value) {
-		if (key.equals("x1")) {
-			this.x1 = Integer.parseInt(value);
-		} else if (key.equals("y1")) {
-			this.y1 = Integer.parseInt(value);
-		} else if (key.equals("x2")) {
-			this.x2 = Integer.parseInt(value);
-		} else if (key.equals("y2")) {
-			this.y2 = Integer.parseInt(value);
-		} else {
-			System.out.println("WARNING: Unhandled property " + key + " in area " + areaid + ".");
-		}
+		if (key.equals("skill")) {
+			this.skill = Integer.parseInt(value);
+		} else if (key.equals("level")) {
+			this.level = Integer.parseInt(value);
+		}/* else {
+			System.out.println("WARNING: Unhandled property " + key + " in skill " + skillid + ".");
+		}*/
 	}
 	
 	public int size() {
-		int size = areaid.length() + 1; //areaid
-		size += Size.INT; //x1
-		size += Size.INT; //y1
-		size += Size.INT; //x2
-		size += Size.INT; //y2
+		int size = Size.INT; //skillid
+		size += Size.INT; //skill
+		size += Size.INT; //level
 		return size;
 	}
 	
 	public void writeBytes(LittleEndianWriter lew) {
-		lew.writeNullTerminatedString(areaid);
-		lew.writeInt(x1);
-		lew.writeInt(y1);
-		lew.writeInt(x2);
-		lew.writeInt(y2);
+		lew.writeInt(skillid);
+		lew.writeInt(skill);
+		lew.writeInt(level);
 	}
 }
