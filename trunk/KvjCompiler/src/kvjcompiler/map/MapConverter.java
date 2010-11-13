@@ -67,7 +67,7 @@ public class MapConverter extends Converter {
 							open--;
 						}
 					}
-					lew = new LittleEndianWriter(p.size() + Size.BYTE, PORTAL);
+					lew = new LittleEndianWriter(Size.HEADER + p.size(), PORTAL);
 					p.writeBytes(lew);
 					fos.write(lew.toArray());
 				}
@@ -93,7 +93,7 @@ public class MapConverter extends Converter {
 							open--;
 						}
 					}
-					lew = new LittleEndianWriter(l.size() + Size.BYTE, LIFE);
+					lew = new LittleEndianWriter(Size.HEADER + l.size(), LIFE);
 					l.writeBytes(lew);
 					fos.write(lew.toArray());
 				}
@@ -119,7 +119,7 @@ public class MapConverter extends Converter {
 							open--;
 						}
 					}
-					lew = new LittleEndianWriter(a.size() + Size.BYTE, AREA);
+					lew = new LittleEndianWriter(Size.HEADER + a.size(), AREA);
 					a.writeBytes(lew);
 					fos.write(lew.toArray());
 				}
@@ -145,7 +145,7 @@ public class MapConverter extends Converter {
 							open--;
 						}
 					}
-					lew = new LittleEndianWriter(rt.size() + Size.BYTE, REACTOR);
+					lew = new LittleEndianWriter(Size.HEADER + rt.size(), REACTOR);
 					rt.writeBytes(lew);
 					fos.write(lew.toArray());
 				}

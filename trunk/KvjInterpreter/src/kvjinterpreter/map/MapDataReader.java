@@ -163,7 +163,7 @@ public class MapDataReader extends DataReader {
 		p.setX(reader.readInt());
 		p.setY(reader.readInt());
 		p.setTargetMapId(reader.readInt());
-		p.setTarget(reader.readNullTerminatedString());
+		p.setTargetName(reader.readNullTerminatedString());
 		p.setScript(reader.readNullTerminatedString());
 		map.addPortal(id, p);
 	}

@@ -23,6 +23,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import kvjcompiler.map.MapConverter;
 import kvjcompiler.mob.MobConverter;
+import kvjcompiler.reactor.ReactorConverter;
 
 public abstract class Converter {
 	public abstract boolean handleDir(String parent, XMLStreamReader r, FileOutputStream fos) throws XMLStreamException, IOException;
@@ -35,11 +36,13 @@ public abstract class Converter {
 			return new MapConverter();
 		} else if (source.equals("Mob.wz")) {
 			return new MobConverter();
+		} else if (source.equals("Reactor.wz")) {
+			return new ReactorConverter();
 		}
 		return null;
 	}
 	
 	public enum WzType {
-		MAP, MOB
+		MAP, MOB, REACTOR
 	}
 }
