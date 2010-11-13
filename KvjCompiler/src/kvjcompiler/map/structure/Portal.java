@@ -27,8 +27,8 @@ public class Portal implements IStructure {
 	private int pt; //portal type
 	private int x; //x
 	private int y; //y
-	private int tm; //target map id
-	private String tn; //target
+	private int tm; //target map
+	private String tn; //target name
 	private String script;
 	
 	public Portal(int portalid) {
@@ -57,13 +57,13 @@ public class Portal implements IStructure {
 	
 	public int size() {
 		int size = Size.INT; //portalid
-		size += pn.length() + 1; //extra null char to signal string end
-		size += Size.INT;
-		size += Size.INT;
-		size += Size.INT;
-		size += Size.INT;
-		size += tn.length() + 1; //extra null char to signal string end
-		size += script != null ? script.length() + 1 : 1; //extra null char to signify string end
+		size += pn.length() + 1; //pn
+		size += Size.INT; //pt
+		size += Size.INT; //x
+		size += Size.INT; //y
+		size += Size.INT; //tm
+		size += tn.length() + 1; //tn
+		size += script != null ? script.length() + 1 : 1; //script
 		
 		return size;
 	}

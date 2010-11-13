@@ -46,7 +46,7 @@ public class Portal {
 		this.tm = tm;
 	}
 	
-	public void setTarget(String tn) {
+	public void setTargetName(String tn) {
 		this.tn = tn;
 	}
 	

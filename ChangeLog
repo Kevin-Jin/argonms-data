@@ -34,6 +34,13 @@
 	* Changed the default path (I'm now developing on a Windows environment)
  	and the default wz file to Mob.wz.
 
+2010-10-12  GoldenKevin  (revision 4)
+
+	* Added toString method to kvjinterpreter.map.structure.Reactor
+	* Renamed setTarget method in kvjinterpreter.map.structure.Portal to
+	setTargetName. Modified comments in kvjcompiler.map.structure.Portal.
+	* Added support for reactor compiling.
+
 Copyright 2010 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

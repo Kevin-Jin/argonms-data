@@ -28,9 +28,9 @@ import javax.xml.stream.XMLStreamReader;
 
 public class WzCompiler {
 	private static final String log = "wzlog.txt";
-	private static final String outPath = "C:\\Users\\Kevin\\KvjBin\\out\\"; //MUST HAVE TRAILING SLASH!
-	private static final String wzPath = "C:\\Users\\Kevin\\Documents\\KiniroMS\\wz\\"; //MUST HAVE TRAILING SLASH!
-	private static final String wzFile = "Mob.wz";
+	private static final String outPath = "/home/kevin/KvjBin/out/"; //MUST HAVE TRAILING SLASH!
+	private static final String wzPath = "/home/kevin/KvjBin/wz/"; //MUST HAVE TRAILING SLASH!
+	private static final String wzFile = "Reactor.wz";
 	
 	public static void main(String[] args) throws Exception {
 		//System.out.println("Using " + new File(".").getCanonicalPath() + " as the working directory...");
@@ -73,6 +73,13 @@ public class WzCompiler {
 					}
 					break;
 				case MOB:
+					dir = new File(path);
+					for (String fileName : dir.list()) {
+						comp.compile(path, fileName);
+						i++;
+					}
+					break;
+				case REACTOR:
 					dir = new File(path);
 					for (String fileName : dir.list()) {
 						comp.compile(path, fileName);

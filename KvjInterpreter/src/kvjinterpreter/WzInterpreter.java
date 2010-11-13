@@ -23,9 +23,9 @@ import java.io.IOException;
 import kvjinterpreter.DataReader.WzType;
 
 public class WzInterpreter {
-	private static final String binPath = "C:\\Users\\Kevin\\KvjBin\\out\\"; //MUST HAVE TRAILING SLASH!
-	private static final String wzFile = "Mob.wz";
-	private static final int id = 100100;
+	private static final String binPath = "/home/kevin/KvjBin/out/"; //MUST HAVE TRAILING SLASH!
+	private static final String wzFile = "Reactor.wz";
+	private static final int id = 9208011;
 	
 	public static void main(String[] args) throws IOException {
 		DataReader reader = DataReader.getReader(wzFile);
@@ -48,6 +48,9 @@ public class WzInterpreter {
 				paddedId = String.format("%09d", id);
 				return new StringBuilder(binPath).append(wzFile).append(File.separator).append("Map").append(File.separator).append("Map").append(paddedId.charAt(0)).append(File.separator).append(paddedId).append(".img.kvj").toString();
 			case MOB:
+				paddedId = String.format("%07d", id);
+				return new StringBuilder(binPath).append(wzFile).append(File.separator).append(paddedId).append(".img.kvj").toString();
+			case REACTOR:
 				paddedId = String.format("%07d", id);
 				return new StringBuilder(binPath).append(wzFile).append(File.separator).append(paddedId).append(".img.kvj").toString();
 			default:
