@@ -17,7 +17,6 @@
  */
 package kvjcompiler.reactor;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -33,12 +32,13 @@ public class ReactorConverter extends Converter {
 		ITEM_EVENT = 3
 	;
 	
-	public WzType getWzType() {
-		return WzType.REACTOR;
+	public String getWzName() {
+		return "Reactor.wz";
 	}
 	
-	public boolean handleDir(String parent, XMLStreamReader r, FileOutputStream fos) throws XMLStreamException, IOException {
-		if (!parent.equals("info")) {
+	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
+		String[] dirs = nestedPath.split("/");
+		if (!dirs[0].equals("info")) {
 			Event e;
 			LittleEndianWriter lew;
 			for (int open1 = 1, event, open; open1 > 0;) {
@@ -46,7 +46,7 @@ public class ReactorConverter extends Converter {
 				if (event == XMLStreamReader.START_ELEMENT) {
 					open1++;
 					if (r.getLocalName().equals("imgdir") && r.getAttributeValue(0).equals("0")) {
-						e = new Event(Integer.parseInt(parent));
+						e = new Event(Integer.parseInt(dirs[0]));
 						for (open = 1; open > 0;) {
 							event = r.next();
 							if (event == XMLStreamReader.START_ELEMENT) {
@@ -67,22 +67,18 @@ public class ReactorConverter extends Converter {
 					open1--;
 				}
 			}
-			return true;
+			return;
 		}
-		return false;
+		traverseBlock(nestedPath);
 	}
 	
-	public byte[] getEncodedBytes(String key, String value) {
-		String[] keys = key.split("/");
-		if (keys[0].equals("info")) {
-			if (keys[1].equals("link")) {
-				return new LittleEndianWriter(Size.HEADER + Size.INT, LINK).writeInt(Integer.parseInt(value)).toArray();
+	protected void handleProperty(String nestedPath, String value) throws IOException {
+		//System.out.println("DEBUG: Handling " + nestedPath);
+		String[] dirs = nestedPath.split("/");
+		if (dirs[0].equals("info")) {
+			if (dirs[1].equals("link")) {
+				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, LINK).writeInt(Integer.parseInt(value)).toArray());
 			}
 		}
-		return null;
-	}
-	
-	public void finished(FileOutputStream fos) throws IOException {
-		
 	}
 }

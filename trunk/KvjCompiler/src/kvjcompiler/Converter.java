@@ -17,19 +17,101 @@
  */
 package kvjcompiler;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+
 import kvjcompiler.map.MapConverter;
 import kvjcompiler.mob.MobConverter;
 import kvjcompiler.reactor.ReactorConverter;
 
+//TODO - try replacing nestedPath String with ArrayList<String>
+//[and replace "String[] dirs = nestedPath.split("/")" with "String[] dirs = nestedPath.toArray()"]
+//to see if it improves performance.
+//Be careful because ArrayList is not immutable, so added elements have to be removed after processing.
+//Simply remove the last element from the list to achieve this.
 public abstract class Converter {
-	public abstract boolean handleDir(String parent, XMLStreamReader r, FileOutputStream fos) throws XMLStreamException, IOException;
-	public abstract byte[] getEncodedBytes(String key, String value);
-	public abstract WzType getWzType();
-	public abstract void finished(FileOutputStream fos) throws IOException;
+	protected FileOutputStream fos;
+	protected XMLStreamReader r;
+	
+	public abstract String getWzName();
+	
+	public void compile(String outPath, String internalPath, String imgName, XMLStreamReader r) throws XMLStreamException, IOException {
+		startCompile(outPath, internalPath, imgName, r);
+		finalizeCompile(internalPath, imgName);
+	}
+	
+	protected void startCompile(String outPath, String internalPath, String imgName, XMLStreamReader r) throws XMLStreamException, IOException {
+		System.err.print("Building " + internalPath + imgName + "...\t");
+		
+		if (r.getEventType() != XMLStreamReader.START_DOCUMENT)
+			throw new IllegalStateException("ERROR: Received an XML that has already been partially read.");
+		
+		r.next();
+		if (DataType.getFromString(r.getLocalName()) != DataType.IMGDIR || !r.getAttributeValue(0).equals(imgName))
+			throw new IllegalStateException("ERROR: Received a non-WZ XML file.");
+		
+		File binDir = new File(outPath + getWzName() + File.separatorChar + internalPath);
+		if (!binDir.exists())
+			if (!binDir.mkdirs())
+				throw new IllegalStateException("ERROR: Could not create compiled directory " + binDir.getAbsolutePath());
+		this.fos = new FileOutputStream(binDir.getAbsolutePath() + File.separatorChar + imgName + ".kvj");
+		this.r = r;
+		traverseBlock("");
+	}
+	
+	protected void finalizeCompile(String internalPath, String imgName) throws IOException, XMLStreamException {
+		try {
+			if (r.getEventType() != XMLStreamReader.END_ELEMENT || DataType.getFromString(r.getLocalName()) != DataType.IMGDIR || r.next() != XMLStreamReader.END_DOCUMENT)
+				throw new IllegalStateException("ERROR: " + internalPath + File.separatorChar + imgName + " XML WZ not closed.");
+			
+			System.out.println(getWzName() + File.separatorChar + internalPath + imgName + " done.");
+			System.err.println("Complete.");
+		} finally {
+			this.fos.close();
+			this.fos = null;
+			this.r.close();
+			this.r = null;
+		}
+	}
+	
+	protected void traverseBlock(String nestedPath) throws XMLStreamException, IOException {
+		//System.out.println("DEBUG: Entering " + nestedPath);
+		DataType type;
+		String key, value;
+		
+		for (int nestedLevel = 1, event; nestedLevel > 0;) {
+			event = r.next();
+			if (event == XMLStreamReader.START_ELEMENT) {
+				nestedLevel++;
+				type = DataType.getFromString(r.getLocalName());
+				key = r.getAttributeValue(0);
+				
+				if (type.isDirectory()) {
+					handleDir((nestedPath.length() == 0 ? "" : nestedPath + '/') + key);
+				} else {
+					value = r.getAttributeValue(1);
+					handleProperty((nestedPath.length() == 0 ? "" : nestedPath + '/') + key, value);
+				}
+				event = r.getEventType();
+			}
+			if (event == XMLStreamReader.END_ELEMENT) {
+				nestedLevel--;
+				type = DataType.getFromString(r.getLocalName());
+				
+				if (type.isDirectory()) {
+					
+				}
+			}
+		}
+		//System.out.println("DEBUG: Leaving " + nestedPath);
+	}
+	
+	protected abstract void handleDir(String nestedPath) throws XMLStreamException, IOException;
+	protected abstract void handleProperty(String nestedPath, String value) throws IOException;
 	
 	public static Converter getConverter(String source) {
 		if (source.equals("Map.wz")) {
@@ -40,9 +122,5 @@ public abstract class Converter {
 			return new ReactorConverter();
 		}
 		return null;
-	}
-	
-	public enum WzType {
-		MAP, MOB, REACTOR
 	}
 }

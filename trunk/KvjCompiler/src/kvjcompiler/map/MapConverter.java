@@ -17,10 +17,11 @@
  */
 package kvjcompiler.map;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
+
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+
 import kvjcompiler.Converter;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
@@ -45,12 +46,13 @@ public class MapConverter extends Converter {
 		PORTAL = 15
 	;
 	
-	public WzType getWzType() {
-		return WzType.MAP;
+	public String getWzName() {
+		return "Map.wz";
 	}
 	
-	public boolean handleDir(String name, XMLStreamReader r, FileOutputStream fos) throws XMLStreamException, IOException {
-		if (name.equals("portal")) {
+	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
+		String[] dirs = nestedPath.split("/");
+		if (dirs[0].equals("portal")) {
 			Portal p;
 			LittleEndianWriter lew;
 			for (int open1 = 1, event; open1 > 0;) {
@@ -75,8 +77,8 @@ public class MapConverter extends Converter {
 					open1--;
 				}
 			}
-			return true;
-		} else if (name.equals("life")) {
+			return;
+		} else if (dirs[0].equals("life")) {
 			Life l;
 			LittleEndianWriter lew;
 			for (int open1 = 1, event; open1 > 0;) {
@@ -101,8 +103,8 @@ public class MapConverter extends Converter {
 					open1--;
 				}
 			}
-			return true;
-		} else if (name.equals("area")) {
+			return;
+		} else if (dirs[0].equals("area")) {
 			Area a;
 			LittleEndianWriter lew;
 			for (int open1 = 1, event; open1 > 0;) {
@@ -127,8 +129,8 @@ public class MapConverter extends Converter {
 					open1--;
 				}
 			}
-			return true;
-		} else if (name.equals("reactor")) {
+			return;
+		} else if (dirs[0].equals("reactor")) {
 			LittleEndianWriter lew;
 			Reactor rt;
 			for (int open1 = 1, event; open1 > 0;) {
@@ -153,8 +155,8 @@ public class MapConverter extends Converter {
 					open1--;
 				}
 			}
-			return true;
-		} else if (name.equals("foothold")) {
+			return;
+		} else if (dirs[0].equals("foothold")) {
 			Foothold f;
 			LittleEndianWriter lew;
 			
@@ -203,41 +205,38 @@ public class MapConverter extends Converter {
 					open3--;
 				}
 			}
-			return true;
+			return;
 		}
-		return false;
+		traverseBlock(nestedPath);
 	}
 	
-	public byte[] getEncodedBytes(String key, String value) {
-		String[] keys = key.split("/");
-		if (keys[0].equals("info")) {
-			if (keys[1].equals("town")) {
+	protected void handleProperty(String nestedPath, String value) throws IOException {
+		//System.out.println("DEBUG: Handling " + nestedPath);
+		String[] dirs = nestedPath.split("/");
+		if (dirs[0].equals("info")) {
+			if (dirs[1].equals("town")) {
 				if (Integer.parseInt(value) == 1)
-					return new LittleEndianWriter(Size.HEADER, TOWN).toArray();
-			} else if (keys[1].equals("returnMap")) {
-				return new LittleEndianWriter(Size.HEADER + Size.INT, RETURN_MAP).writeInt(Integer.parseInt(value)).toArray();
-			} else if (keys[1].equals("forcedReturn")) {
-				return new LittleEndianWriter(Size.HEADER + Size.INT, FORCED_RETURN).writeInt(Integer.parseInt(value)).toArray();
-			} else if (keys[1].equals("mobRate")) {
-				return new LittleEndianWriter(Size.HEADER + Size.FLOAT, MOB_RATE).writeFloat(Float.parseFloat(value)).toArray();
-			} else if (keys[1].equals("decHP")) {
-				return new LittleEndianWriter(Size.HEADER + Size.INT, DEC_HP).writeInt(Integer.parseInt(value)).toArray();
-			} else if (keys[1].equals("timeLimit")) {
-				return new LittleEndianWriter(Size.HEADER + Size.INT, TIME_LIMIT).writeInt(Integer.parseInt(value)).toArray();
-			} else if (keys[1].equals("protectItem")) {
-				return new LittleEndianWriter(Size.HEADER + Size.INT, PROTECT_ITEM).writeInt(Integer.parseInt(value)).toArray();
-			} else if (keys[1].equals("everlast")) {
+					fos.write(new LittleEndianWriter(Size.HEADER, TOWN).toArray());
+			} else if (dirs[1].equals("returnMap")) {
+				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, RETURN_MAP).writeInt(Integer.parseInt(value)).toArray());
+			} else if (dirs[1].equals("forcedReturn")) {
+				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, FORCED_RETURN).writeInt(Integer.parseInt(value)).toArray());
+			} else if (dirs[1].equals("mobRate")) {
+				fos.write(new LittleEndianWriter(Size.HEADER + Size.FLOAT, MOB_RATE).writeFloat(Float.parseFloat(value)).toArray());
+			} else if (dirs[1].equals("decHP")) {
+				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, DEC_HP).writeInt(Integer.parseInt(value)).toArray());
+			} else if (dirs[1].equals("timeLimit")) {
+				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, TIME_LIMIT).writeInt(Integer.parseInt(value)).toArray());
+			} else if (dirs[1].equals("protectItem")) {
+				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, PROTECT_ITEM).writeInt(Integer.parseInt(value)).toArray());
+			} else if (dirs[1].equals("everlast")) {
 				if (Integer.parseInt(value) == 1)
-					return new LittleEndianWriter(Size.HEADER, EVERLAST).toArray();
+					fos.write(new LittleEndianWriter(Size.HEADER, EVERLAST).toArray());
 			}
-		} else if (keys[0].equals("clock")) {
-			return new LittleEndianWriter(Size.HEADER, CLOCK).toArray();
-		} else if (keys[0].equals("shipObj")) {
-			return new LittleEndianWriter(Size.HEADER, BOAT).toArray();
+		} else if (dirs[0].equals("clock")) {
+			fos.write(new LittleEndianWriter(Size.HEADER, CLOCK).toArray());
+		} else if (dirs[0].equals("shipObj")) {
+			fos.write(new LittleEndianWriter(Size.HEADER, BOAT).toArray());
 		}
-		return null;
-	}
-	
-	public void finished(FileOutputStream fos) throws IOException {
 	}
 }

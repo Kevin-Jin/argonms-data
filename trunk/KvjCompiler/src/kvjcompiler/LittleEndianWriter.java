@@ -42,6 +42,7 @@ public class LittleEndianWriter {
 	}
 	
 	private void grow() {
+		System.out.println("WARNING: Growing a LittleEndianWriter...");
 		byte[] copy = new byte[bytes.length + bytes.length / 2];
 		System.arraycopy(bytes, 0, copy, 0, bytes.length);
 		bytes = copy;
@@ -100,6 +101,7 @@ public class LittleEndianWriter {
 		if (index == bytes.length)
 			return bytes;
 		
+		System.out.println("WARNING: Shrinking a LittleEndianWriter...");
 		byte[] trimmed = new byte[index];
 		System.arraycopy(bytes, 0, trimmed, 0, index);
 		return trimmed;
