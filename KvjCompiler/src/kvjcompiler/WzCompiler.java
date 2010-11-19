@@ -22,121 +22,65 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 public class WzCompiler {
 	private static final String log = "wzlog.txt";
-	private static final String outPath = "/home/kevin/KvjBin/out/"; //MUST HAVE TRAILING SLASH!
-	private static final String wzPath = "/home/kevin/KvjBin/wz/"; //MUST HAVE TRAILING SLASH!
-	private static final String wzFile = "Reactor.wz";
+	private static final String outPath = "C:\\Users\\Kevin\\KvjBin\\out\\"; //MUST HAVE TRAILING SLASH!
+	private static final String wzPath = "C:\\Users\\Kevin\\Documents\\KiniroMS\\wz\\"; //MUST HAVE TRAILING SLASH!
+	private static final String wzFile = "Map.wz";
 	
-	public static void main(String[] args) throws Exception {
-		//System.out.println("Using " + new File(".").getCanonicalPath() + " as the working directory...");
-		if (!new File(outPath).exists()) {
-			if (!(new File(outPath).mkdirs())) {
+	public static void main(String[] args) throws XMLStreamException, IOException {
+		File dir;
+		String absDir;
+		Converter converter = Converter.getConverter(wzFile);
+		XMLStreamReader r;
+		XMLInputFactory f = XMLInputFactory.newInstance();
+		
+		dir = new File(wzPath + wzFile);
+		if (!dir.exists())
+			throw new IllegalStateException("ERROR: Could not find input directory " + wzPath + wzFile);
+		
+		dir = new File(outPath);
+		if (!dir.exists())
+			if (!dir.mkdirs())
 				throw new IllegalStateException("ERROR: Could not create output directory " + outPath);
-			}
-		}
+		
 		FileOutputStream fos = new FileOutputStream(outPath + log);
 		PrintStream ps = new PrintStream(fos);
 		System.setOut(ps);
 		
-		Converter converter = Converter.getConverter(wzFile);
-		
-		if (converter == null) {
-			throw new IllegalStateException("ERROR: Wz type '" + wzFile + "' is not recognized. Please try again.");
-		}
-
-		XMLInputFactory f = XMLInputFactory.newInstance(); 
-		WzCompiler comp = new WzCompiler(f, converter);
-		int i = 0;
-		String path = wzPath + wzFile, absDir;
-		File dir;
+		String inputPath = wzPath + wzFile + File.separatorChar;
+		int count = 0;
 		long start, end;
 		start = System.currentTimeMillis();
-		try {
-			switch (converter.getWzType()) {
-				case MAP:
-					for (String mapDir : new File(path + "/Map").list()) {
-						dir = new File(path + '/', "Map/" + mapDir);
-						if (dir.isDirectory()) {
-							absDir = "Map" + File.separatorChar + mapDir + File.separatorChar;
-							for (String fileName : dir.list()) {
-								comp.compile(path, absDir + fileName);
-								i++;
-							}
-						} else {
-							System.out.println("Skipping " + dir.getPath());
-						}
-					}
-					break;
-				case MOB:
-					dir = new File(path);
+		if (converter.getWzName().equals("Map.wz")) {
+			for (String mapDir : new File(inputPath + "Map").list()) {
+				dir = new File(inputPath, "Map" + File.separatorChar + mapDir);
+				if (dir.isDirectory()) {
+					absDir = "Map" + File.separatorChar + mapDir + File.separatorChar;
 					for (String fileName : dir.list()) {
-						comp.compile(path, fileName);
-						i++;
+						r = f.createXMLStreamReader(new FileInputStream(new File(inputPath + absDir + fileName)));
+						converter.compile(outPath, absDir, fileName.substring(0, fileName.lastIndexOf(".xml")), r);
+						count++;
 					}
-					break;
-				case REACTOR:
-					dir = new File(path);
-					for (String fileName : dir.list()) {
-						comp.compile(path, fileName);
-						i++;
-					}
-					break;
+				} else {
+					System.out.println("Skipping " + dir.getPath());
+				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} else if (converter.getWzName().equals("Mob.wz") || converter.getWzName().equals("Reactor.wz")) {
+			dir = new File(inputPath);
+			for (String fileName : dir.list()) {
+				r = f.createXMLStreamReader(new FileInputStream(new File(inputPath + fileName)));
+				converter.compile(outPath, "", fileName.substring(0, fileName.lastIndexOf(".xml")), r);
+				count++;
+			}
 		}
 		end = System.currentTimeMillis();
-
-		System.err.println(i + " file(s) compiled successfully in " + (end - start) + "ms!. Check the logs at " + log + " for more information.");
-	}
-	
-	private XMLInputFactory f;
-	private Converter converter;
-	
-	private WzCompiler(XMLInputFactory f, Converter converter) {
-		this.f = f;
-		this.converter = converter;
-	}
-	
-	public void compile(String path, String location) throws XMLStreamException, IOException {
-		System.err.print("Building " + location + "...\t");
-		XMLStreamReader r = f.createXMLStreamReader(new FileInputStream(new File(path + File.separatorChar + location)));
 		
-		if (r.getEventType() != XMLStreamReader.START_DOCUMENT) {
-			throw new IllegalStateException("Malformed Xml document at " + location);
-		}
-		String imgName = location.substring(location.lastIndexOf(File.separatorChar) + 1, location.lastIndexOf(".xml"));
-		
-		/*int event = */r.next();
-		
-		if (!r.getAttributeValue(0).equals(imgName)) {
-			throw new IllegalStateException("ERROR: <imgdir name=\"" + imgName + "\"> expected as first tag in " + imgName + ".");
-		}
-		
-		String binFile = outPath + wzFile + File.separatorChar + location.substring(0, location.lastIndexOf(".xml")) + ".kvj";
-		File binDir = new File(binFile.substring(0, binFile.lastIndexOf(File.separatorChar)));
-		if (!binDir.exists()) {
-			if (!binDir.mkdirs()) {
-				throw new IllegalStateException("ERROR: Could not create compiled directory " + binDir.getAbsolutePath());
-			}
-		}
-		FileOutputStream fos = new FileOutputStream(binFile);
-		XmlReader traverser = new XmlReader(converter, r, fos);
-		
-		while (r.hasNext())
-			if (r.next() == XMLStreamReader.START_ELEMENT)
-				traverser.traverseBlock();
-		
-		converter.finished(fos);
-		fos.close();
-		r.close();
-		
-		System.out.println(binFile + " done.");
-		System.err.println("Complete.");
+		System.err.println(count + " file(s) compiled successfully in " + (end - start) + "ms!. Check the logs at " + log + " for more information.");
 	}
 }

@@ -17,7 +17,6 @@
  */
 package kvjcompiler.mob;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,16 +58,26 @@ public class MobConverter extends Converter {
 	
 	private Map<String, Integer> delays;
 	
-	public MobConverter() {
-		delays = new HashMap<String, Integer>();
+	public void compile(String outPath, String internalPath, String imgName, XMLStreamReader r) throws XMLStreamException, IOException {
+		this.delays = new HashMap<String, Integer>();
+		startCompile(outPath, internalPath, imgName, r);
+		
+		String key;
+		for (Entry<String, Integer> pair : delays.entrySet()) {
+			key = pair.getKey();
+			fos.write(new LittleEndianWriter(Size.HEADER + key.length() + 1 + Size.INT, DELAY).writeNullTerminatedString(key).writeInt(pair.getValue().intValue()).toArray());
+		}
+		
+		finalizeCompile(internalPath, imgName);
 	}
 	
-	public WzType getWzType() {
-		return WzType.MOB;
+	public String getWzName() {
+		return "Mob.wz";
 	}
 	
-	public boolean handleDir(String parent, XMLStreamReader r, FileOutputStream fos) throws XMLStreamException, IOException {
-		if (parent.equals("info")) {
+	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
+		String[] dirs = nestedPath.split("/");
+		if (dirs[0].equals("info")) {
 			for (int open1 = 1, event, open; open1 > 0;) {
 				event = r.next();
 				if (event == XMLStreamReader.START_ELEMENT) {
@@ -184,18 +193,18 @@ public class MobConverter extends Converter {
 					open1--;
 				}
 			}
-			return true;
-		} else if (parent.length() > 6 && parent.substring(0, 6).equals("attack")) { //there should be a more elegant solution...
-			Attack a = new Attack(Integer.parseInt(parent.substring(6, parent.length())));
+			return;
+		} else if (dirs[0].length() > 6 && dirs[0].substring(0, 6).equals("attack")) { //there should be a more elegant solution...
+			Attack a = new Attack(Integer.parseInt(dirs[0].substring(6, dirs[0].length())));
 			for (int open = 1, event; open > 0;) {
 				event = r.next();
 				if (event == XMLStreamReader.START_ELEMENT) {
 					open++;
 					if (open == 3) {
 						if (r.getAttributeValue(0).equals("delay")) {
-							if (!delays.containsKey(parent))
-								delays.put(parent, Integer.valueOf(0));
-							delays.put(parent, Integer.valueOf(delays.get(parent).intValue() + Integer.parseInt(r.getAttributeValue(1))));
+							if (!delays.containsKey(dirs[0]))
+								delays.put(dirs[0], Integer.valueOf(0));
+							delays.put(dirs[0], Integer.valueOf(delays.get(dirs[0]).intValue() + Integer.parseInt(r.getAttributeValue(1))));
 						} else {
 							a.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
 						}
@@ -207,35 +216,28 @@ public class MobConverter extends Converter {
 			LittleEndianWriter lew = new LittleEndianWriter(Size.HEADER + a.size(), ATTACK);
 			a.writeBytes(lew);
 			fos.write(lew.toArray());
-			return true;
+			return;
 		} else {
 			for (int open = 1, event; open > 0;) {
 				event = r.next();
 				if (event == XMLStreamReader.START_ELEMENT) {
 					open++;
 					if (r.getAttributeValue(0).equals("delay")) {
-						if (!delays.containsKey(parent))
-							delays.put(parent, Integer.valueOf(0));
-						delays.put(parent, Integer.valueOf(delays.get(parent).intValue() + Integer.parseInt(r.getAttributeValue(1))));
+						if (!delays.containsKey(dirs[0]))
+							delays.put(dirs[0], Integer.valueOf(0));
+						delays.put(dirs[0], Integer.valueOf(delays.get(dirs[0]).intValue() + Integer.parseInt(r.getAttributeValue(1))));
 					}
 				} else if (event == XMLStreamReader.END_ELEMENT) {
 					open--;
 				}
 			}
-			return true;
+			return;
 		}
+		//traverseBlock(nestedPath);
 	}
 	
-	public byte[] getEncodedBytes(String key, String value) {
-		return null;
-	}
-	
-	public void finished(FileOutputStream fos) throws IOException {
-		String key;
-		for (Entry<String, Integer> pair : delays.entrySet()) {
-			key = pair.getKey();
-			fos.write(new LittleEndianWriter(Size.HEADER + key.length() + 1 + Size.INT, DELAY).writeNullTerminatedString(key).writeInt(pair.getValue().intValue()).toArray());
-		}
-		delays = new HashMap<String, Integer>();
+	protected void handleProperty(String nestedPath, String value) throws IOException {
+		//System.out.println("DEBUG: Handling " + nestedPath);
+		//String[] dirs = nestedPath.split("/");
 	}
 }

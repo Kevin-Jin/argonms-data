@@ -41,6 +41,16 @@
 	setTargetName. Modified comments in kvjcompiler.map.structure.Portal.
 	* Added support for reactor compiling.
 
+2010-11-19  GoldenKevin  (revision 5)
+	* Complete rewrite of KvjCompiler. Expected behavior has not changed,
+	and generated code should still be identical to previous revisions.
+	Performance has been slightly hampered, as a trade off to simplicity.
+	Code is more object oriented now, and it should make the addition of
+	Item.wz compiling easier, which will break the current one to one file
+	correspondence between the WZ files and the compiled binaries by
+	compiling individual items as different files inside a folder that is
+	named after the XML WZ file that contains the specific item.
+
 Copyright 2010 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.
