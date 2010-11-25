@@ -21,9 +21,11 @@ public class Size {
 	public static final int HEADER = 1; //currently 1-byte (255 possible values)
 	
 	public static final int
+		LONG = 8,
 		INT = 4,
 		SHORT = 2,
 		BYTE = 1,
+		DOUBLE = 8,
 		FLOAT = 4,
 		CHAR = 1,
 		BOOL = 1

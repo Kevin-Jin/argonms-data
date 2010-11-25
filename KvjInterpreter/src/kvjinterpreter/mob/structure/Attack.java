@@ -1,5 +1,5 @@
 /*
- *  KvJ Compiler for XML WZ data files
+ *  Sample interpreter for data files compiled from XML using KvJ
  *  Copyright (C) 2010  GoldenKevin
  *
  *  This program is free software: you can redistribute it and/or modify

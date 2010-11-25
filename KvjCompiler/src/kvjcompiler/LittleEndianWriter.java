@@ -48,6 +48,18 @@ public class LittleEndianWriter {
 		bytes = copy;
 	}
 	
+	public LittleEndianWriter writeLong(long l) {
+		writeByte((byte) (l & 0xFF));
+		writeByte((byte) ((l >>> 8) & 0xFF));
+		writeByte((byte) ((l >>> 16) & 0xFF));
+		writeByte((byte) ((l >>> 24) & 0xFF));
+		writeByte((byte) ((l >>> 32) & 0xFF));
+		writeByte((byte) ((l >>> 40) & 0xFF));
+		writeByte((byte) ((l >>> 48) & 0xFF));
+		writeByte((byte) ((l >>> 56) & 0xFF));
+		return this;
+	}
+	
 	public LittleEndianWriter writeInt(int i) {
 		writeByte((byte) (i & 0xFF));
 		writeByte((byte) ((i >>> 8) & 0xFF));
@@ -70,8 +82,13 @@ public class LittleEndianWriter {
 		return this;
 	}
 	
-	public LittleEndianWriter writeFloat(float d) {
-		writeInt(Float.floatToRawIntBits(d));
+	public LittleEndianWriter writeFloat(float f) {
+		writeInt(Float.floatToRawIntBits(f));
+		return this;
+	}
+	
+	public LittleEndianWriter writeDouble(double d) {
+		writeLong(Double.doubleToRawLongBits(d));
 		return this;
 	}
 	

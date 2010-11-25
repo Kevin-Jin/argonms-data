@@ -20,6 +20,21 @@ package kvjinterpreter;
 public abstract class LittleEndianReader {
 	protected abstract int read();
 	
+	public long readLong() {
+		long b1, b2, b3, b4, b5, b6, b7, b8;
+		
+		b1 = read();
+		b2 = read();
+		b3 = read();
+		b4 = read();
+		b5 = read();
+		b6 = read();
+		b7 = read();
+		b8 = read();
+		
+		return (b8 << 56) + (b7 << 48) + (b6 << 40) + (b5 << 32) + (b4 << 24) + (b3 << 16) + (b2 << 8) + b1;
+	}
+	
 	public int readInt() {
 		int b1, b2, b3, b4;
 		
@@ -46,6 +61,10 @@ public abstract class LittleEndianReader {
 	
 	public float readFloat() {
 		return Float.intBitsToFloat(readInt());
+	}
+	
+	public double readDouble() {
+		return Double.longBitsToDouble(readLong());
 	}
 	
 	public String readNullTerminatedString() {

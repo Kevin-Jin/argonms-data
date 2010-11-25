@@ -51,6 +51,11 @@
 	compiling individual items as different files inside a folder that is
 	named after the XML WZ file that contains the specific item.
 
+2010-11-25  GoldenKevin  (revision 6)
+	* Added preliminary Item.wz compiling as well as part of the Kvj
+	parser for Item.wz. Please excuse all the comments in KvjInterpreter
+	regarding items because it still is a work in progress after all.
+
 Copyright 2010 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

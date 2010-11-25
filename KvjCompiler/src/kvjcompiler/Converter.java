@@ -24,6 +24,7 @@ import java.io.IOException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import kvjcompiler.item.ItemConverter;
 import kvjcompiler.map.MapConverter;
 import kvjcompiler.mob.MobConverter;
 import kvjcompiler.reactor.ReactorConverter;
@@ -66,15 +67,19 @@ public abstract class Converter {
 	protected void finalizeCompile(String internalPath, String imgName) throws IOException, XMLStreamException {
 		try {
 			if (r.getEventType() != XMLStreamReader.END_ELEMENT || DataType.getFromString(r.getLocalName()) != DataType.IMGDIR || r.next() != XMLStreamReader.END_DOCUMENT)
-				throw new IllegalStateException("ERROR: " + internalPath + File.separatorChar + imgName + " XML WZ not closed.");
+				throw new IllegalStateException("ERROR: End of " + internalPath + imgName + " not yet reached.");
 			
 			System.out.println(getWzName() + File.separatorChar + internalPath + imgName + " done.");
 			System.err.println("Complete.");
 		} finally {
-			this.fos.close();
-			this.fos = null;
-			this.r.close();
-			this.r = null;
+			if (fos != null) {
+				this.fos.close();
+				this.fos = null;
+			}
+			if (r != null) {
+				this.r.close();
+				this.r = null;
+			}
 		}
 	}
 	
@@ -120,6 +125,8 @@ public abstract class Converter {
 			return new MobConverter();
 		} else if (source.equals("Reactor.wz")) {
 			return new ReactorConverter();
+		} else if (source.equals("Item.wz")) {
+			return new ItemConverter();
 		}
 		return null;
 	}
