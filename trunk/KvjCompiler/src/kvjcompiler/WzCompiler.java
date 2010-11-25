@@ -29,9 +29,9 @@ import javax.xml.stream.XMLStreamReader;
 
 public class WzCompiler {
 	private static final String log = "wzlog.txt";
-	private static final String outPath = "C:\\Users\\Kevin\\KvjBin\\out\\"; //MUST HAVE TRAILING SLASH!
-	private static final String wzPath = "C:\\Users\\Kevin\\Documents\\KiniroMS\\wz\\"; //MUST HAVE TRAILING SLASH!
-	private static final String wzFile = "Map.wz";
+	private static final String outPath = "/home/kevin/KvjBin/out/"; //MUST HAVE TRAILING SLASH!
+	private static final String wzPath = "/home/kevin/KvjBin/wz/"; //MUST HAVE TRAILING SLASH!
+	private static final String wzFile = "Item.wz";
 	
 	public static void main(String[] args) throws XMLStreamException, IOException {
 		File dir;
@@ -77,6 +77,14 @@ public class WzCompiler {
 				r = f.createXMLStreamReader(new FileInputStream(new File(inputPath + fileName)));
 				converter.compile(outPath, "", fileName.substring(0, fileName.lastIndexOf(".xml")), r);
 				count++;
+			}
+		} else if (converter.getWzName().equals("Item.wz")) {
+			for (String catDir : new File(inputPath).list()) {
+				for (String fileName : new File(inputPath + catDir).list()) {
+					r = f.createXMLStreamReader(new FileInputStream(new File(inputPath + catDir + File.separatorChar + fileName)));
+					converter.compile(outPath, catDir + File.separatorChar, fileName.substring(0, fileName.lastIndexOf(".xml")), r);
+					count++;
+				}
 			}
 		}
 		end = System.currentTimeMillis();

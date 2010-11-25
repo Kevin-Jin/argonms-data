@@ -1,5 +1,5 @@
 /*
- *  Sample interpreter for data files compiled from XML using KvJ
+ *  KvJ Compiler for XML WZ data files
  *  Copyright (C) 2010  GoldenKevin
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -15,30 +15,32 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package kvjinterpreter.mob.structure;
+package kvjcompiler.item.structure;
 
-public class SelfDestruct {
-	private int action;
-	private int hp;
-	private int removeAfter;
+import java.util.ArrayList;
+import java.util.List;
+import kvjcompiler.IStructure;
+import kvjcompiler.LittleEndianWriter;
+import kvjcompiler.Size;
+
+public class ScrollRequirements implements IStructure {
+	private List<Integer> reqs;
 	
-	public void setAction(int action) {
-		this.action = action;
+	public ScrollRequirements() {
+		reqs = new ArrayList<Integer>();
 	}
 	
-	public void setHp(int points) {
-		this.hp = points;
+	public void setProperty(String key, String value) {
+		reqs.add(Integer.valueOf(value));
 	}
-	
-	public void setRemoveAfter(int time) {
-		this.removeAfter = time;
+
+	public int size() {
+		return Size.INT + Size.INT * reqs.size();
 	}
-	
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Action=").append(action);
-		builder.append(", Hp=").append(hp);
-		builder.append(", RemoveAfter=").append(removeAfter);
-		return builder.toString();
+
+	public void writeBytes(LittleEndianWriter lew) {
+		lew.writeInt(reqs.size());
+		for (Integer i : reqs)
+			lew.writeInt(i.intValue());
 	}
 }

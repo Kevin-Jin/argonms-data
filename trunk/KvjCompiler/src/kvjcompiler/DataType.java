@@ -29,6 +29,8 @@ public enum DataType {
 	public static DataType getFromString(String s) {
 		if (s.equals("imgdir"))
 			return IMGDIR;
+		else if (s.equals("canvas"))
+			return CANVAS;
 		return UNKNOWN;
 	}
 }
