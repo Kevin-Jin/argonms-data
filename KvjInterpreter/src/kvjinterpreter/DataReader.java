@@ -17,7 +17,6 @@
  */
 package kvjinterpreter;
 
-import kvjinterpreter.item.ItemDataReader;
 import kvjinterpreter.map.MapDataReader;
 import kvjinterpreter.mob.MobDataReader;
 import kvjinterpreter.reactor.ReactorDataReader;
@@ -34,13 +33,11 @@ public abstract class DataReader {
 			return new MobDataReader();
 		} else if (source.equals("Reactor.wz")) {
 			return new ReactorDataReader();
-		} else if (source.equals("Item.wz")) {
-			return new ItemDataReader();
 		}
 		return null;
 	}
 	
 	public enum WzType {
-		MAP, MOB, REACTOR, ITEM
+		MAP, MOB, REACTOR
 	}
 }
