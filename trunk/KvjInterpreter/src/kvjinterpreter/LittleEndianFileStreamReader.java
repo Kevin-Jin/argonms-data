@@ -1,6 +1,6 @@
 /*
  *  Sample interpreter for data files compiled from XML using KvJ
- *  Copyright (C) 2010  GoldenKevin
+ *  Copyright (C) 2010, 2011  GoldenKevin
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,39 +17,30 @@
  */
 package kvjinterpreter;
 
+//import java.io.BufferedInputStream;
+//import java.io.File;
+//import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class LittleEndianFileStreamReader extends LittleEndianReader {
-	private byte[] bytes;
-	private int index;
-	
-	public LittleEndianFileStreamReader(byte[] bytes) {
-		this.bytes = bytes;
-		this.index = 0;
+	private InputStream fis;
+
+	public LittleEndianFileStreamReader(InputStream fis) {
+		this.fis = fis;
 	}
 
+	//the problem with this is that there is no way to close fis...
+	/*public LittleEndianFileStreamReader(File f) throws IOException {
+		this.fis = new BufferedInputStream(new FileInputStream(f));
+	}*/
+
 	protected int read() {
-		if (index >= bytes.length)
+		try {
+			return fis.read() & 0xFF;
+		} catch (IOException e) {
+			e.printStackTrace();
 			return -1;
-		return (int) bytes[index++] & 0xFF;
-	}
-	
-	//Copies the remaining portion of the packet stream to a byte array
-	public byte[] toArray() {
-		byte[] trimmed = new byte[bytes.length - index];
-		System.arraycopy(bytes, index, trimmed, 0, bytes.length - index);
-		return trimmed;
-	}
-	
-	public String toString() {
-		String all = "", now = "";
-		
-		for (int i = 0; i < bytes.length; i++)
-			all += bytes[i] + " ";
-		all = all.substring(0, all.length() - 1);
-		
-		for (int i = index; i < bytes.length; i++)
-			now += bytes[i] + " ";
-		now = now.substring(0, now.length() - 1);
-		
-		return "All: " + all + "\nNow: " + now;
+		}
 	}
 }

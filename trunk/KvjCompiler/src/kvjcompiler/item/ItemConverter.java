@@ -1,6 +1,6 @@
 /*
  *  KvJ Compiler for XML WZ data files
- *  Copyright (C) 2010  GoldenKevin
+ *  Copyright (C) 2010, 2011  GoldenKevin
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
  */
 package kvjcompiler.item;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -114,7 +115,6 @@ public class ItemConverter extends Converter {
 		if (DataType.getFromString(r.getLocalName()) != DataType.IMGDIR || !r.getAttributeValue(0).equals(imgName))
 			throw new IllegalStateException("ERROR: Received a non-WZ XML file.");
 		
-		this.binDir = new File(outPath + getWzName() + File.separatorChar + internalPath + File.separatorChar + imgName);
 		this.r = r;
 		
 		String id = imgName.substring(0, imgName.lastIndexOf(".img"));
@@ -124,8 +124,13 @@ public class ItemConverter extends Converter {
 			int parsed = Integer.parseInt(id);
 			pet = (parsed >= 5000000 && parsed <= 5000100);
 			if (pet) {
-				this.fos = new FileOutputStream(binDir.getAbsolutePath() + ".kvj");
+				this.binDir = new File(outPath + getWzName() + File.separatorChar + internalPath);
+				if (!binDir.exists())
+					if (!binDir.mkdirs())
+						throw new IllegalStateException("ERROR: Could not create compiled directory " + binDir.getAbsolutePath());
+				this.fos = new BufferedOutputStream(new FileOutputStream(binDir.getAbsolutePath() + File.separatorChar + imgName + ".kvj"));
 			} else {
+				this.binDir = new File(outPath + getWzName() + File.separatorChar + internalPath + File.separatorChar + imgName);
 				if (!binDir.exists())
 					if (!binDir.mkdirs())
 						throw new IllegalStateException("ERROR: Could not create compiled directory " + binDir.getAbsolutePath());
@@ -176,7 +181,7 @@ public class ItemConverter extends Converter {
 			if (isNumber(dirs[0])) {
 				if (this.fos != null)
 					this.fos.close();
-				this.fos = new FileOutputStream(binDir.getAbsolutePath() + File.separatorChar + dirs[0] + ".kvj");
+				this.fos = new BufferedOutputStream(new FileOutputStream(binDir.getAbsolutePath() + File.separatorChar + dirs[0] + ".kvj"));
 				this.current = dirs[0];
 			}
 

@@ -1,6 +1,6 @@
 /*
  *  KvJ Compiler for XML WZ data files
- *  Copyright (C) 2010  GoldenKevin
+ *  Copyright (C) 2010, 2011  GoldenKevin
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,9 +17,11 @@
  */
 package kvjcompiler;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -35,7 +37,7 @@ import kvjcompiler.reactor.ReactorConverter;
 //Be careful because ArrayList is not immutable, so added elements have to be removed after processing.
 //Simply remove the last element from the list to achieve this.
 public abstract class Converter {
-	protected FileOutputStream fos;
+	protected OutputStream fos;
 	protected XMLStreamReader r;
 	
 	public abstract String getWzName();
@@ -59,7 +61,7 @@ public abstract class Converter {
 		if (!binDir.exists())
 			if (!binDir.mkdirs())
 				throw new IllegalStateException("ERROR: Could not create compiled directory " + binDir.getAbsolutePath());
-		this.fos = new FileOutputStream(binDir.getAbsolutePath() + File.separatorChar + imgName + ".kvj");
+		this.fos = new BufferedOutputStream(new FileOutputStream(binDir.getAbsolutePath() + File.separatorChar + imgName + ".kvj"));
 		this.r = r;
 		traverseBlock("");
 	}

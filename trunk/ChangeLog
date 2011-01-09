@@ -56,6 +56,24 @@
 	parser for Item.wz. Please excuse all the comments in KvjInterpreter
 	regarding items because it still is a work in progress after all.
 
-Copyright 2010 GoldenKevin
+2011-01-09  GoldenKevin  (revision 7)
+	* Replaced references of FileOutputStream with a BufferedOutputStream
+	that uses an underlying FileOutputStream. This should improve
+	performance somewhat for KvjCompiler. Both the log file and the
+	compiled binary files are now outputted with buffered output streams.
+	* Replaced references of FileInputStream with a BufferedInputStream
+	that uses an underlying FileInputStream. This should improve
+	performance somewhat for KvjInterpreter when using
+	kvjinterpreter.LittleEndianFileStreamReader.
+	* Fixed the file names of kvjinterpreter.LittleEndianFileStreamReader
+	and kvjinterpreter.LittleEndianByteArrayReader. The names were
+	previously swapped. Also added a new constructor for
+	kvjinterpreter.LittleEndianByteArrayReader that takes in a File and
+	automatically fills the byte array.
+	* Fixed Item.wz/Pet folder not being automatically created if it
+	did not exist (kvjcompiler.item.ItemConverter).
+	* It's 2011 now people! Added current year on all license headers.
+
+Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

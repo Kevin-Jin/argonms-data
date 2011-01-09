@@ -1,6 +1,6 @@
 /*
  *  KvJ Compiler for XML WZ data files
- *  Copyright (C) 2010  GoldenKevin
+ *  Copyright (C) 2010, 2011  GoldenKevin
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
  */
 package kvjcompiler;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -49,8 +50,7 @@ public class WzCompiler {
 			if (!dir.mkdirs())
 				throw new IllegalStateException("ERROR: Could not create output directory " + outPath);
 		
-		FileOutputStream fos = new FileOutputStream(outPath + log);
-		PrintStream ps = new PrintStream(fos);
+		PrintStream ps = new PrintStream(new BufferedOutputStream(new FileOutputStream(outPath + log)));
 		System.setOut(ps);
 		
 		String inputPath = wzPath + wzFile + File.separatorChar;
@@ -87,6 +87,7 @@ public class WzCompiler {
 				}
 			}
 		}
+		ps.close();
 		end = System.currentTimeMillis();
 		
 		System.err.println(count + " file(s) compiled successfully in " + (end - start) + "ms!. Check the logs at " + log + " for more information.");

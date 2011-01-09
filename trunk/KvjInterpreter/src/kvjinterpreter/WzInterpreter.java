@@ -1,6 +1,6 @@
 /*
  *  Sample interpreter for data files compiled from XML using KvJ
- *  Copyright (C) 2010  GoldenKevin
+ *  Copyright (C) 2010, 2011  GoldenKevin
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,9 +17,11 @@
  */
 package kvjinterpreter;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import kvjinterpreter.DataReader.WzType;
 import kvjinterpreter.item.ItemDataReader;
 
@@ -36,8 +38,8 @@ public class WzInterpreter {
 		}
 		
 		File f = new File(getPath(reader.getWzType()));
-		FileInputStream fis = new FileInputStream(f);
-		reader.initialize(id, new LittleEndianByteArrayReader(fis));
+		InputStream fis = new BufferedInputStream(new FileInputStream(f));
+		reader.initialize(id, new LittleEndianFileStreamReader(fis));
 		System.out.println(reader.doWork());
 		fis.close();
 		

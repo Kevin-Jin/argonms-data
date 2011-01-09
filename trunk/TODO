@@ -1,0 +1,10 @@
+Copyright 2010, 2011 GoldenKevin
+Copying and distribution of this file, with or without modification, are
+permitted provided the copyright notice and this notice are preserved.
+
+* OPTIMIZATION AND CLEAN UP
+  -The use of a byte buffer in LittleEndianWriter is redundant since we already
+   use an OutputStream that buffers data for us. When I tried writing bytes
+   directly to the OutputStream in LittleEndianWriter and then modifying
+   MapConverter to use it, I saw a performance increase of around 200ms (I
+   consistently seen differences on the scale of from 139xx ms to 137xx ms).
