@@ -21,6 +21,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -58,7 +59,6 @@ public class ItemConverter extends Converter {
 		
 		PET_COMMAND = 21,
 		PET_HUNGER = 22,
-		PET_EVOL_AMOUNT = 24,
 		PET_EVOLVE = 25
 	;
 	
@@ -344,7 +344,7 @@ public class ItemConverter extends Converter {
 				if (Integer.parseInt(value) == 1)
 					fos.write(new LittleEndianWriter(Size.HEADER, CONSUME_ON_PICKUP).toArray());
 			} else if (isNumber(dirs[2])) {
-				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, PET_CONSUMABLE_BY).writeInt(Integer.parseInt(dirs[2])).toArray());
+				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, PET_CONSUMABLE_BY).writeInt(Integer.parseInt(value)).toArray());
 			}
 		}
 	}
@@ -356,7 +356,7 @@ public class ItemConverter extends Converter {
 			} else if (dirs[1].equals("evol")) {
 				//kinda unnecessary... if evolNo == 0, or is not in the file at all, then we know it's not evolvable...
 			} else if (dirs[1].equals("evolNo")) {
-				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, PET_EVOL_AMOUNT).writeInt(Integer.parseInt(value)).toArray());
+				//unnecessary... once you processed the entire binary, you can realize how many evolve paths there are...
 			} else if (dirs[1].length() > 8 && dirs[1].substring(0, 8).equals("evolProb")) {
 				int num = Integer.parseInt(dirs[1].substring(8, dirs[1].length()));
 				if (evolIds.containsKey(Integer.valueOf(num))) {
@@ -380,19 +380,19 @@ public class ItemConverter extends Converter {
 	
 	private byte getDayByteFromString(String str) {
 		if (str.equals("SUN")) {
-			return 1;
+			return Calendar.SUNDAY;
 		} else if (str.equals("MON")) {
-			return 2;
+			return Calendar.MONDAY;
 		} else if (str.equals("TUE")) {
-			return 3;
+			return Calendar.TUESDAY;
 		} else if (str.equals("WED")) {
-			return 4;
+			return Calendar.WEDNESDAY;
 		} else if (str.equals("THU")) {
-			return 5;
+			return Calendar.THURSDAY;
 		} else if (str.equals("FRI")) {
-			return 6;
+			return Calendar.FRIDAY;
 		} else if (str.equals("SAT")) {
-			return 7;
+			return Calendar.SATURDAY;
 		} else if (str.equals("HOL")) {
 			return 8;
 		} else {

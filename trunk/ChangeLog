@@ -74,6 +74,17 @@
 	did not exist (kvjcompiler.item.ItemConverter).
 	* It's 2011 now people! Added current year on all license headers.
 
+2011-01-09  GoldenKevin  (revision 8)
+	* Finished creating the sample interpreter for Item.wz. Unlike previous
+	demos, there is no output and the class ItemConverter is only there to
+	show how you can implement a ItemInformationProvider. You can modify
+	the main method to output data for any item.
+	* Fixed PET_CONSUMABLE_BY not writing the correct integer.
+	* PET_EVOL_AMOUNT is no longer written in the binaries because its
+	redundant. kvjcompiler.item.ItemConverter.getDayByteFromString now
+	returns the java.util.Calendar constants instead of using magic numbers.
+	The constants are equivalent though.
+
 Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.
