@@ -30,6 +30,7 @@ import kvjcompiler.item.ItemConverter;
 import kvjcompiler.map.MapConverter;
 import kvjcompiler.mob.MobConverter;
 import kvjcompiler.reactor.ReactorConverter;
+import kvjcompiler.string.StringConverter;
 
 //TODO - try replacing nestedPath String with ArrayList<String>
 //[and replace "String[] dirs = nestedPath.split("/")" with "String[] dirs = nestedPath.toArray()"]
@@ -129,6 +130,8 @@ public abstract class Converter {
 			return new ReactorConverter();
 		} else if (source.equals("Item.wz")) {
 			return new ItemConverter();
+		} else if (source.equals("String.wz")) {
+			return new StringConverter();
 		}
 		return null;
 	}

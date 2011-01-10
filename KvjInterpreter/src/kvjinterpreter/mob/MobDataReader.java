@@ -54,8 +54,8 @@ public class MobDataReader extends DataReader {
 		return WzType.MOB;
 	}
 	
-	public void initialize(int mobid, LittleEndianReader reader) {
-		this.mob = new MapleMob(mobid);
+	public void initialize(String mobid, LittleEndianReader reader) {
+		this.mob = new MapleMob(Integer.parseInt(mobid));
 		this.reader = reader;
 	}
 	

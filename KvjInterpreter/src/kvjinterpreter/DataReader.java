@@ -20,10 +20,11 @@ package kvjinterpreter;
 import kvjinterpreter.map.MapDataReader;
 import kvjinterpreter.mob.MobDataReader;
 import kvjinterpreter.reactor.ReactorDataReader;
+import kvjinterpreter.string.StringDataReader;
 
 public abstract class DataReader {
 	public abstract WzType getWzType();
-	public abstract void initialize(int id, LittleEndianReader reader);
+	public abstract void initialize(String img, LittleEndianReader reader);
 	public abstract Object doWork();
 	
 	public static DataReader getReader(String source) {
@@ -33,11 +34,13 @@ public abstract class DataReader {
 			return new MobDataReader();
 		} else if (source.equals("Reactor.wz")) {
 			return new ReactorDataReader();
+		} else if (source.equals("String.wz")) {
+			return new StringDataReader();
 		}
 		return null;
 	}
 	
 	public enum WzType {
-		MAP, MOB, REACTOR
+		MAP, MOB, REACTOR, STRING
 	}
 }
