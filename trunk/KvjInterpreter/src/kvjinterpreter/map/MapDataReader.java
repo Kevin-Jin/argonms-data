@@ -47,8 +47,8 @@ public class MapDataReader extends DataReader {
 		return WzType.MAP;
 	}
 	
-	public void initialize(int mapid, LittleEndianReader reader) {
-		this.map = new MapleMap(mapid);
+	public void initialize(String mapid, LittleEndianReader reader) {
+		this.map = new MapleMap(Integer.parseInt(mapid));
 		this.reader = reader;
 	}
 	

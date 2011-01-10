@@ -15,61 +15,55 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package kvjinterpreter.reactor;
+package kvjinterpreter.string;
 
 import kvjinterpreter.DataReader;
 import kvjinterpreter.LittleEndianReader;
-import kvjinterpreter.reactor.structure.State;
+import kvjinterpreter.string.structure.StringEntry;
 
-public class ReactorDataReader extends DataReader {
+public class StringDataReader extends DataReader {
 	private static final byte
-		LINK = 1,
-		HIT_EVENT = 2,
-		ITEM_EVENT = 3
+		NEXT = 1,
+		NAME = 2,
+		MAP_NAME = 3,
+		STREET_NAME = 4,
+		MSG = 5
 	;
 	
-	private MapleReactor reactor;
+	private StringWz collection;
 	private LittleEndianReader reader;
 	
 	public WzType getWzType() {
-		return WzType.REACTOR;
+		return WzType.STRING;
 	}
 	
-	public void initialize(String reactorid, LittleEndianReader reader) {
-		this.reactor = new MapleReactor(Integer.parseInt(reactorid));
+	public void initialize(String img, LittleEndianReader reader) {
+		this.collection = new StringWz(img);
 		this.reader = reader;
 	}
 	
-	public MapleReactor doWork() {
+	public Object doWork() {
+		StringEntry e = null;
 		for (byte now = reader.readByte(); now != -1; now = reader.readByte()) {
 			switch (now) {
-				case LINK:
-					reactor.setLink(reader.readInt());
+				case NEXT:
+					e = new StringEntry();
+					collection.add(reader.readInt(), e);
 					break;
-				case HIT_EVENT:
-					processHitEvent();
+				case NAME:
+					e.setName(reader.readNullTerminatedString());
 					break;
-				case ITEM_EVENT:
-					processItemEvent();
+				case MAP_NAME:
+					e.setMapName(reader.readNullTerminatedString());
+					break;
+				case STREET_NAME:
+					e.setStreetName(reader.readNullTerminatedString());
+					break;
+				case MSG:
+					e.setMessage(reader.readNullTerminatedString());
 					break;
 			}
 		}
-		return reactor;
-	}
-	
-	private State processHitEvent() {
-		int stateid = reader.readInt();
-		State s = new State();
-		s.setType(reader.readInt());
-		s.setNextState(reader.readInt());
-		reactor.addState(stateid, s);
-		return s;
-	}
-	
-	private void processItemEvent() {
-		State s = processHitEvent();
-		s.setItem(reader.readInt(), reader.readInt());
-		s.setLt(reader.readInt(), reader.readInt());
-		s.setRb(reader.readInt(), reader.readInt());
+		return collection;
 	}
 }

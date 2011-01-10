@@ -32,7 +32,7 @@ public class WzCompiler {
 	private static final String log = "wzlog.txt";
 	private static final String outPath = "/home/kevin/KvjBin/out/"; //MUST HAVE TRAILING SLASH!
 	private static final String wzPath = "/home/kevin/KvjBin/wz/"; //MUST HAVE TRAILING SLASH!
-	private static final String wzFile = "Item.wz";
+	private static final String wzFile = "String.wz";
 	
 	public static void main(String[] args) throws XMLStreamException, IOException {
 		File dir;
@@ -86,10 +86,23 @@ public class WzCompiler {
 					count++;
 				}
 			}
+		} else if (converter.getWzName().equals("String.wz")) {
+			//servers only need these files...
+			converter.compile(outPath, "", "Cash.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "Cash.img.xml"))));
+			converter.compile(outPath, "", "Consume.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "Consume.img.xml"))));
+			converter.compile(outPath, "", "Eqp.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "Eqp.img.xml"))));
+			converter.compile(outPath, "", "Etc.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "Etc.img.xml"))));
+			converter.compile(outPath, "", "Ins.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "Ins.img.xml"))));
+			converter.compile(outPath, "", "Map.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "Map.img.xml"))));
+			converter.compile(outPath, "", "Mob.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "Mob.img.xml"))));
+			converter.compile(outPath, "", "Npc.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "Npc.img.xml"))));
+			converter.compile(outPath, "", "Pet.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "Pet.img.xml"))));
+			converter.compile(outPath, "", "Skill.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "Skill.img.xml"))));
+			count += 10;
 		}
 		ps.close();
 		end = System.currentTimeMillis();
 		
-		System.err.println(count + " file(s) compiled successfully in " + (end - start) + "ms!. Check the logs at " + log + " for more information.");
+		System.err.println(count + " file(s) compiled successfully in " + (end - start) + "ms! Check the logs at " + log + " for more information.");
 	}
 }

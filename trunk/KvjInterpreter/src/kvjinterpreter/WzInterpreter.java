@@ -23,12 +23,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import kvjinterpreter.DataReader.WzType;
-import kvjinterpreter.item.ItemDataReader;
 
 public class WzInterpreter {
 	public static final String binPath = "/home/kevin/KvjBin/out/"; //MUST HAVE TRAILING SLASH!
-	public static final String wzFile = "Item.wz";
-	private static final int id = 5000000;
+	public static final String wzFile = "String.wz";
+	private static final String id = "Map";
 	
 	public static void main(String[] args) throws IOException {
 		DataReader reader = DataReader.getReader(wzFile);
@@ -48,14 +47,16 @@ public class WzInterpreter {
 		String paddedId;
 		switch (type) {
 			case MAP:
-				paddedId = String.format("%09d", id);
+				paddedId = String.format("%1$#9s", id);
 				return new StringBuilder(binPath).append(wzFile).append(File.separator).append("Map").append(File.separator).append("Map").append(paddedId.charAt(0)).append(File.separator).append(paddedId).append(".img.kvj").toString();
 			case MOB:
-				paddedId = String.format("%07d", id);
+				paddedId = String.format("%1$#7s", id);
 				return new StringBuilder(binPath).append(wzFile).append(File.separator).append(paddedId).append(".img.kvj").toString();
 			case REACTOR:
-				paddedId = String.format("%07d", id);
+				paddedId = String.format("%1$#7s", id);
 				return new StringBuilder(binPath).append(wzFile).append(File.separator).append(paddedId).append(".img.kvj").toString();
+			case STRING:
+				return new StringBuilder(binPath).append(wzFile).append(File.separator).append(id).append(".img.kvj").toString();
 			default:
 				return null;
 		}

@@ -85,6 +85,10 @@
 	returns the java.util.Calendar constants instead of using magic numbers.
 	The constants are equivalent though.
 
+2011-01-10  GoldenKevin  (revision 9)
+	* String.wz compiling is now possible and the corresponding interpreter
+	has been released as well.
+
 Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.
