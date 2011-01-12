@@ -89,6 +89,21 @@
 	* String.wz compiling is now possible and the corresponding interpreter
 	has been released as well.
 
+2011-01-12  GoldenKevin  (revision 10)
+	* Added Skill.wz compiling. There are way too many properties to handle,
+	so I won't add a sample interpreter. I think it would be easy enough to
+	make one yourself. Also added a new method to kvyjcompiler.DataType to
+	detect whether a property has two values (isPoint()).
+	* Made the isNumber method from ItemConverter and StringConverter a
+	public static method in kvjcompiler.Converter.
+	* Input and output paths, as well as the WZ file and log file names can
+	now be specified at runtime through arguments. A sample batch file for
+	Windows is included with this update as well as a sample BASH script for
+	Unix-like operating systems. You most likely have to fix the classpath
+	if you are not using NetBeans, as well as the in and out paths that are
+	specified in the batch file variables (I believe it should be
+	KvjCompiler\bin for Eclipse).
+
 Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

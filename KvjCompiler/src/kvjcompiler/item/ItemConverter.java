@@ -434,14 +434,4 @@ public class ItemConverter extends Converter {
 		}
 		return -1;
 	}
-	
-	private boolean isNumber(String str) {
-		char ch;
-		for (int i = str.length() - 1; i >= 0; i--) {
-			ch = str.charAt(i);
-			if (ch < '0' || ch > '9')
-				return false;
-		}
-		return true;
-	}
 }

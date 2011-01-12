@@ -30,6 +30,7 @@ import kvjcompiler.item.ItemConverter;
 import kvjcompiler.map.MapConverter;
 import kvjcompiler.mob.MobConverter;
 import kvjcompiler.reactor.ReactorConverter;
+import kvjcompiler.skill.SkillConverter;
 import kvjcompiler.string.StringConverter;
 
 //TODO - try replacing nestedPath String with ArrayList<String>
@@ -120,6 +121,16 @@ public abstract class Converter {
 	
 	protected abstract void handleDir(String nestedPath) throws XMLStreamException, IOException;
 	protected abstract void handleProperty(String nestedPath, String value) throws IOException;
+
+	public static boolean isNumber(String str) {
+		char ch;
+		for (int i = str.length() - 1; i >= 0; i--) {
+			ch = str.charAt(i);
+			if (ch < '0' || ch > '9')
+				return false;
+		}
+		return true;
+	}
 	
 	public static Converter getConverter(String source) {
 		if (source.equals("Map.wz")) {
@@ -132,6 +143,8 @@ public abstract class Converter {
 			return new ItemConverter();
 		} else if (source.equals("String.wz")) {
 			return new StringConverter();
+		} else if (source.equals("Skill.wz")) {
+			return new SkillConverter();
 		}
 		return null;
 	}

@@ -63,14 +63,4 @@ public class StringConverter extends Converter {
 	
 	protected void handleProperty(String nestedPath, String value) throws IOException {
 	}
-	
-	private boolean isNumber(String str) {
-		char ch;
-		for (int i = str.length() - 1; i >= 0; i--) {
-			ch = str.charAt(i);
-			if (ch < '0' || ch > '9')
-				return false;
-		}
-		return true;
-	}
 }
