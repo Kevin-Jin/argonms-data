@@ -8,3 +8,8 @@ permitted provided the copyright notice and this notice are preserved.
    directly to the OutputStream in LittleEndianWriter and then modifying
    MapConverter to use it, I saw a performance increase of around 200ms (I
    consistently seen differences on the scale of from 139xx ms to 137xx ms).
+  -I think I should repack all items that share the same 3 digit prefix into
+   a single file like the XML Wzs, and just load every item in that file at
+   once on the server. NTFS' overhead is just too much for it. 4246 files that
+   should only take up 54808 bytes of space takes up 15568896 bytes. That's a
+   factor of 284 times.

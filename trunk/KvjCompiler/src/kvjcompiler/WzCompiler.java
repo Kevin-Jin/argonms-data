@@ -29,12 +29,14 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 public class WzCompiler {
-	private static final String log = "wzlog.txt";
-	private static final String outPath = "/home/kevin/KvjBin/out/"; //MUST HAVE TRAILING SLASH!
-	private static final String wzPath = "/home/kevin/KvjBin/wz/"; //MUST HAVE TRAILING SLASH!
-	private static final String wzFile = "String.wz";
+	private static String log = "wzlog.txt";
+	private static String outPath = "/home/kevin/KvjBin/out/"; //MUST HAVE TRAILING SLASH!
+	private static String wzPath = "/home/kevin/KvjBin/wz/"; //MUST HAVE TRAILING SLASH!
+	private static String wzFile = "Skill.wz";
 	
 	public static void main(String[] args) throws XMLStreamException, IOException {
+		parseParameters(args);
+
 		File dir;
 		String absDir;
 		Converter converter = Converter.getConverter(wzFile);
@@ -99,10 +101,38 @@ public class WzCompiler {
 			converter.compile(outPath, "", "Pet.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "Pet.img.xml"))));
 			converter.compile(outPath, "", "Skill.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "Skill.img.xml"))));
 			count += 10;
+		} else if (converter.getWzName().equals("Skill.wz")) {
+			for (String fileName : new File(inputPath).list()) {
+				String id = fileName.substring(0, fileName.lastIndexOf(".img.xml"));
+				if (Converter.isNumber(id)) {
+					converter.compile(outPath, "", id + ".img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + fileName))));
+					count++;
+				}
+			}
+			converter.compile(outPath, "", "MobSkill.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "MobSkill.img.xml"))));
+			count++;
 		}
 		ps.close();
 		end = System.currentTimeMillis();
 		
 		System.err.println(count + " file(s) compiled successfully in " + (end - start) + "ms! Check the logs at " + log + " for more information.");
+	}
+
+	private static void parseParameters(String[] args) {
+		for (int i = 0; i < args.length; i += 2) {
+			if (args[i].equals("-log")) {
+				log = args[i + 1];
+			} else if (args[i].equals("-out")) {
+				outPath = args[i + 1];
+				if (outPath.charAt(outPath.length() - 1) != File.separatorChar)
+					outPath += File.separatorChar;
+			} else if (args[i].equals("-in")) {
+				wzPath = args[i + 1];
+				if (wzPath.charAt(wzPath.length() - 1) != File.separatorChar)
+					wzPath += File.separatorChar;
+			} else if (args[i].equals("-file")) {
+				wzFile = args[i + 1];
+			}
+		}
 	}
 }

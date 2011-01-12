@@ -20,17 +20,24 @@ package kvjcompiler;
 public enum DataType {
 	IMGDIR,
 	CANVAS,
+	VECTOR,
 	UNKNOWN;
 	
 	public boolean isDirectory() {
 		return (this == IMGDIR || this == CANVAS);
 	}
-	
+
+	public boolean isPoint() {
+		return (this == VECTOR);
+	}
+
 	public static DataType getFromString(String s) {
 		if (s.equals("imgdir"))
 			return IMGDIR;
 		else if (s.equals("canvas"))
 			return CANVAS;
+		else if (s.equals("vector"))
+			return VECTOR;
 		return UNKNOWN;
 	}
 }
