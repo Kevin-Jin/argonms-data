@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import kvjinterpreter.Effects;
 import kvjinterpreter.LittleEndianFileStreamReader;
 import kvjinterpreter.LittleEndianReader;
 import kvjinterpreter.WzInterpreter;
@@ -135,38 +136,18 @@ public class ItemDataReader {
 		CURSED = 9,
 		CASH = 10,
 		OPERATING_HOURS = 11,
-		CONSUME_ON_PICKUP = 12,
-		SKILL = 13,
-		PET_CONSUMABLE_BY = 14,
-		UNIT_PRICE = 15,
-		REQ_STAT = 16,
-		UPGRADE_SLOTS = 17,
-		SCROLL_REQUIREMENTS = 18,
-		TRIGGER_ITEM = 19,
-		MESO_VALUE = 20,
+		SKILL = 12,
+		UNIT_PRICE = 13,
+		REQ_STAT = 14,
+		UPGRADE_SLOTS = 15,
+		SCROLL_REQUIREMENTS = 16,
+		ITEM_EFFECT = 17,
+		TRIGGER_ITEM = 18,
+		MESO_VALUE = 19,
 		
-		PET_COMMAND = 21,
-		PET_HUNGER = 22,
-		PET_EVOLVE = 25
-	;
-	
-	private static final byte //stats
-		STR = 0,
-		DEX = 1,
-		INT = 2,
-		LUK = 3,
-		PAD = 4,
-		PDD = 5,
-		MAD = 6,
-		MDD = 7,
-		ACC = 8,
-		EVA = 9,
-		MHP = 10,
-		MMP = 11,
-		Speed = 12,
-		Jump = 13,
-		Level = 14,
-		MaxLevel = 15
+		PET_COMMAND = 20,
+		PET_HUNGER = 21,
+		PET_EVOLVE = 22
 	;
 	
 	private List<Integer> loaded;
@@ -322,19 +303,19 @@ public class ItemDataReader {
 						operatingHours.put(oId, new ArrayList<byte[]>());
 					operatingHours.get(oId).add(processOperatingHours(reader));
 					break;
-				case CONSUME_ON_PICKUP:
-					useOnPickup.add(oId);
-					break;
+				//case CONSUME_ON_PICKUP:
+					//useOnPickup.add(oId);
+					//break;
 				case SKILL:
 					if (!skills.containsKey(oId))
 						skills.put(oId, new ArrayList<Integer>());
 					skills.get(oId).add(Integer.valueOf(reader.readInt()));
 					break;
-				case PET_CONSUMABLE_BY:
-					if (!petConsumableBy.containsKey(oId))
-						petConsumableBy.put(oId, new ArrayList<Integer>());
-					petConsumableBy.get(oId).add(Integer.valueOf(reader.readInt()));
-					break;
+				//case PET_CONSUMABLE_BY:
+					//if (!petConsumableBy.containsKey(oId))
+						//petConsumableBy.put(oId, new ArrayList<Integer>());
+					//petConsumableBy.get(oId).add(Integer.valueOf(reader.readInt()));
+					//break;
 				case UNIT_PRICE:
 					unitPrice.put(oId, Double.valueOf(reader.readDouble()));
 					break;
@@ -348,6 +329,9 @@ public class ItemDataReader {
 					break;
 				case SCROLL_REQUIREMENTS:
 					scrollReqs.put(oId, processScrollReqs(reader));
+					break;
+				case ITEM_EFFECT:
+					while (reader.readByte() != Effects.END_EFFECT);
 					break;
 				case TRIGGER_ITEM:
 					triggerItem.put(oId, Integer.valueOf(reader.readInt()));
@@ -439,7 +423,7 @@ public class ItemDataReader {
 			load(itemId);
 		short[] stats = reqStats.get(oId);
 		if (stats != null)
-			return stats[Level];
+			return stats[Effects.Level];
 		return 0;
 	}
 

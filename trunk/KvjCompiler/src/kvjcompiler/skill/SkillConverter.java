@@ -32,54 +32,13 @@ public class SkillConverter extends Converter {
 		return "Skill.wz";
 	}
 
-	public static final byte
+	public static final byte //skill props
 		NEXT_SKILL = 1,
 		ELEM_ATTR = 2,
 		IS_BUFF = 3,
 		DELAY = 4,
 		IS_CHARGE = 5,
-		NEXT_LEVEL = 6,
-		MP_CONSUME = 7,
-		HP_CONSUME = 8,
-		DURATION = 9,
-		X = 10,
-		Y = 11,
-		Z = 12,
-		DAMAGE = 13,
-		LT = 14,
-		RB = 15,
-		MOB_COUNT = 16,
-		PROP = 17,
-		MASTERY = 18,
-		COOLTIME = 19,
-		RANGE = 20,
-		WATK = 21,
-		WDEF = 22,
-		MATK = 23,
-		MDEF = 24,
-		ACC = 25,
-		AVOID = 26,
-		HP_BONUS = 27,
-		MP_BONUS = 28,
-		SPEED = 29,
-		JUMP = 30,
-		ATTACK_COUNT = 31,
-		BULLET_COUNT = 32,
-		ITEM_CONSUME = 33,
-		ITEM_CONSUME_COUNT = 34,
-		BULLET_CONSUME = 35,
-		MONEY_CONSUME = 36,
-		MORPH = 37,
-		HP_RECOVER = 38,
-		MP_RECOVER = 39,
-		MOVE_TO = 40,
-		POISON = 41,
-		SEAL = 42,
-		DARKNESS = 43,
-		WEAKNESS = 44,
-		CURSE = 45,
-		SUMMON_EFFECT = 46,
-		LIMIT = 47
+		NEXT_LEVEL = 6
 	;
 
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
