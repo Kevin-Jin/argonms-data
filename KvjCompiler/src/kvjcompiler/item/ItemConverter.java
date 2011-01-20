@@ -17,6 +17,7 @@
  */
 package kvjcompiler.item;
 
+import java.awt.Point;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,6 +31,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import kvjcompiler.Converter;
 import kvjcompiler.DataType;
+import kvjcompiler.Effects;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 import kvjcompiler.item.structure.*;
@@ -47,46 +49,26 @@ public class ItemConverter extends Converter {
 		CURSED = 9,
 		CASH = 10,
 		OPERATING_HOURS = 11,
-		CONSUME_ON_PICKUP = 12,
-		SKILL = 13,
-		PET_CONSUMABLE_BY = 14,
-		UNIT_PRICE = 15,
-		REQ_STAT = 16,
-		UPGRADE_SLOTS = 17,
-		SCROLL_REQUIREMENTS = 18,
-		TRIGGER_ITEM = 19,
-		MESO_VALUE = 20,
+		SKILL = 12,
+		UNIT_PRICE = 13,
+		REQ_STAT = 14,
+		UPGRADE_SLOTS = 15,
+		SCROLL_REQUIREMENTS = 16,
+		ITEM_EFFECT = 17,
+		TRIGGER_ITEM = 18,
+		MESO_VALUE = 19,
 		
-		PET_COMMAND = 21,
-		PET_HUNGER = 22,
-		PET_EVOLVE = 25
+		PET_COMMAND = 20,
+		PET_HUNGER = 21,
+		PET_EVOLVE = 22
 	;
-	
-	private static final byte //stats
-		STR = 0,
-		DEX = 1,
-		INT = 2,
-		LUK = 3,
-		PAD = 4,
-		PDD = 5,
-		MAD = 6,
-		MDD = 7,
-		ACC = 8,
-		EVA = 9,
-		MHP = 10,
-		MMP = 11,
-		Speed = 12,
-		Jump = 13,
-		Level = 14,
-		MaxLevel = 15
-	;
-	
+
 	private File binDir;
 	private String current;
 	private boolean pet;
 	private Map<Integer, Integer> evolIds;
 	private Map<Integer, Integer> evolProbs;
-	
+
 	public String getWzName() {
 		return "Item.wz";
 	}
@@ -238,6 +220,32 @@ public class ItemConverter extends Converter {
 					}
 				}
 				return true;
+			} else if (dirs[1].equals("spec")) {
+				ItemEffect e = new ItemEffect();
+				for (int open = 1, event; open > 0;) {
+					event = r.next();
+					if (event == XMLStreamReader.START_ELEMENT) {
+						open++;
+						e.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
+						if (DataType.getFromString(r.getLocalName()).isDirectory()) {
+							for (int open1 = 1; open1 > 0;) {
+								event = r.next();
+								if (event == XMLStreamReader.START_ELEMENT)
+									open1++;
+								else if (event == XMLStreamReader.END_ELEMENT)
+									open1--;
+							}
+						}
+					}
+					if (event == XMLStreamReader.END_ELEMENT) {
+						open--;
+					}
+				}
+				LittleEndianWriter lew = new LittleEndianWriter(Size.HEADER + e.size() + Size.BYTE, ITEM_EFFECT);
+				e.writeBytes(lew);
+				lew.writeByte(Effects.END_EFFECT);
+				fos.write(lew.toArray());
+				return true;
 			}
 		}
 		return false;
@@ -324,7 +332,7 @@ public class ItemConverter extends Converter {
 			} else if (dirs[2].equals("skill")) {
 				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, SKILL).writeInt(Integer.parseInt(value)).toArray());
 			} else if (dirs[2].equals("maxLevel")) {
-				fos.write(new LittleEndianWriter(Size.HEADER + Size.BYTE + Size.SHORT, REQ_STAT).writeByte(MaxLevel).writeShort(Short.parseShort(value)).toArray());
+				fos.write(new LittleEndianWriter(Size.HEADER + Size.BYTE + Size.SHORT, REQ_STAT).writeByte(Effects.MaxLevel).writeShort(Short.parseShort(value)).toArray());
 			} else {
 				if (dirs[2].length() > 2) {
 					String prefix = dirs[2].substring(0, 3);
@@ -338,13 +346,6 @@ public class ItemConverter extends Converter {
 						}
 					}
 				}
-			}
-		} else if (dirs[1].equals("spec")) {
-			if (dirs[2].equals("consumeOnPickup")) {
-				if (Integer.parseInt(value) == 1)
-					fos.write(new LittleEndianWriter(Size.HEADER, CONSUME_ON_PICKUP).toArray());
-			} else if (isNumber(dirs[2])) {
-				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, PET_CONSUMABLE_BY).writeInt(Integer.parseInt(value)).toArray());
 			}
 		}
 	}
@@ -402,35 +403,35 @@ public class ItemConverter extends Converter {
 	
 	private byte getStat(String str) {
 		if (str.equals("STR")) {
-			return STR;
+			return Effects.STR;
 		} else if (str.equals("DEX")) {
-			return DEX;
+			return Effects.DEX;
 		} else if (str.equals("INT")) {
-			return INT;
+			return Effects.INT;
 		} else if (str.equals("LUK")) {
-			return LUK;
+			return Effects.LUK;
 		} else if (str.equals("PAD")) {
-			return PAD;
+			return Effects.PAD;
 		} else if (str.equals("PDD")) {
-			return PDD;
+			return Effects.PDD;
 		} else if (str.equals("MAD")) {
-			return MAD;
+			return Effects.MAD;
 		} else if (str.equals("MDD")) {
-			return MDD;
+			return Effects.MDD;
 		} else if (str.equals("ACC")) {
-			return ACC;
+			return Effects.ACC;
 		} else if (str.equals("EVA")) {
-			return EVA;
+			return Effects.EVA;
 		} else if (str.equals("MHP")) {
-			return MHP;
+			return Effects.MHP;
 		} else if (str.equals("MMP")) {
-			return MMP;
+			return Effects.MMP;
 		} else if (str.equals("Speed")) {
-			return Speed;
+			return Effects.Speed;
 		} else if (str.equals("Jump")) {
-			return Jump;
+			return Effects.Jump;
 		} else if (str.equals("Level")) {
-			return Level;
+			return Effects.Level;
 		}
 		return -1;
 	}

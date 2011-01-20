@@ -104,6 +104,16 @@
 	specified in the batch file variables (I believe it should be
 	KvjCompiler\bin for Eclipse).
 
+2011-01-20  GoldenKevin  (revision 11)
+	* Rewrote code for Skill compiling so that the effect codes aren't with
+	of the rest of the Skill codes.
+	* Fixed Skill RANGE being coded as MASTERY.
+	* Item effects are now in the compiled binaries. Just like with Skill
+	compiling, I got lazy with creating an interpreter that reads the
+	effects, but you should get the general idea.
+	* Fixed the batch scripts. They should now print out the correct name
+	of the WZ files currently being compiled.
+
 Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

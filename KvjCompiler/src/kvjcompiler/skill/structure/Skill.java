@@ -20,6 +20,7 @@ package kvjcompiler.skill.structure;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import kvjcompiler.Effects;
 import kvjcompiler.IStructure;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
@@ -58,7 +59,7 @@ public class Skill implements IStructure {
 	}
 
 	public void addLevel(byte level, SkillEffect effect) {
-		levels.put(level, effect);
+		levels.put(Byte.valueOf(level), effect);
 	}
 
 	public void addDelay(int time) {
@@ -72,7 +73,7 @@ public class Skill implements IStructure {
 		sum += Size.INT;
 		sum += isCharged ? Size.BYTE : 0;
 		for (SkillEffect effect : levels.values())
-			sum += effect.size() + Size.BYTE + Size.BYTE;
+			sum += Size.BYTE + Size.BYTE + effect.size() + Size.BYTE;
 		return sum;
 	}
 
@@ -87,6 +88,7 @@ public class Skill implements IStructure {
 		for (Entry<Byte, SkillEffect> entry : levels.entrySet()) {
 			lew.writeByte(SkillConverter.NEXT_LEVEL).writeByte(entry.getKey().byteValue());
 			entry.getValue().writeBytes(lew);
+			lew.writeByte(Effects.END_EFFECT);
 		}
 	}
 
