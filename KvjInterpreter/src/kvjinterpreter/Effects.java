@@ -74,14 +74,14 @@ public final class Effects {
 		MP_RECOVER = 33,
 		MOVE_TO = 34,
 		POISON = 35,
-		SEAL = 35,
-		DARKNESS = 36,
-		WEAKNESS = 37,
-		CURSE = 38,
-		SUMMON_EFFECT = 39,
+		SEAL = 36,
+		DARKNESS = 37,
+		WEAKNESS = 38,
+		CURSE = 39,
 		CONSUME_ON_PICKUP = 40,
 		PET_CONSUMABLE_BY = 41,
-		LIMIT = 42
+		SUMMON_EFFECT = 42,
+		LIMIT = 43
 	;
 
 	private Effects() {

@@ -114,6 +114,10 @@
 	* Fixed the batch scripts. They should now print out the correct name
 	of the WZ files currently being compiled.
 
+2011-01-20  GoldenKevin  (revision 12)
+	* Fixed repeated Effects constant.
+	* Cleaned up code that I meant to remove last revision.
+
 Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.
