@@ -303,19 +303,11 @@ public class ItemDataReader {
 						operatingHours.put(oId, new ArrayList<byte[]>());
 					operatingHours.get(oId).add(processOperatingHours(reader));
 					break;
-				//case CONSUME_ON_PICKUP:
-					//useOnPickup.add(oId);
-					//break;
 				case SKILL:
 					if (!skills.containsKey(oId))
 						skills.put(oId, new ArrayList<Integer>());
 					skills.get(oId).add(Integer.valueOf(reader.readInt()));
 					break;
-				//case PET_CONSUMABLE_BY:
-					//if (!petConsumableBy.containsKey(oId))
-						//petConsumableBy.put(oId, new ArrayList<Integer>());
-					//petConsumableBy.get(oId).add(Integer.valueOf(reader.readInt()));
-					//break;
 				case UNIT_PRICE:
 					unitPrice.put(oId, Double.valueOf(reader.readDouble()));
 					break;
