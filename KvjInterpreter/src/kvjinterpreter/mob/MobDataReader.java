@@ -63,7 +63,7 @@ public class MobDataReader extends DataReader {
 		for (byte now = reader.readByte(); now != -1; now = reader.readByte()) {
 			switch (now) {
 				case LEVEL:
-					mob.setLevel(reader.readInt());
+					mob.setLevel(reader.readShort());
 					break;
 				case MAX_HP:
 					mob.setMaxHp(reader.readInt());
@@ -93,10 +93,10 @@ public class MobDataReader extends DataReader {
 					mob.setHideName();
 					break;
 				case HP_TAG_COLOR:
-					mob.setHpTagColor(reader.readInt());
+					mob.setHpTagColor(reader.readByte());
 					break;
 				case HP_TAG_BG_COLOR:
-					mob.setHpTagBgColor(reader.readInt());
+					mob.setHpTagBgColor(reader.readByte());
 					break;
 				case BOSS:
 					mob.setBoss();
@@ -155,10 +155,9 @@ public class MobDataReader extends DataReader {
 	}
 	
 	private void processSkill() {
-		int skillid = reader.readInt();
 		Skill s = new Skill();
 		s.setSkill(reader.readInt());
 		s.setLevel(reader.readInt());
-		mob.addSkill(skillid, s);
+		mob.addSkill(s);
 	}
 }

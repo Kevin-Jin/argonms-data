@@ -26,7 +26,7 @@ import kvjinterpreter.mob.structure.*;
 
 public class MapleMob {
 	private int mobid;
-	private int level;
+	private short level;
 	private int maxHp;
 	private int maxMp;
 	private int pad;
@@ -36,8 +36,8 @@ public class MapleMob {
 	private int removeAfter;
 	private boolean hideHp;
 	private boolean hideName;
-	private int hpTagColor;
-	private int hpTagBgColor;
+	private byte hpTagColor;
+	private byte hpTagBgColor;
 	private boolean boss;
 	private SelfDestruct sd;
 	private List<Integer> loseItems;
@@ -45,7 +45,7 @@ public class MapleMob {
 	private List<Integer> summons;
 	private boolean firstAttack;
 	private Map<Integer, Attack> attacks;
-	private Map<Integer, Skill> skills;
+	private List<Skill> skills;
 	private int buff;
 	private Map<String, Integer> delays;
 	
@@ -54,11 +54,11 @@ public class MapleMob {
 		this.loseItems = new ArrayList<Integer>();
 		this.summons = new ArrayList<Integer>();
 		this.attacks = new TreeMap<Integer, Attack>();
-		this.skills = new TreeMap<Integer, Skill>();
+		this.skills = new ArrayList<Skill>();
 		this.delays = new TreeMap<String, Integer>();
 	}
 	
-	public void setLevel(int level) {
+	public void setLevel(short level) {
 		this.level = level;
 	}
 	
@@ -98,11 +98,11 @@ public class MapleMob {
 		this.hideHp = true;
 	}
 	
-	public void setHpTagColor(int color) {
+	public void setHpTagColor(byte color) {
 		this.hpTagColor = color;
 	}
 	
-	public void setHpTagBgColor(int color) {
+	public void setHpTagBgColor(byte color) {
 		this.hpTagBgColor = color;
 	}
 	
@@ -134,8 +134,8 @@ public class MapleMob {
 		this.attacks.put(Integer.valueOf(attackid), attack);
 	}
 	
-	public void addSkill(int skillid, Skill skill) {
-		this.skills.put(Integer.valueOf(skillid), skill);
+	public void addSkill(Skill skill) {
+		this.skills.add(skill);
 	}
 	
 	public void setBuffToGive(int buffid) {
@@ -173,14 +173,16 @@ public class MapleMob {
 				ret.append(itemid).append(", ");
 			ret = ret.delete(0, ret.length() - 2);
 		}
+		if (!skills.isEmpty()) {
+			ret.append("\nSkills:\t");
+			for (Skill s : skills)
+				ret.append(s).append(", ");
+			ret = ret.delete(0, ret.length() - 2);
+		}
 		if (!attacks.isEmpty())
 			ret.append("\nAttacks:");
 		for (Entry<Integer, Attack> a : attacks.entrySet())
 			ret.append("\n\t").append(a.getKey()).append(": ").append(a.getValue());
-		if (!skills.isEmpty())
-			ret.append("\nSkills:");
-		for (Entry<Integer, Skill> s : skills.entrySet())
-			ret.append("\n\t").append(s.getKey()).append(": ").append(s.getValue());
 		if (!delays.isEmpty())
 			ret.append("\nAnimation Times:");
 		for (Entry<String, Integer> d : delays.entrySet())

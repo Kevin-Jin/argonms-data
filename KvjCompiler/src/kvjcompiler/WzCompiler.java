@@ -59,7 +59,19 @@ public class WzCompiler {
 		int count = 0;
 		long start, end;
 		start = System.currentTimeMillis();
-		if (converter.getWzName().equals("Map.wz")) {
+		if (converter.getWzName().equals("Character.wz")) {
+			for (String cat : new File(inputPath).list()) {
+				absDir = inputPath + cat + File.separatorChar;
+				dir = new File(absDir);
+				if (dir.isDirectory()) {
+					for (String fileName : dir.list()) {
+						r = f.createXMLStreamReader(new FileInputStream(new File(absDir + fileName)));
+						converter.compile(outPath, absDir, fileName.substring(0, fileName.lastIndexOf(".xml")), r);
+						count++;
+					}
+				}
+			}
+		} else if (converter.getWzName().equals("Map.wz")) {
 			for (String mapDir : new File(inputPath + "Map").list()) {
 				dir = new File(inputPath, "Map" + File.separatorChar + mapDir);
 				if (dir.isDirectory()) {
