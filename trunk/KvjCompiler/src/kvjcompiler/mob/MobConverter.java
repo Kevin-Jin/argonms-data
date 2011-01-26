@@ -90,7 +90,7 @@ public class MobConverter extends Converter {
 							event = r.next();
 							if (event == XMLStreamReader.START_ELEMENT) {
 								open2++;
-								s = new Skill(Integer.parseInt(r.getAttributeValue(0)));
+								s = new Skill();
 								for (open = 1; open > 0;) {
 									event = r.next();
 									if (event == XMLStreamReader.START_ELEMENT) {
@@ -149,7 +149,7 @@ public class MobConverter extends Converter {
 					} else {
 						String value = r.getAttributeValue(1);
 						if (key.equals("level")) {
-							fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, LEVEL).writeInt(Integer.parseInt(value)).toArray());
+							fos.write(new LittleEndianWriter(Size.HEADER + Size.SHORT, LEVEL).writeShort(Short.parseShort(value)).toArray());
 						} else if (key.equals("maxHP")) {
 							fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, MAX_HP).writeInt(Integer.parseInt(value)).toArray());
 						} else if (key.equals("maxMP")) {
@@ -172,9 +172,9 @@ public class MobConverter extends Converter {
 							if (Integer.parseInt(value) == 1)
 								fos.write(new LittleEndianWriter(Size.HEADER, HIDE_NAME).toArray());
 						} else if (key.equals("hpTagColor")) {
-							fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, HP_TAG_COLOR).writeInt(Integer.parseInt(value)).toArray());
+							fos.write(new LittleEndianWriter(Size.HEADER + Size.BYTE, HP_TAG_COLOR).writeByte(Byte.parseByte(value)).toArray());
 						} else if (key.equals("hpTagBgcolor")) {
-							fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, HP_TAG_BG_COLOR).writeInt(Integer.parseInt(value)).toArray());
+							fos.write(new LittleEndianWriter(Size.HEADER + Size.BYTE, HP_TAG_BG_COLOR).writeByte(Byte.parseByte(value)).toArray());
 						} else if (key.equals("boss")) {
 							if (Integer.parseInt(value) == 1)
 								fos.write(new LittleEndianWriter(Size.HEADER, BOSS).toArray());

@@ -25,6 +25,7 @@ import java.io.OutputStream;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import kvjcompiler.character.CharacterConverter;
 
 import kvjcompiler.item.ItemConverter;
 import kvjcompiler.map.MapConverter;
@@ -133,7 +134,9 @@ public abstract class Converter {
 	}
 	
 	public static Converter getConverter(String source) {
-		if (source.equals("Map.wz")) {
+		if (source.equals("Character.wz")) {
+			return new CharacterConverter();
+		} else if (source.equals("Map.wz")) {
 			return new MapConverter();
 		} else if (source.equals("Mob.wz")) {
 			return new MobConverter();

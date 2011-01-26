@@ -118,6 +118,10 @@
 	* Fixed repeated Effects constant.
 	* Cleaned up code that I meant to remove last revision.
 
+2011-01-25  GoldenKevin  (revision 13)
+	* Cleaned up MobConverter so that unnecessary bytes aren't written.
+	* Somewhat started on Character.wz compiling.
+
 Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

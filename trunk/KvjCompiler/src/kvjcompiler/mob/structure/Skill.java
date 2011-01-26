@@ -22,13 +22,8 @@ import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 
 public class Skill implements IStructure {
-	private int skillid;
 	private int skill;
 	private int level;
-	
-	public Skill(int id) {
-		this.skillid = id;
-	}
 	
 	public void setProperty(String key, String value) {
 		if (key.equals("skill")) {
@@ -41,14 +36,12 @@ public class Skill implements IStructure {
 	}
 	
 	public int size() {
-		int size = Size.INT; //skillid
-		size += Size.INT; //skill
+		int size = Size.INT; //skill
 		size += Size.INT; //level
 		return size;
 	}
 	
 	public void writeBytes(LittleEndianWriter lew) {
-		lew.writeInt(skillid);
 		lew.writeInt(skill);
 		lew.writeInt(level);
 	}

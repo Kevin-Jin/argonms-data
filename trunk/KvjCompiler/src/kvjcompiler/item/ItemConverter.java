@@ -377,7 +377,7 @@ public class ItemConverter extends Converter {
 		}
 	}
 	
-	private byte getDayByteFromString(String str) {
+	private static byte getDayByteFromString(String str) {
 		if (str.equals("SUN")) {
 			return Calendar.SUNDAY;
 		} else if (str.equals("MON")) {
@@ -399,7 +399,7 @@ public class ItemConverter extends Converter {
 		}
 	}
 	
-	private byte getStat(String str) {
+	public static byte getStat(String str) {
 		if (str.equals("STR")) {
 			return Effects.STR;
 		} else if (str.equals("DEX")) {
