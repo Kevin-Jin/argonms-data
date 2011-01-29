@@ -18,6 +18,9 @@ echo.
 echo Compiling Item.wz
 java kvjcompiler.WzCompiler -in "%in%" -out "%out%" -log "%log%" -file Item.wz 
 echo.
+echo Compiling Character.wz
+java kvjcompiler.WzCompiler -in "%in%" -out "%out%" -log "%log%" -file Character.wz 
+echo.
 echo Compiling Map.wz
 java kvjcompiler.WzCompiler -in "%in%" -out "%out%" -log "%log%" -file Map.wz 
 echo.

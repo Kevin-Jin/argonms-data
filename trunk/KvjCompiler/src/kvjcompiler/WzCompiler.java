@@ -63,10 +63,10 @@ public class WzCompiler {
 			for (String cat : new File(inputPath).list()) {
 				absDir = inputPath + cat + File.separatorChar;
 				dir = new File(absDir);
-				if (dir.isDirectory()) {
+				if (dir.isDirectory() && !cat.equals("Afterimage") && !cat.equals("Face") && !cat.equals("Hair")) {
 					for (String fileName : dir.list()) {
 						r = f.createXMLStreamReader(new FileInputStream(new File(absDir + fileName)));
-						converter.compile(outPath, absDir, fileName.substring(0, fileName.lastIndexOf(".xml")), r);
+						converter.compile(outPath, cat + File.separatorChar, fileName.substring(0, fileName.lastIndexOf(".xml")), r);
 						count++;
 					}
 				}
