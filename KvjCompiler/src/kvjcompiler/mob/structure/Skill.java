@@ -22,27 +22,27 @@ import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 
 public class Skill implements IStructure {
-	private int skill;
-	private int level;
+	private short skill;
+	private byte level;
 	
 	public void setProperty(String key, String value) {
 		if (key.equals("skill")) {
-			this.skill = Integer.parseInt(value);
+			this.skill = Short.parseShort(value);
 		} else if (key.equals("level")) {
-			this.level = Integer.parseInt(value);
+			this.level = Byte.parseByte(value);
 		}/* else {
 			System.out.println("WARNING: Unhandled property " + key + " in skill " + skillid + ".");
 		}*/
 	}
 	
 	public int size() {
-		int size = Size.INT; //skill
-		size += Size.INT; //level
+		int size = Size.SHORT; //skill
+		size += Size.BYTE; //level
 		return size;
 	}
 	
 	public void writeBytes(LittleEndianWriter lew) {
-		lew.writeInt(skill);
-		lew.writeInt(level);
+		lew.writeShort(skill);
+		lew.writeByte(level);
 	}
 }

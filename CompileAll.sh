@@ -14,5 +14,7 @@ echo Compiling Mob.wz
 java kvjcompiler.WzCompiler -in "$IN" -out "$OUT" -log "$LOG" -file Mob.wz
 echo Compiling Item.wz
 java kvjcompiler.WzCompiler -in "$IN" -out "$OUT" -log "$LOG" -file Item.wz
+echo Compiling Character.wz
+java kvjcompiler.WzCompiler -in "$IN" -out "$OUT" -log "$LOG" -file Character.wz
 echo Compiling Map.wz
 java kvjcompiler.WzCompiler -in "$IN" -out "$OUT" -log "$LOG" -file Map.wz

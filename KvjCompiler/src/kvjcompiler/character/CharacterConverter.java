@@ -27,24 +27,15 @@ import kvjcompiler.item.ItemConverter;
 public class CharacterConverter extends Converter {
 	private static final byte
 		WHOLE_PRICE = 1,
-		SLOT_MAX = 2,
 		IS_TRADE_BLOCKED = 3,
 		IS_ONE_ONLY = 4,
 		IS_QUEST_ITEM = 5,
 		BONUS_STAT = 6,
-		SUMMON = 7,
-		SUCCESS = 8,
-		CURSED = 9,
 		CASH = 10,
-		OPERATING_HOURS = 11,
-		SKILL = 12,
-		UNIT_PRICE = 13,
 		REQ_STAT = 14,
 		UPGRADE_SLOTS = 15,
-		SCROLL_REQUIREMENTS = 16,
-		ITEM_EFFECT = 17,
-		TRIGGER_ITEM = 18,
-		MESO_VALUE = 19
+
+		TAMING_MOB_ID = 23
 	;
 
 	public String getWzName() {
@@ -58,13 +49,24 @@ public class CharacterConverter extends Converter {
 	protected void handleProperty(String nestedPath, String value) throws IOException {
 		String[] dirs = nestedPath.split("/");
 		if (dirs[0].equals("info")) {
-			if (dirs[1].equals("price")) {
-				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, WHOLE_PRICE).writeInt(Integer.parseInt(value)).toArray());
-			} else if (dirs[1].equals("cash")) {
+			if (dirs[1].equals("cash")) {
 				if (Integer.parseInt(value) == 1)
 					fos.write(new LittleEndianWriter(Size.HEADER, CASH).toArray());
 			} else if (dirs[1].equals("tuc")) {
 				fos.write(new LittleEndianWriter(Size.HEADER + Size.BYTE, UPGRADE_SLOTS).writeByte(Byte.parseByte(value)).toArray());
+			} else if (dirs[1].equals("price")) {
+				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, WHOLE_PRICE).writeInt(Integer.parseInt(value)).toArray());
+			} else if (dirs[1].equals("tradeBlock")) {
+				if (Integer.parseInt(value) == 1)
+					fos.write(new LittleEndianWriter(Size.HEADER, IS_TRADE_BLOCKED).toArray());
+			} else if (dirs[1].equals("only")) {
+				if (Integer.parseInt(value) == 1)
+					fos.write(new LittleEndianWriter(Size.HEADER, IS_ONE_ONLY).toArray());
+			} else if (dirs[1].equals("quest")) {
+				if (Integer.parseInt(value) == 1)
+					fos.write(new LittleEndianWriter(Size.HEADER, IS_QUEST_ITEM).toArray());
+			} else if (dirs[1].equals("tamingMob")) {
+				fos.write(new LittleEndianWriter(Size.HEADER + Size.BYTE, TAMING_MOB_ID).writeByte(Byte.parseByte(value)).toArray());
 			} else {
 				if (dirs[1].length() > 2) {
 					String prefix = dirs[1].substring(0, 3);

@@ -122,6 +122,10 @@
 	* Cleaned up MobConverter so that unnecessary bytes aren't written.
 	* Somewhat started on Character.wz compiling.
 
+2011-01-29  GoldenKevin  (revision 14)
+	* Completed Character.wz compiling support.
+	* Reduced size of Mob data a little bit.
+
 Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.
