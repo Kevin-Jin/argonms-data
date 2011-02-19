@@ -22,54 +22,50 @@ import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 
 public class Foothold implements IStructure {
-	private int footholdid;
-	private int x1;
-	private int y1;
-	private int x2;
-	private int y2;
-	private int prev;
-	private int next;
+	private short x1;
+	private short y1;
+	private short x2;
+	private short y2;
+	private short prev;
+	private short next;
 	
-	public Foothold(int id) {
-		this.footholdid = id;
+	public Foothold() {
 	}
 	
 	public void setProperty(String key, String value) {
 		if (key.equals("x1")) {
-			this.x1 = Integer.parseInt(value);
+			this.x1 = Short.parseShort(value);
 		} else if (key.equals("y1")) {
-			this.y1 = Integer.parseInt(value);
+			this.y1 = Short.parseShort(value);
 		} else if (key.equals("x2")) {
-			this.x2 = Integer.parseInt(value);
+			this.x2 = Short.parseShort(value);
 		} else if (key.equals("y2")) {
-			this.y2 = Integer.parseInt(value);
+			this.y2 = Short.parseShort(value);
 		} else if (key.equals("prev")) {
-			this.prev = Integer.parseInt(value);
+			this.prev = Short.parseShort(value);
 		} else if (key.equals("next")) {
-			this.next = Integer.parseInt(value);
+			this.next = Short.parseShort(value);
 		} else {
-			System.out.println("WARNING: Unhandled property " + key + " in foothold " + footholdid + ".");
+			System.out.println("WARNING: Unhandled property " + key + " in foothold.");
 		}
 	}
 	
 	public int size() {
-		int size = Size.INT; //footholdid
-		size += Size.INT; //x1
-		size += Size.INT; //y1
-		size += Size.INT; //x2
-		size += Size.INT; //y2
-		size += Size.INT; //prev
-		size += Size.INT; //next
+		int size = Size.SHORT; //x1
+		size += Size.SHORT; //y1
+		size += Size.SHORT; //x2
+		size += Size.SHORT; //y2
+		size += Size.SHORT; //prev
+		size += Size.SHORT; //next
 		return size;
 	}
 	
 	public void writeBytes(LittleEndianWriter lew) {
-		lew.writeInt(footholdid);
-		lew.writeInt(x1);
-		lew.writeInt(y1);
-		lew.writeInt(x2);
-		lew.writeInt(y2);
-		lew.writeInt(prev);
-		lew.writeInt(next);
+		lew.writeShort(x1);
+		lew.writeShort(y1);
+		lew.writeShort(x2);
+		lew.writeShort(y2);
+		lew.writeShort(prev);
+		lew.writeShort(next);
 	}
 }

@@ -174,7 +174,7 @@ public class MapConverter extends Converter {
 									if (event == XMLStreamReader.START_ELEMENT) {
 										open1++;
 										if (r.getLocalName().equals("imgdir")) {
-											f = new Foothold(Integer.parseInt(r.getAttributeValue(0)));
+											f = new Foothold();
 											for (open = 1; open > 0;) {
 												event = r.next();
 												if (event == XMLStreamReader.START_ELEMENT) {

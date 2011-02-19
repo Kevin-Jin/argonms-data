@@ -24,8 +24,8 @@ import kvjcompiler.Size;
 public class Reactor implements IStructure {
 	private int reactorid;
 	private int id;
-	private int x;
-	private int y;
+	private short x;
+	private short y;
 	private int reactorTime;
 	private String name;
 	
@@ -37,9 +37,9 @@ public class Reactor implements IStructure {
 		if (key.equals("id")) {
 			this.id = Integer.parseInt(value);
 		} else if (key.equals("x")) {
-			this.x = Integer.parseInt(value);
+			this.x = Short.parseShort(value);
 		} else if (key.equals("y")) {
-			this.y = Integer.parseInt(value);
+			this.y = Short.parseShort(value);
 		} else if (key.equals("reactorTime")) {
 			this.reactorTime = Integer.parseInt(value);
 		} else if (key.equals("f")) {
@@ -54,8 +54,8 @@ public class Reactor implements IStructure {
 	public int size() {
 		int size = Size.INT; //reactorid
 		size += Size.INT; //id
-		size += Size.INT; //x
-		size += Size.INT; //y
+		size += Size.SHORT; //x
+		size += Size.SHORT; //y
 		size += Size.INT; //reactorTime
 		size += name != null ? name.length() + 1 : 1; //name
 		
@@ -65,8 +65,8 @@ public class Reactor implements IStructure {
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeInt(reactorid);
 		lew.writeInt(id);
-		lew.writeInt(x);
-		lew.writeInt(y);
+		lew.writeShort(x);
+		lew.writeShort(y);
 		lew.writeInt(reactorTime);
 		lew.writeNullTerminatedString(name != null ? name : "");
 	}
