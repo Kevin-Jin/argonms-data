@@ -23,10 +23,10 @@ import kvjcompiler.Size;
 
 public class Area implements IStructure {
 	private String areaid;
-	private int x1;
-	private int y1;
-	private int x2;
-	private int y2;
+	private short x1;
+	private short y1;
+	private short x2;
+	private short y2;
 	
 	public Area(String id) {
 		this.areaid = id;
@@ -34,13 +34,13 @@ public class Area implements IStructure {
 	
 	public void setProperty(String key, String value) {
 		if (key.equals("x1")) {
-			this.x1 = Integer.parseInt(value);
+			this.x1 = Short.parseShort(value);
 		} else if (key.equals("y1")) {
-			this.y1 = Integer.parseInt(value);
+			this.y1 = Short.parseShort(value);
 		} else if (key.equals("x2")) {
-			this.x2 = Integer.parseInt(value);
+			this.x2 = Short.parseShort(value);
 		} else if (key.equals("y2")) {
-			this.y2 = Integer.parseInt(value);
+			this.y2 = Short.parseShort(value);
 		} else {
 			System.out.println("WARNING: Unhandled property " + key + " in area " + areaid + ".");
 		}
@@ -48,18 +48,18 @@ public class Area implements IStructure {
 	
 	public int size() {
 		int size = areaid.length() + 1; //areaid
-		size += Size.INT; //x1
-		size += Size.INT; //y1
-		size += Size.INT; //x2
-		size += Size.INT; //y2
+		size += Size.SHORT; //x1
+		size += Size.SHORT; //y1
+		size += Size.SHORT; //x2
+		size += Size.SHORT; //y2
 		return size;
 	}
 	
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeNullTerminatedString(areaid);
-		lew.writeInt(x1);
-		lew.writeInt(y1);
-		lew.writeInt(x2);
-		lew.writeInt(y2);
+		lew.writeShort(x1);
+		lew.writeShort(y1);
+		lew.writeShort(x2);
+		lew.writeShort(y2);
 	}
 }

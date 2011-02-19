@@ -126,6 +126,12 @@
 	* Completed Character.wz compiling support.
 	* Reduced size of Mob data a little bit.
 
+2011-02-19  GoldenKevin  (revision 15)
+	* Reduced size of Map data a little bit. Removed SelfDestruct structure
+	of Mobs and replaced it with the selfDestructHp and removeAfter props.
+	* Added drop chances to mob Kvj files by using String.wz/MonsterBook.img
+	Note this probably won't work for any versions lower than v0.62.
+
 Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

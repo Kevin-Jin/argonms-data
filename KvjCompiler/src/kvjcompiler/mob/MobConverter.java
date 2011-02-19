@@ -27,7 +27,6 @@ import kvjcompiler.Converter;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 import kvjcompiler.mob.structure.Attack;
-import kvjcompiler.mob.structure.SelfDestruct;
 import kvjcompiler.mob.structure.Skill;
 
 public class MobConverter extends Converter {
@@ -53,13 +52,17 @@ public class MobConverter extends Converter {
 		ATTACK = 19,
 		SKILL = 20,
 		BUFF = 21,
-		DELAY = 22
+		DELAY = 22,
+		DROPS = 23
 	;
 	
 	private Map<String, Integer> delays;
+	private boolean isBoss;
+	private Map<Integer, Map<Integer, Integer>> drops;
 	
 	public void compile(String outPath, String internalPath, String imgName, XMLStreamReader r) throws XMLStreamException, IOException {
 		this.delays = new HashMap<String, Integer>();
+		this.isBoss = false;
 		startCompile(outPath, internalPath, imgName, r);
 		
 		String key;
@@ -67,6 +70,7 @@ public class MobConverter extends Converter {
 			key = pair.getKey();
 			fos.write(new LittleEndianWriter(Size.HEADER + key.length() + 1 + Size.INT, DELAY).writeNullTerminatedString(key).writeInt(pair.getValue().intValue()).toArray());
 		}
+		writeDrops(imgName);
 		
 		finalizeCompile(internalPath, imgName);
 	}
@@ -110,21 +114,20 @@ public class MobConverter extends Converter {
 							}
 						}
 					} else if (key.equals("selfDestruction")) {
-						SelfDestruct sd;
-						LittleEndianWriter lew;
-						sd = new SelfDestruct();
 						for (open = 1; open > 0;) {
 							event = r.next();
 							if (event == XMLStreamReader.START_ELEMENT) {
 								open++;
-								sd.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
+								key = r.getAttributeValue(0);
+								String value = r.getAttributeValue(1);
+								if (key.equals("removeAfter"))
+									fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, REMOVE_AFTER).writeInt(Integer.parseInt(value)).toArray());
+								else if(key.equals("hp"))
+									fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, SELF_DESTRUCT).writeInt(Integer.parseInt(value)).toArray());
 							} else if (event == XMLStreamReader.END_ELEMENT) {
 								open--;
 							}
 						}
-						lew = new LittleEndianWriter(Size.HEADER + sd.size(), SELF_DESTRUCT);
-						sd.writeBytes(lew);
-						fos.write(lew.toArray());
 					} else if (key.equals("loseItem")) {
 						for (open = 1; open > 0;) {
 							event = r.next();
@@ -176,8 +179,10 @@ public class MobConverter extends Converter {
 						} else if (key.equals("hpTagBgcolor")) {
 							fos.write(new LittleEndianWriter(Size.HEADER + Size.BYTE, HP_TAG_BG_COLOR).writeByte(Byte.parseByte(value)).toArray());
 						} else if (key.equals("boss")) {
-							if (Integer.parseInt(value) == 1)
+							if (Integer.parseInt(value) == 1) {
 								fos.write(new LittleEndianWriter(Size.HEADER, BOSS).toArray());
+								isBoss = true;
+							}
 						} else if (key.equals("invincible")) {
 							if (Integer.parseInt(value) == 1)
 								fos.write(new LittleEndianWriter(Size.HEADER, INVINCIBLE).toArray());
@@ -239,5 +244,50 @@ public class MobConverter extends Converter {
 	protected void handleProperty(String nestedPath, String value) throws IOException {
 		//System.out.println("DEBUG: Handling " + nestedPath);
 		//String[] dirs = nestedPath.split("/");
+	}
+	
+	public void setDrops(Map<Integer, Map<Integer, Integer>> drops) {
+		this.drops = drops;
+	}
+	
+	private void writeDrops(String imgName) throws IOException {
+		int mobid = Integer.parseInt(imgName.substring(0, imgName.indexOf(".img")));
+		Map<Integer, Integer> idAndChance = drops.get(Integer.valueOf(mobid));
+		if (idAndChance != null) {
+			LittleEndianWriter lew = new LittleEndianWriter(Size.HEADER + Size.BYTE + (idAndChance.size() * Size.INT * 2), DROPS);
+			lew.writeByte((byte) idAndChance.size());
+
+			int multiplier = 1;
+			if (isBoss) {
+				switch (mobid) {
+						case 9400265: // Vergamot
+						case 9400270: // Dunas
+						case 9400273: // Nibergen
+						case 9400294: // Dunas2
+							multiplier *= 24;
+							break;
+						case 9420522: // Krexel
+							multiplier *= 29;
+							break;
+						case 9400409: // Emperor
+							multiplier *= 35;
+							break;
+						case 9400287: // Imperial guard
+							multiplier *= 60;
+							break;
+						default:
+							multiplier *= 10;
+							break;
+				}
+			}
+			for (Entry<Integer, Integer> entry : idAndChance.entrySet()) {
+				lew.writeInt(entry.getKey().intValue()); //itemid
+				int chance = entry.getValue().intValue();
+				if (chance <= 100000) //10%. Don't question LightPepsi
+					chance *= multiplier;
+				lew.writeInt(chance); //chance
+			}
+			fos.write(lew.toArray());
+		}
 	}
 }

@@ -25,15 +25,15 @@ public class Life implements IStructure {
 	private int lifeid;
 	private char type;
 	private int id;
-	private int x;
-	private int y;
+	private short x;
+	private short y;
 	private int mobTime;
 	private boolean f;
 	private boolean hide;
-	private int fh;
-	private int cy;
-	private int rx0;
-	private int rx1;
+	private short fh;
+	private short cy;
+	private short rx0;
+	private short rx1;
 	
 	public Life(int id) {
 		lifeid = id;
@@ -50,9 +50,9 @@ public class Life implements IStructure {
 		} else if (key.equals("id")) {
 			this.id = Integer.parseInt(value);
 		} else if (key.equals("x")) {
-			this.x = Integer.parseInt(value);
+			this.x = Short.parseShort(value);
 		} else if (key.equals("y")) {
-			this.y = Integer.parseInt(value);
+			this.y = Short.parseShort(value);
 		} else if (key.equals("mobTime")) {
 			this.mobTime = Integer.parseInt(value);
 		} else if (key.equals("f")) {
@@ -60,13 +60,13 @@ public class Life implements IStructure {
 		} else if (key.equals("hide")) {
 			this.hide = Integer.parseInt(value) > 0;
 		} else if (key.equals("fh")) {
-			this.fh = Integer.parseInt(value);
+			this.fh = Short.parseShort(value);
 		} else if (key.equals("cy")) {
-			this.cy = Integer.parseInt(value);
+			this.cy = Short.parseShort(value);
 		} else if (key.equals("rx0")) {
-			this.rx0 = Integer.parseInt(value);
+			this.rx0 = Short.parseShort(value);
 		} else if (key.equals("rx1")) {
-			this.rx1 = Integer.parseInt(value);
+			this.rx1 = Short.parseShort(value);
 		} else {
 			System.out.println("WARNING: Unhandled property " + key + " in life " + lifeid + ".");
 		}
@@ -76,15 +76,15 @@ public class Life implements IStructure {
 		int size = Size.INT; //lifeid
 		size += Size.CHAR; //type
 		size += Size.INT; //id
-		size += Size.INT; //x
-		size += Size.INT; //y
+		size += Size.SHORT; //x
+		size += Size.SHORT; //y
 		size += Size.INT; //mobTime
 		size += Size.BOOL; //f
 		size += Size.BOOL; //hide
-		size += Size.INT; //fh
-		size += Size.INT; //cy
-		size += Size.INT; //rx0
-		size += Size.INT; //rx1
+		size += Size.SHORT; //fh
+		size += Size.SHORT; //cy
+		size += Size.SHORT; //rx0
+		size += Size.SHORT; //rx1
 		
 		return size;
 	}
@@ -93,14 +93,14 @@ public class Life implements IStructure {
 		lew.writeInt(lifeid);
 		lew.writeChar(type);
 		lew.writeInt(id);
-		lew.writeInt(x);
-		lew.writeInt(y);
+		lew.writeShort(x);
+		lew.writeShort(y);
 		lew.writeInt(mobTime);
 		lew.writeBool(f);
 		lew.writeBool(hide);
-		lew.writeInt(fh);
-		lew.writeInt(cy);
-		lew.writeInt(rx0);
-		lew.writeInt(rx1);
+		lew.writeShort(fh);
+		lew.writeShort(cy);
+		lew.writeShort(rx0);
+		lew.writeShort(rx1);
 	}
 }

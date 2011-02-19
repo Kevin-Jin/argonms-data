@@ -24,9 +24,9 @@ import kvjcompiler.Size;
 public class Portal implements IStructure {
 	private int portalid;
 	private String pn; //portal name
-	private int pt; //portal type
-	private int x; //x
-	private int y; //y
+	private byte pt; //portal type
+	private short x; //x
+	private short y; //y
 	private int tm; //target map
 	private String tn; //target name
 	private String script;
@@ -39,13 +39,13 @@ public class Portal implements IStructure {
 		if (key.equals("pn")) {
 			this.pn = value;
 		} else if (key.equals("pt")) {
-			this.pt = Integer.valueOf(Integer.parseInt(value));
+			this.pt = Byte.parseByte(value);
 		} else if (key.equals("x")) {
-			this.x = Integer.valueOf(Integer.parseInt(value));
+			this.x = Short.parseShort(value);
 		} else if (key.equals("y")) {
-			this.y = Integer.valueOf(Integer.parseInt(value));
+			this.y = Short.parseShort(value);
 		} else if (key.equals("tm")) {
-			this.tm = Integer.valueOf(Integer.parseInt(value));
+			this.tm = Integer.parseInt(value);
 		} else if (key.equals("tn")) {
 			this.tn = value;
 		} else if (key.equals("script")) {
@@ -58,9 +58,9 @@ public class Portal implements IStructure {
 	public int size() {
 		int size = Size.INT; //portalid
 		size += pn.length() + 1; //pn
-		size += Size.INT; //pt
-		size += Size.INT; //x
-		size += Size.INT; //y
+		size += Size.BYTE; //pt
+		size += Size.SHORT; //x
+		size += Size.SHORT; //y
 		size += Size.INT; //tm
 		size += tn.length() + 1; //tn
 		size += script != null ? script.length() + 1 : 1; //script
@@ -71,9 +71,9 @@ public class Portal implements IStructure {
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeInt(portalid);
 		lew.writeNullTerminatedString(pn);
-		lew.writeInt(pt);
-		lew.writeInt(x);
-		lew.writeInt(y);
+		lew.writeByte(pt);
+		lew.writeShort(x);
+		lew.writeShort(y);
 		lew.writeInt(tm);
 		lew.writeNullTerminatedString(tn);
 		lew.writeNullTerminatedString(script != null ? script : "");

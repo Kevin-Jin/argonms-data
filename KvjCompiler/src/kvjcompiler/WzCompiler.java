@@ -28,6 +28,9 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import kvjcompiler.mob.DropConverter;
+import kvjcompiler.mob.MobConverter;
+
 public class WzCompiler {
 	private static String log = "wzlog.txt";
 	private static String outPath = "/home/kevin/KvjBin/out/"; //MUST HAVE TRAILING SLASH!
@@ -86,6 +89,10 @@ public class WzCompiler {
 				}
 			}
 		} else if (converter.getWzName().equals("Mob.wz") || converter.getWzName().equals("Reactor.wz")) {
+			r = f.createXMLStreamReader(new FileInputStream(new File(wzPath + "String.wz" + File.separatorChar + "MonsterBook.img.xml")));
+			DropConverter d = new DropConverter();
+			d.compile(null, null, null, r);
+			((MobConverter) converter).setDrops(d.getDrops());
 			dir = new File(inputPath);
 			for (String fileName : dir.list()) {
 				r = f.createXMLStreamReader(new FileInputStream(new File(inputPath + fileName)));
