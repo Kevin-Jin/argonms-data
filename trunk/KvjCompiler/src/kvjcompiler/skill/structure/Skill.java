@@ -68,10 +68,14 @@ public class Skill implements IStructure {
 
 	public int size() {
 		int sum = Size.INT;
-		sum += isBuff ? Size.BYTE : 0;
-		sum += (elemAttr == null ? 0 : elemAttr.length()) + Size.BYTE;
-		sum += Size.INT;
-		sum += isCharged ? Size.BYTE : 0;
+		if (isBuff)
+			sum += Size.BYTE;
+		if (elemAttr != null)
+			sum += Size.HEADER + elemAttr.length() + Size.BYTE;
+		if (animationTime != 0)
+			sum += Size.HEADER + Size.INT;
+		if (isCharged)
+			sum += Size.BYTE;
 		for (SkillEffect effect : levels.values())
 			sum += Size.BYTE + Size.BYTE + effect.size() + Size.BYTE;
 		return sum;
@@ -81,8 +85,10 @@ public class Skill implements IStructure {
 		lew.writeInt(skillid);
 		if (isBuff)
 			lew.writeByte(SkillConverter.IS_BUFF);
-		lew.writeNullTerminatedString(elemAttr == null ? "" : elemAttr);
-		lew.writeInt(animationTime);
+		if (elemAttr != null)
+			lew.writeByte(SkillConverter.ELEM_ATTR).writeNullTerminatedString(elemAttr);
+		if (animationTime != 0)
+			lew.writeByte(SkillConverter.DELAY).writeInt(animationTime);
 		if (isCharged)
 			lew.writeByte(SkillConverter.IS_CHARGE);
 		for (Entry<Byte, SkillEffect> entry : levels.entrySet()) {
