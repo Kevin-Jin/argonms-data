@@ -130,7 +130,10 @@
 	* Reduced size of Map data a little bit. Removed SelfDestruct structure
 	of Mobs and replaced it with the selfDestructHp and removeAfter props.
 	* Added drop chances to mob Kvj files by using String.wz/MonsterBook.img
-	Note this probably won't work for any versions lower than v0.62.
+	Note this probably won't work for any GMS version lower than v0.62.
+
+2011-02-27  GoldenKevin  (revision 16)
+	* Fixed Skill.wz compiling.
 
 Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are
