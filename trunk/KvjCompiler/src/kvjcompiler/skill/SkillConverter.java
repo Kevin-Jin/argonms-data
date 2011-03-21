@@ -67,9 +67,20 @@ public class SkillConverter extends Converter {
 										if (event == XMLStreamReader.START_ELEMENT) {
 											key = r.getAttributeValue(0);
 											value = r.getAttributeValue(1);
-											if (DataType.getFromString(r.getLocalName()).isPoint())
+											DataType type = DataType.getFromString(r.getLocalName());
+											if (type.isPoint())
 												value += ',' + r.getAttributeValue(1);
-											e.setProperty(key, value);
+											if (!type.isDirectory()) {
+												e.setProperty(key, value);
+											} else {
+												for (int open3 = 1; open3 > 0;) {
+													event = r.next();
+													if (event == XMLStreamReader.START_ELEMENT)
+														open3++;
+													else if (event == XMLStreamReader.END_ELEMENT)
+														open3--;
+												}
+											}
 											open++;
 										}
 										if (event == XMLStreamReader.END_ELEMENT) {
@@ -118,7 +129,7 @@ public class SkillConverter extends Converter {
 								}
 							}
 						} else
-							s.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
+							s.setProperty(key, r.getAttributeValue(1));
 					}
 				}
 				if (event == XMLStreamReader.END_ELEMENT) {

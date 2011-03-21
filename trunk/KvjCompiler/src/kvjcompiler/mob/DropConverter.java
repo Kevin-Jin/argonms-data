@@ -18,8 +18,12 @@
 package kvjcompiler.mob;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import kvjcompiler.Converter;
@@ -38,9 +42,11 @@ import kvjcompiler.DataType;
  */
 public class DropConverter extends Converter {
 	private Map<Integer, Map<Integer, Integer>> drops;
+	private CustomDropsMap customDrops;
 
 	public DropConverter() {
 		drops = new HashMap<Integer, Map<Integer, Integer>>();
+		populateCustomDrops();
 	}
 
 	public String getWzName() {
@@ -63,6 +69,7 @@ public class DropConverter extends Converter {
 
 	protected void finalizeCompile(String internalPath, String imgName) throws IOException, XMLStreamException {
 		try {
+			customDrops.appendRemaining(drops);
 			if (r.getEventType() != XMLStreamReader.END_ELEMENT || DataType.getFromString(r.getLocalName()) != DataType.IMGDIR || r.next() != XMLStreamReader.END_DOCUMENT)
 				throw new IllegalStateException("ERROR: End of " + internalPath + imgName + " not yet reached.");
 			
@@ -95,6 +102,7 @@ public class DropConverter extends Converter {
 							open--;
 						}
 					}
+					customDrops.appendCustomDrops(mobid, idAndChance);
 					drops.put(Integer.valueOf(mobid), idAndChance);
 				}
 			}
@@ -366,5 +374,60 @@ public class DropConverter extends Converter {
 				return 2000;
 		}
 		return 999999; //99.9999%
+	}
+
+	private void populateCustomDrops() {
+		customDrops = new CustomDropsMap();
+		customDrops.add(9409000, 4000300, 500000);
+		customDrops.add(9409001, 4000301, 500000);
+	}
+
+	private static class IdAndChance {
+		public int id;
+		public int chance;
+
+		public IdAndChance(int itemid, int chance) {
+			this.id = itemid;
+			this.chance = chance;
+		}
+	}
+
+	@SuppressWarnings("serial")
+	private static class CustomDropsMap extends HashMap<Integer, List<IdAndChance>> {
+		public void add(int mobid, int itemid, int chance) {
+			Integer oKey = Integer.valueOf(mobid);
+			List<IdAndChance> list = get(oKey);
+			if (list == null) {
+				list = new ArrayList<IdAndChance>();
+				put(oKey, list);
+			}
+			list.add(new IdAndChance(itemid, chance));
+		}
+
+		public void appendCustomDrops(int mobid, Map<Integer, Integer> originals) {
+			List<IdAndChance> list = get(Integer.valueOf(mobid));
+			if (list != null) {
+				Iterator<IdAndChance> iter = list.iterator();
+				while (iter.hasNext()) {
+					IdAndChance custom = iter.next();
+					originals.put(Integer.valueOf(custom.id), Integer.valueOf(custom.chance));
+					iter.remove();
+				}
+				remove(Integer.valueOf(mobid));
+			}
+		}
+
+		public void appendRemaining(Map<Integer, Map<Integer, Integer>> drops) {
+			for (Entry<Integer, List<IdAndChance>> entry : entrySet()) {
+				Map<Integer, Integer> retList = new HashMap<Integer, Integer>();
+				Iterator<IdAndChance> iter = entry.getValue().iterator();
+				while (iter.hasNext()) {
+					IdAndChance custom = iter.next();
+					retList.put(Integer.valueOf(custom.id), Integer.valueOf(custom.chance));
+					iter.remove();
+				}
+				drops.put(entry.getKey(), retList);
+			}
+		}
 	}
 }

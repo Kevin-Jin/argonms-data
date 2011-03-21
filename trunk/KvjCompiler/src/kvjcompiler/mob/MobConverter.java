@@ -200,7 +200,7 @@ public class MobConverter extends Converter {
 			}
 			return;
 		} else if (dirs[0].length() > 6 && dirs[0].substring(0, 6).equals("attack")) { //there should be a more elegant solution...
-			Attack a = new Attack(Integer.parseInt(dirs[0].substring(6, dirs[0].length())));
+			Attack a = new Attack((byte) (Byte.parseByte(dirs[0].substring(6, dirs[0].length())) - 1));
 			for (int open = 1, event; open > 0;) {
 				event = r.next();
 				if (event == XMLStreamReader.START_ELEMENT) {

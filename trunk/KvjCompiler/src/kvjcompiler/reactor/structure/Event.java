@@ -22,67 +22,68 @@ import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 
 public class Event implements IStructure {
-	private int eventid;
-	private int type;
-	private int nextState;
+	private byte eventid;
+	private byte type;
+	private byte nextState;
 	
 	//item event only
-	private int itemid, quantity;
-	private int ltx, lty;
-	private int rbx, rby;
+	private int itemid;
+	private short quantity;
+	private short ltx, lty;
+	private short rbx, rby;
 	
-	public Event(int id) {
+	public Event(byte id) {
 		this.eventid = id;
 	}
 	
 	public void setProperty(String key, String value) {
 		if (key.equals("type")) {
-			this.type = Integer.parseInt(value);
+			this.type = Byte.parseByte(value);
 		} else if (key.equals("state")) {
-			this.nextState = Integer.parseInt(value);
+			this.nextState = Byte.parseByte(value);
 		} else if (key.equals("0")) {
 			this.itemid = Integer.parseInt(value);
 		} else if (key.equals("1")) {
-			this.quantity = Integer.parseInt(value);
+			this.quantity = Short.parseShort(value);
 		} else if (key.equals("lt")) {
 			String[] c = value.split(",");
-			ltx = Integer.parseInt(c[0]);
-			lty = Integer.parseInt(c[1]);
+			ltx = Short.parseShort(c[0]);
+			lty = Short.parseShort(c[1]);
 		} else if (key.equals("rb")) {
 			String[] c = value.split(",");
-			rbx = Integer.parseInt(c[0]);
-			rby = Integer.parseInt(c[1]);
+			rbx = Short.parseShort(c[0]);
+			rby = Short.parseShort(c[1]);
 		} else {
 			System.out.println("WARNING: Unhandled property " + key + " in event " + eventid + ".");
 		}
 	}
 	
 	public int size() {
-		int size = Size.INT; //eventid
-		size += Size.INT; //type
-		size += Size.INT; //nextState
+		int size = Size.BYTE; //eventid
+		size += Size.BYTE; //type
+		size += Size.BYTE; //nextState
 		if (isItemEvent()) {
 			size += Size.INT; //itemid
-			size += Size.INT; //quantity
-			size += Size.INT; //ltx
-			size += Size.INT; //lty
-			size += Size.INT; //rbx
-			size += Size.INT; //rby
+			size += Size.SHORT; //quantity
+			size += Size.SHORT; //ltx
+			size += Size.SHORT; //lty
+			size += Size.SHORT; //rbx
+			size += Size.SHORT; //rby
 		}
 		return size;
 	}
 	
 	public void writeBytes(LittleEndianWriter lew) {
-		lew.writeInt(eventid);
-		lew.writeInt(type);
-		lew.writeInt(nextState);
+		lew.writeByte(eventid);
+		lew.writeByte(type);
+		lew.writeByte(nextState);
 		if (isItemEvent()) {
 			lew.writeInt(itemid);
-			lew.writeInt(quantity);
-			lew.writeInt(ltx);
-			lew.writeInt(lty);
-			lew.writeInt(rbx);
-			lew.writeInt(rby);
+			lew.writeShort(quantity);
+			lew.writeShort(ltx);
+			lew.writeShort(lty);
+			lew.writeShort(rbx);
+			lew.writeShort(rby);
 		}
 	}
 	

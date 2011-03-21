@@ -135,6 +135,21 @@
 2011-02-27  GoldenKevin  (revision 16)
 	* Fixed Skill.wz compiling.
 
+2011-03-21  GoldenKevin  (revision 17)
+	* Reworked argument passing. Now you can specify multiple files to
+	compile without having to re run the program, so your logs will not be
+	overwritten for every WZ file you compile.
+	* Fixed Reactor.wz compiling giving ClassCastException.
+	* Fixed SkillCOnverter going into an infinite loop.
+	* Fixed MobConverter giving NumberFormatException (does Bodyguard B
+	really need to drain 50000 mp even though players have a max of 30000?)
+	* Some integer properties were reduced in size to further save space.
+	* Added summons to mob skills.
+	* Added a way to add custom monster drops by means of editing
+	DropConverter's source. One day, I may load custom scripts from a file
+	so that you won't have to recompile the converter in order to change
+	custom drops.
+
 Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.
