@@ -46,7 +46,7 @@ public class ReactorConverter extends Converter {
 				if (event == XMLStreamReader.START_ELEMENT) {
 					open1++;
 					if (r.getLocalName().equals("imgdir") && r.getAttributeValue(0).equals("0")) {
-						e = new Event(Integer.parseInt(dirs[0]));
+						e = new Event(Byte.parseByte(dirs[0]));
 						for (open = 1; open > 0;) {
 							event = r.next();
 							if (event == XMLStreamReader.START_ELEMENT) {

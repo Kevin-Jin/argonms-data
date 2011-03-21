@@ -22,26 +22,27 @@ import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 
 public class Attack implements IStructure {
-	private int attackid;
+	private byte attackid;
 	private boolean deadlyAttack;
-	private int mpBurn;
-	private int diseaseSkill;
-	private int diseaseLevel;
+	private short mpBurn;
+	private byte diseaseSkill;
+	private byte diseaseLevel;
 	private int conMp;
 	
-	public Attack(int id) {
+	public Attack(byte id) {
 		this.attackid = id;
 	}
 	
 	public void setProperty(String key, String value) {
 		if (key.equals("deadlyAttack")) {
 			this.deadlyAttack = Integer.parseInt(value) > 0;
-		} else if (key.equals("mpBurn")) {
-			this.mpBurn = Integer.parseInt(value);
+		} else if (key.equals("mpBurn")) { //how can it burn more than 30000 mp from a character???
+			//stupid Bodyguard B... just set his MP drain to 32767
+			this.mpBurn = (short) Math.min(Integer.parseInt(value), Short.MAX_VALUE);
 		} else if (key.equals("disease")) {
-			this.diseaseSkill = Integer.parseInt(value);
+			this.diseaseSkill = Byte.parseByte(value);
 		} else if (key.equals("level")) {
-			this.diseaseLevel = Integer.parseInt(value);
+			this.diseaseLevel = Byte.parseByte(value);
 		} else if (key.equals("conMP")) {
 			this.conMp = Integer.parseInt(value);
 		}/* else {
@@ -50,21 +51,21 @@ public class Attack implements IStructure {
 	}
 	
 	public int size() {
-		int size = Size.INT; //attackid
+		int size = Size.BYTE; //attackid
 		size += Size.BOOL; //deadlyAttack
-		size += Size.INT; //mpBurn
-		size += Size.INT; //diseaseSkill
-		size += Size.INT; //diseaseLevel
+		size += Size.SHORT; //mpBurn
+		size += Size.BYTE; //diseaseSkill
+		size += Size.BYTE; //diseaseLevel
 		size += Size.INT; //conMp
 		return size;
 	}
 	
 	public void writeBytes(LittleEndianWriter lew) {
-		lew.writeInt(attackid);
+		lew.writeByte(attackid);
 		lew.writeBool(deadlyAttack);
-		lew.writeInt(mpBurn);
-		lew.writeInt(diseaseSkill);
-		lew.writeInt(diseaseLevel);
+		lew.writeShort(mpBurn);
+		lew.writeByte(diseaseSkill);
+		lew.writeByte(diseaseLevel);
 		lew.writeInt(conMp);
 	}
 }

@@ -31,7 +31,7 @@ public class SkillEffect implements IStructure {
 	private Map<Byte, Integer> intProps;
 	private Map<Byte, Short> shortProps;
 	private Map<Byte, Byte> byteProps;
-	public static int[] lawl = new int[48];
+	private Map<Byte, Integer> summons;
 	private Point lt;
 	private Point rb;
 
@@ -39,6 +39,7 @@ public class SkillEffect implements IStructure {
 		this.intProps = new TreeMap<Byte, Integer>();
 		this.shortProps = new TreeMap<Byte, Short>();
 		this.byteProps = new TreeMap<Byte, Byte>();
+		this.summons = new TreeMap<Byte, Integer>();
 	}
 
 	public void setProperty(String key, String value) {
@@ -107,6 +108,15 @@ public class SkillEffect implements IStructure {
 			shortProps.put(Byte.valueOf(Effects.MONEY_CONSUME), Short.valueOf(Short.parseShort(value)));
 		} else if (key.equals("morph")) {
 			intProps.put(Byte.valueOf(Effects.MORPH), Integer.valueOf(Integer.parseInt(value)));
+		} else if (key.equals("limit")) {
+			shortProps.put(Byte.valueOf(Effects.LIMIT), Short.valueOf(Short.parseShort(value)));
+		} else if (key.equals("summonEffect")) {
+			byteProps.put(Byte.valueOf(Effects.SUMMON_EFFECT), Byte.valueOf(Byte.parseByte(value)));
+		} else if (Converter.isNumber(key)) {
+			//as of GMS v0.62, Shout level 4's prop is glitched, but we can't
+			//check that here, so we'll have to make a special case in the Kvj
+			//parser. :(
+			summons.put(Byte.valueOf(Byte.parseByte(key)), Integer.valueOf(Integer.parseInt(value)));
 		}
 	}
 
@@ -119,6 +129,7 @@ public class SkillEffect implements IStructure {
 			sum += Size.BYTE + 2 * Size.SHORT;
 		if (rb != null)
 			sum += Size.BYTE + 2 * Size.SHORT;
+		sum += (summons.size() * (Size.BYTE + Size.BYTE + Size.INT));
 		return sum;
 	}
 
@@ -133,5 +144,7 @@ public class SkillEffect implements IStructure {
 			lew.writeByte(Effects.LT).writeShort((short) lt.x).writeShort((short) lt.y);
 		if (rb != null)
 			lew.writeByte(Effects.RB).writeShort((short) rb.x).writeShort((short) rb.y);
+		for (Entry<Byte, Integer> entry : summons.entrySet())
+			lew.writeByte(Effects.SUMMON).writeByte(entry.getKey().byteValue()).writeInt(entry.getValue().intValue());
 	}
 }
