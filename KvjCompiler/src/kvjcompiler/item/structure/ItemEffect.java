@@ -57,9 +57,9 @@ public class ItemEffect implements IStructure {
 		} else if (key.equals("eva")) {
 			shortProps.put(Byte.valueOf(Effects.AVOID), Short.valueOf(Short.parseShort(value)));
 		} else if (key.equals("hp")) {
-			shortProps.put(Byte.valueOf(Effects.HP_BONUS), Short.valueOf(Short.parseShort(value)));
+			shortProps.put(Byte.valueOf(Effects.HP), Short.valueOf(Short.parseShort(value)));
 		} else if (key.equals("mp")) {
-			shortProps.put(Byte.valueOf(Effects.MP_BONUS), Short.valueOf(Short.parseShort(value)));
+			shortProps.put(Byte.valueOf(Effects.MP), Short.valueOf(Short.parseShort(value)));
 		} else if (key.equals("speed")) {
 			shortProps.put(Byte.valueOf(Effects.SPEED), Short.valueOf(Short.parseShort(value)));
 		} else if (key.equals("jump")) {
@@ -67,9 +67,9 @@ public class ItemEffect implements IStructure {
 		} else if (key.equals("morph")) {
 			intProps.put(Byte.valueOf(Effects.MORPH), Integer.valueOf(Integer.parseInt(value)));
 		} else if (key.equals("hpR")) {
-			shortProps.put(Byte.valueOf(Effects.HP_RECOVER), Short.valueOf(Short.parseShort(value)));
+			shortProps.put(Byte.valueOf(Effects.HP_RECOVER_PERCENT), Short.valueOf(Short.parseShort(value)));
 		} else if (key.equals("mpR")) {
-			shortProps.put(Byte.valueOf(Effects.MP_RECOVER), Short.valueOf(Short.parseShort(value)));
+			shortProps.put(Byte.valueOf(Effects.MP_RECOVER_PERCENT), Short.valueOf(Short.parseShort(value)));
 		} else if (key.equals("moveTo")) {
 			intProps.put(Byte.valueOf(Effects.MOVE_TO), Integer.parseInt(value));
 		} else if (key.equals("poison")) {
