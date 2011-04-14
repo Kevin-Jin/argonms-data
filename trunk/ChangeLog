@@ -140,7 +140,7 @@
 	compile without having to re run the program, so your logs will not be
 	overwritten for every WZ file you compile.
 	* Fixed Reactor.wz compiling giving ClassCastException.
-	* Fixed SkillCOnverter going into an infinite loop.
+	* Fixed SkillConverter going into an infinite loop.
 	* Fixed MobConverter giving NumberFormatException (does Bodyguard B
 	really need to drain 50000 mp even though players have a max of 30000?)
 	* Some integer properties were reduced in size to further save space.
@@ -149,6 +149,9 @@
 	DropConverter's source. One day, I may load custom scripts from a file
 	so that you won't have to recompile the converter in order to change
 	custom drops.
+
+2011-04-13  GoldenKevin  (revision 18)
+	* Updated status effect stat names to conform to ArgonMS r25.
 
 Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are

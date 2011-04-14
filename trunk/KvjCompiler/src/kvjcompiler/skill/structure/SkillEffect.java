@@ -87,9 +87,9 @@ public class SkillEffect implements IStructure {
 		} else if (key.equals("eva")) {
 			shortProps.put(Byte.valueOf(Effects.AVOID), Short.valueOf(Short.parseShort(value)));
 		} else if (key.equals("hp")) {
-			shortProps.put(Byte.valueOf(Effects.HP_BONUS), Short.valueOf(Short.parseShort(value)));
+			shortProps.put(Byte.valueOf(Effects.HP), Short.valueOf(Short.parseShort(value)));
 		} else if (key.equals("mp")) {
-			shortProps.put(Byte.valueOf(Effects.MP_BONUS), Short.valueOf(Short.parseShort(value)));
+			shortProps.put(Byte.valueOf(Effects.MP), Short.valueOf(Short.parseShort(value)));
 		} else if (key.equals("speed")) {
 			shortProps.put(Byte.valueOf(Effects.SPEED), Short.valueOf(Short.parseShort(value)));
 		} else if (key.equals("jump")) {
