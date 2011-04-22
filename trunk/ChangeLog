@@ -153,6 +153,16 @@
 2011-04-13  GoldenKevin  (revision 18)
 	* Updated status effect stat names to conform to ArgonMS r25.
 
+2011-04-22  GoldenKevin  (revision 19)
+	* Updated Linux launcher to support the new argument parsing system
+	introduced in r17.
+	* All files now have updated svn:eol-style and svn:mime-type properties.
+	* Removed KvjInterpreter because it was extremely outdated. You may view
+	the source code of ArgonMS to view an up-to-date implementation of a
+	Kvj parser.
+	* Moved files from KvjCompiler into the root directory now that it is
+	the only project in this repository (since KvjInterpreter is now gone).
+
 Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.
