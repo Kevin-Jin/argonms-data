@@ -42,7 +42,7 @@ public class QuestInfoConverter extends Converter {
 	}
 
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
-		QuestInfo i = new QuestInfo(Integer.parseInt(r.getAttributeValue(0)));
+		QuestInfo i = new QuestInfo(Short.parseShort(r.getAttributeValue(0)));
 		for (int open1 = 1, event, open; open1 > 0;) {
 			event = r.next();
 			if (event == XMLStreamReader.START_ELEMENT) {

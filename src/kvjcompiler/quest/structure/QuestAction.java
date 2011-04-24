@@ -30,7 +30,7 @@ import kvjcompiler.Size;
 public class QuestAction extends QuestBehavior {
 	private final List<QuestSkillAction> skills;
 	private int expGain;
-	private int nextQuest;
+	private short nextQuest;
 	private int money;
 	private int buffToGive;
 	private short petTameness;
@@ -44,7 +44,7 @@ public class QuestAction extends QuestBehavior {
 		if (key.equals("exp")) {
 			expGain = Integer.parseInt(value);
 		} else if (key.equals("nextQuest")) {
-			nextQuest = Integer.parseInt(value);
+			nextQuest = Short.parseShort(value);
 		} else if (key.equals("money")) {
 			money = Integer.parseInt(value);
 		} else if (key.equals("npcAct")) {
@@ -64,7 +64,7 @@ public class QuestAction extends QuestBehavior {
 		}*/
 	}
 
-	public void addSkill(byte index, QuestSkillAction s) {
+	public void addSkill(QuestSkillAction s) {
 		skills.add(s);
 	}
 
@@ -76,7 +76,7 @@ public class QuestAction extends QuestBehavior {
 		if (expGain != 0)
 			size += Size.BYTE + Size.INT;
 		if (nextQuest != 0)
-			size += Size.BYTE + Size.INT;
+			size += Size.BYTE + Size.SHORT;
 		if (money != 0)
 			size += Size.BYTE + Size.INT;
 		if (buffToGive != 0)
@@ -102,7 +102,7 @@ public class QuestAction extends QuestBehavior {
 		if (expGain != 0)
 			lew.writeByte(QuestBehaviors.REWARD_EXP_GAIN).writeInt(expGain);
 		if (nextQuest != 0)
-			lew.writeByte(QuestBehaviors.REWARD_NEXT_QUEST).writeInt(nextQuest);
+			lew.writeByte(QuestBehaviors.REWARD_NEXT_QUEST).writeShort(nextQuest);
 		if (money != 0)
 			lew.writeByte(QuestBehaviors.REWARD_MESOS).writeInt(money);
 		if (buffToGive != 0)

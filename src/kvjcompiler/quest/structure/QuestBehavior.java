@@ -40,11 +40,11 @@ public abstract class QuestBehavior implements IStructure {
 		quests = new ArrayList<QuestQuest>();
 	}
 
-	public void addItem(byte index, QuestItem item) {
+	public void addItem(QuestItem item) {
 		items.add(item);
 	}
 
-	public void addQuest(byte index, QuestQuest qu) {
+	public void addQuest(QuestQuest qu) {
 		quests.add(qu);
 	}
 

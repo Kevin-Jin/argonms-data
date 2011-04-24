@@ -40,7 +40,7 @@ public class QuestActionsConverter extends Converter {
 	}
 
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
-		QuestBehaviors group = new QuestBehaviors(Integer.parseInt(r.getAttributeValue(0)));
+		QuestBehaviors group = new QuestBehaviors(Short.parseShort(r.getAttributeValue(0)));
 		LittleEndianWriter lew;
 		for (int open1 = 1, event, open; open1 > 0;) {
 			event = r.next();
@@ -83,7 +83,6 @@ public class QuestActionsConverter extends Converter {
 			event = r.next();
 			if (event == XMLStreamReader.START_ELEMENT) {
 				skill++;
-				byte index = Byte.parseByte(r.getAttributeValue(0));
 				QuestSkillAction s = new QuestSkillAction();
 				for (int skillProp = 1; skillProp > 0;) {
 					event = r.next();
@@ -94,7 +93,7 @@ public class QuestActionsConverter extends Converter {
 							for (int job = 1; job > 0;) {
 								event = r.next();
 								if (event == XMLStreamReader.START_ELEMENT) {
-									s.addJob(Byte.parseByte(r.getAttributeValue(0)), Short.parseShort(r.getAttributeValue(1)));
+									s.addJob(Short.parseShort(r.getAttributeValue(1)));
 									job++;
 								}
 								if (event == XMLStreamReader.END_ELEMENT) {
@@ -119,7 +118,7 @@ public class QuestActionsConverter extends Converter {
 						skillProp--;
 					}
 				}
-				a.addSkill(index, s);
+				a.addSkill(s);
 			}
 			if (event == XMLStreamReader.END_ELEMENT) {
 				skill--;

@@ -39,7 +39,7 @@ public class QuestRequirementsConverter extends Converter {
 	}
 
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
-		QuestBehaviors group = new QuestBehaviors(Integer.parseInt(r.getAttributeValue(0)));
+		QuestBehaviors group = new QuestBehaviors(Short.parseShort(r.getAttributeValue(0)));
 		QuestRequirement req;
 		for (int open1 = 1, event, open; open1 > 0;) {
 			event = r.next();
@@ -60,7 +60,6 @@ public class QuestRequirementsConverter extends Converter {
 									event = r.next();
 									if (event == XMLStreamReader.START_ELEMENT) {
 										mob++;
-										byte index = Byte.parseByte(r.getAttributeValue(0));
 										QuestMob m = new QuestMob();
 										for (int mobProp = 1; mobProp > 0;) {
 											event = r.next();
@@ -72,7 +71,7 @@ public class QuestRequirementsConverter extends Converter {
 												mobProp--;
 											}
 										}
-										req.addMob(index, m);
+										req.addMob(m);
 									}
 									if (event == XMLStreamReader.END_ELEMENT) {
 										mob--;
@@ -83,7 +82,6 @@ public class QuestRequirementsConverter extends Converter {
 									event = r.next();
 									if (event == XMLStreamReader.START_ELEMENT) {
 										skill++;
-										byte index = Byte.parseByte(r.getAttributeValue(0));
 										QuestSkillRequirement s = new QuestSkillRequirement();
 										for (int skillProp = 1; skillProp > 0;) {
 											event = r.next();
@@ -95,7 +93,7 @@ public class QuestRequirementsConverter extends Converter {
 												skillProp--;
 											}
 										}
-										req.addSkill(index, s);
+										req.addSkill(s);
 									}
 									if (event == XMLStreamReader.END_ELEMENT) {
 										skill--;
@@ -106,13 +104,12 @@ public class QuestRequirementsConverter extends Converter {
 									event = r.next();
 									if (event == XMLStreamReader.START_ELEMENT) {
 										pet++;
-										byte index = Byte.parseByte(r.getAttributeValue(0));
 										for (int petProp = 1; petProp > 0;) {
 											event = r.next();
 											if (event == XMLStreamReader.START_ELEMENT) {
 												petProp++;
 												if (r.getAttributeValue(0).equals("id"))
-													req.addPet(index, Integer.parseInt(r.getAttributeValue(1)));
+													req.addPet(Integer.parseInt(r.getAttributeValue(1)));
 											}
 											if (event == XMLStreamReader.END_ELEMENT) {
 												petProp--;

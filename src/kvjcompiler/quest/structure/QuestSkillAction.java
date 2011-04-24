@@ -51,7 +51,7 @@ public class QuestSkillAction implements IStructure {
 		}
 	}
 
-	public void addJob(byte index, short jobId) {
+	public void addJob(short jobId) {
 		jobs.add(Short.valueOf(jobId));
 	}
 
