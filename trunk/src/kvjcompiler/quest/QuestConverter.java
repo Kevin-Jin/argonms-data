@@ -66,7 +66,6 @@ public class QuestConverter extends Converter {
 			for (int item = 1; item > 0;) {
 				event = r.next();
 				if (event == XMLStreamReader.START_ELEMENT) {
-					byte index = Byte.parseByte(r.getAttributeValue(0));
 					item++;
 					QuestItem qItem = new QuestItem();
 					for (int itemProp = 1; itemProp > 0;) {
@@ -79,7 +78,7 @@ public class QuestConverter extends Converter {
 							itemProp--;
 						}
 					}
-					q.addItem(index, qItem);
+					q.addItem(qItem);
 				}
 				if (event == XMLStreamReader.END_ELEMENT) {
 					item--;
@@ -97,7 +96,6 @@ public class QuestConverter extends Converter {
 				event = r.next();
 				if (event == XMLStreamReader.START_ELEMENT) {
 					quest++;
-					byte index = Byte.parseByte(r.getAttributeValue(0));
 					QuestQuest qu = new QuestQuest(); //funny name, no?
 					for (int questProp = 1; questProp > 0;) {
 						event = r.next();
@@ -109,7 +107,7 @@ public class QuestConverter extends Converter {
 							questProp--;
 						}
 					}
-					q.addQuest(index, qu);
+					q.addQuest(qu);
 				}
 				if (event == XMLStreamReader.END_ELEMENT) {
 					quest--;

@@ -28,10 +28,10 @@ import kvjcompiler.quest.QuestInfoConverter;
  * @author GoldenKevin
  */
 public class QuestInfo implements IStructure {
-	private int questid;
+	private short questId;
 
-	public QuestInfo(int questid) {
-		this.questid = questid;
+	public QuestInfo(short questId) {
+		this.questId = questId;
 	}
 
 	private String name;
@@ -48,7 +48,7 @@ public class QuestInfo implements IStructure {
 	}
 
 	public int size() {
-		int size = Size.INT; //questid
+		int size = Size.SHORT; //questid
 		size += name.length() + 1; //name
 		if (autoStart)
 			size += Size.BYTE; //autoStart
@@ -59,7 +59,7 @@ public class QuestInfo implements IStructure {
 	}
 
 	public void writeBytes(LittleEndianWriter lew) {
-		lew.writeInt(questid);
+		lew.writeShort(questId);
 		lew.writeNullTerminatedString(name);
 		if (autoStart)
 			lew.writeByte(QuestInfoConverter.AUTO_START);

@@ -27,12 +27,12 @@ import kvjcompiler.Size;
  * @author GoldenKevin
  */
 public class QuestQuest implements IStructure {
-	private int id;
+	private short id;
 	private byte state;
 
 	public void setProperty(String key, String value) {
 		if (key.equals("id")) {
-			id = Integer.parseInt(value);
+			id = Short.parseShort(value);
 		} else if (key.equals("state")) {
 			state = Byte.parseByte(value);
 		}
@@ -40,13 +40,13 @@ public class QuestQuest implements IStructure {
 
 	public int size() {
 		return
-			Size.INT //quest id
+			Size.SHORT //quest id
 			+ Size.BYTE //state
 		;
 	}
 
 	public void writeBytes(LittleEndianWriter lew) {
-		lew.writeInt(id);
+		lew.writeShort(id);
 		lew.writeByte(state);
 	}
 }

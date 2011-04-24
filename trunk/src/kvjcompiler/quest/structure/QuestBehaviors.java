@@ -49,10 +49,10 @@ public class QuestBehaviors implements IStructure {
 		REWARD_PET_SKILL = 16
 	;
 
-	private int questId;
+	private short questId;
 	private QuestBehavior start, complete;
 
-	public QuestBehaviors(int questId) {
+	public QuestBehaviors(short questId) {
 		this.questId = questId;
 	}
 
@@ -68,7 +68,7 @@ public class QuestBehaviors implements IStructure {
 	}
 
 	public int size() {
-		int size = Size.INT; //quest Id
+		int size = Size.SHORT; //quest Id
 		size += start.size(); //start
 		size += Size.BYTE; //delimiter b/w start & complete
 		size += complete.size(); //complete
@@ -77,7 +77,7 @@ public class QuestBehaviors implements IStructure {
 	}
 
 	public void writeBytes(LittleEndianWriter lew) {
-		lew.writeInt(questId);
+		lew.writeShort(questId);
 		start.writeBytes(lew);
 		lew.writeByte(END_BEHAVIOR);
 		complete.writeBytes(lew);

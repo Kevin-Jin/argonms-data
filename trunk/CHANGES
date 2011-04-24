@@ -179,6 +179,10 @@
 	tab; @author javadoc tags have been added to each class file; and new lines
 	have been added between license headers and package declarations.
 
+2011-04-24  GoldenKevin  (revision 21)
+	* Removed the passing of unnecessary indices to various quest structures.
+	* Quest id is now a 2-byte integer.
+
 Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

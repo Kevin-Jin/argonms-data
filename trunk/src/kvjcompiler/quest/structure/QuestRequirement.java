@@ -71,15 +71,15 @@ public class QuestRequirement extends QuestBehavior {
 		}
 	}
 
-	public void addSkill(byte index, QuestSkillRequirement s) {
+	public void addSkill(QuestSkillRequirement s) {
 		skills.add(s);
 	}
 
-	public void addMob(byte index, QuestMob m) {
+	public void addMob(QuestMob m) {
 		mobs.add(m);
 	}
 
-	public void addPet(byte index, int itemId) {
+	public void addPet(int itemId) {
 		pets.add(Integer.valueOf(itemId));
 	}
 
