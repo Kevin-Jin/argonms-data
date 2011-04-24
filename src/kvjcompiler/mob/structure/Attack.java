@@ -15,12 +15,17 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler.mob.structure;
 
 import kvjcompiler.IStructure;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 
+/**
+ *
+ * @author GoldenKevin
+ */
 public class Attack implements IStructure {
 	private byte attackid;
 	private boolean deadlyAttack;

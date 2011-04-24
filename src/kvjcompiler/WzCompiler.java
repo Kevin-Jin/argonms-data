@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler;
 
 import java.io.BufferedOutputStream;
@@ -25,14 +26,16 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-
 import kvjcompiler.mob.DropConverter;
 import kvjcompiler.mob.MobConverter;
 
+/**
+ *
+ * @author GoldenKevin
+ */
 public class WzCompiler {
 	private static String log;
 	private static String outPath;
@@ -198,6 +201,12 @@ public class WzCompiler {
 				}
 				converter.compile(outPath, "", "MobSkill.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "MobSkill.img.xml"))));
 				count++;
+			} else if (converter.getWzName().equals("Quest.wz")) {
+				//server only need these files (Say.img is meant for the client)...
+				converter.compile(outPath, "", "Act.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "Act.img.xml"))));
+				converter.compile(outPath, "", "Check.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "Check.img.xml"))));
+				converter.compile(outPath, "", "QuestInfo.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "QuestInfo.img.xml"))));
+				count += 3;
 			}
 			System.out.println("Finished compiling " + wzFile + "!");
 			System.err.println("Compiled " + wzFile);

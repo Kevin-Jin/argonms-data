@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler;
 
 import java.io.BufferedOutputStream;
@@ -22,14 +23,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import kvjcompiler.character.CharacterConverter;
-
 import kvjcompiler.item.ItemConverter;
 import kvjcompiler.map.MapConverter;
 import kvjcompiler.mob.MobConverter;
+import kvjcompiler.quest.QuestConverter;
 import kvjcompiler.reactor.ReactorConverter;
 import kvjcompiler.skill.SkillConverter;
 import kvjcompiler.string.StringConverter;
@@ -39,6 +39,10 @@ import kvjcompiler.string.StringConverter;
 //to see if it improves performance.
 //Be careful because ArrayList is not immutable, so added elements have to be removed after processing.
 //Simply remove the last element from the list to achieve this.
+/**
+ *
+ * @author GoldenKevin
+ */
 public abstract class Converter {
 	protected OutputStream fos;
 	protected XMLStreamReader r;
@@ -148,6 +152,8 @@ public abstract class Converter {
 			return new StringConverter();
 		} else if (source.equals("Skill.wz")) {
 			return new SkillConverter();
+		} else if (source.equals("Quest.wz")) {
+			return new QuestConverter();
 		}
 		return null;
 	}

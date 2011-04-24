@@ -16,40 +16,55 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package kvjcompiler.item.structure;
+package kvjcompiler.quest.structure;
 
 import kvjcompiler.IStructure;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
+import kvjcompiler.quest.QuestInfoConverter;
 
 /**
  *
  * @author GoldenKevin
  */
-public class PetCommand implements IStructure {
-	private byte command;
-	private int prob;
-	private int expInc;
-	
-	public PetCommand(byte command) {
-		this.command = command;
+public class QuestInfo implements IStructure {
+	private int questid;
+
+	public QuestInfo(int questid) {
+		this.questid = questid;
 	}
-	
+
+	private String name;
+	private boolean autoStart, autoPreComplete;
+
 	public void setProperty(String key, String value) {
-		if (key.equals("prob")) {
-			prob = Integer.parseInt(value);
-		} else if (key.equals("inc")) {
-			expInc = Integer.parseInt(value);
+		if (key.equals("name")) {
+			name = value;
+		} else if (key.equals("autoStart")) {
+			autoStart = Integer.parseInt(value) != 0;
+		} else if (key.equals("autoPreComplete")) {
+			autoPreComplete = Integer.parseInt(value) != 0;
 		}
 	}
-	
+
 	public int size() {
-		return (Size.BYTE + 2 * Size.INT);
+		int size = Size.INT; //questid
+		size += name.length() + 1; //name
+		if (autoStart)
+			size += Size.BYTE; //autoStart
+		if (autoPreComplete)
+			size += Size.BYTE; //autoPreComplete
+		size += Size.BYTE; //end struct
+		return size;
 	}
-	
+
 	public void writeBytes(LittleEndianWriter lew) {
-		lew.writeByte(command);
-		lew.writeInt(prob);
-		lew.writeInt(expInc);
+		lew.writeInt(questid);
+		lew.writeNullTerminatedString(name);
+		if (autoStart)
+			lew.writeByte(QuestInfoConverter.AUTO_START);
+		if (autoPreComplete)
+			lew.writeByte(QuestInfoConverter.AUTO_PRE_COMPLETE);
+		lew.writeByte(QuestInfoConverter.END_QUEST_INFO);
 	}
 }

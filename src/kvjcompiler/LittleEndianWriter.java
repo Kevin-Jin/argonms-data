@@ -15,10 +15,15 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler;
 
 import java.nio.charset.Charset;
 
+/**
+ *
+ * @author GoldenKevin
+ */
 public class LittleEndianWriter {
 	private byte[] bytes;
 	private static final int DEF_SIZE = 32;

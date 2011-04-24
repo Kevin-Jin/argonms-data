@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export CLASSPATH=".:build/classes"
+export CLASSPATH=".:bin:dist/KvjBin.jar"
 IN="wz/"
 OUT="out/"
 LOG="wzlog.txt"

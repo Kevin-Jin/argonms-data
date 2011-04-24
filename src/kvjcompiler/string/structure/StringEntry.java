@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler.string.structure;
 
 import kvjcompiler.IStructure;
@@ -22,6 +23,10 @@ import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 import kvjcompiler.string.StringConverter;
 
+/**
+ *
+ * @author GoldenKevin
+ */
 public class StringEntry implements IStructure {
 	private int entryid;
 	

@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler.item.structure;
 
 import java.util.ArrayList;
@@ -28,6 +29,10 @@ import kvjcompiler.IStructure;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 
+/**
+ *
+ * @author GoldenKevin
+ */
 public class ItemEffect implements IStructure {
 	private Map<Byte, Short> shortProps;
 	private Map<Byte, Integer> intProps;

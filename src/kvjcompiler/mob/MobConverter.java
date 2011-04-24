@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler.mob;
 
 import java.io.IOException;
@@ -29,6 +30,10 @@ import kvjcompiler.Size;
 import kvjcompiler.mob.structure.Attack;
 import kvjcompiler.mob.structure.Skill;
 
+/**
+ *
+ * @author GoldenKevin
+ */
 public class MobConverter extends Converter {
 	private static final byte
 		LEVEL = 1,

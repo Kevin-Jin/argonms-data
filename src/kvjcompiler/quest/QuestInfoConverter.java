@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package kvjcompiler.string;
+package kvjcompiler.quest;
 
 import java.io.IOException;
 import javax.xml.stream.XMLStreamException;
@@ -24,48 +24,53 @@ import javax.xml.stream.XMLStreamReader;
 import kvjcompiler.Converter;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
-import kvjcompiler.string.structure.StringEntry;
+import kvjcompiler.quest.structure.QuestInfo;
 
 /**
  *
  * @author GoldenKevin
  */
-public class StringConverter extends Converter {
-	public String getWzName() {
-		return "String.wz";
-	}
-	
+public class QuestInfoConverter extends Converter {
 	public static final byte
-		NEXT = 1,
-		NAME = 2,
-		MAP_NAME = 3,
-		STREET_NAME = 4,
-		MSG = 5
+		END_QUEST_INFO = 0,
+		AUTO_START = 1,
+		AUTO_PRE_COMPLETE = 2
 	;
-	
+
+	public String getWzName() {
+		return "Quest.wz";
+	}
+
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
-		LittleEndianWriter lew;
-		int size;
-		if (isNumber(nestedPath)) {
-			StringEntry e = new StringEntry(Integer.parseInt(nestedPath));
-			for (int open = 1, event; open > 0;) {
-				event = r.next();
-				if (event == XMLStreamReader.START_ELEMENT) {
-					open++;
-					e.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
-				} else if (event == XMLStreamReader.END_ELEMENT) {
-					open--;
+		QuestInfo i = new QuestInfo(Integer.parseInt(r.getAttributeValue(0)));
+		for (int open1 = 1, event, open; open1 > 0;) {
+			event = r.next();
+			if (event == XMLStreamReader.START_ELEMENT) {
+				open1++;
+				if (r.getLocalName().equals("imgdir")) {
+					for (open = 1; open > 0;) {
+						event = r.next();
+						if (event == XMLStreamReader.START_ELEMENT) {
+							open++;
+						}
+						if (event == XMLStreamReader.END_ELEMENT) {
+							open--;
+						}
+					}
+				} else {
+					i.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
 				}
 			}
-			size = e.size();
-			if (size != 0) {
-				lew = new LittleEndianWriter(Size.HEADER + e.size(), NEXT);
-				e.writeBytes(lew);
-				fos.write(lew.toArray());
+			if (event == XMLStreamReader.END_ELEMENT) {
+				open1--;
 			}
 		}
+		LittleEndianWriter lew = new LittleEndianWriter(Size.HEADER + i.size(), QuestConverter.QUEST_INFO);
+		i.writeBytes(lew);
+		fos.write(lew.toArray());
 	}
-	
+
 	protected void handleProperty(String nestedPath, String value) throws IOException {
+		
 	}
 }
