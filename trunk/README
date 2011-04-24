@@ -1,9 +1,11 @@
-I coded the path constants in the source file kvjcompiler.WzCompiler, so you're
-going to have to edit those yourselves (make sure they're the fully qualified
-absolute path to wherever you want them to point to. No relative paths here).
-Heed the warning in all caps next to the constants, and make sure they have a
-trailing backslash if a Windows environment, or a trailing slash in an Unix-like
-environment!
+If your XML WZ files are not in a folder named "wz" in your root directory, then
+you will have to edit the batch file (on Windows), or the bash file (on Linux).
+Likewise, you will have to edit those files if you want to change where the
+directory to place the converted files or if you want to rename the wzlog.txt
+file. Make sure that if you are using Windows and need to put backspaces in the
+path that you escape them (just double each backspace) so that Java understands
+that it is not an escape sequence. Unlike in earlier revisions, the paths do not
+have to have a trailing directory delimiter, but you should place one anyway.
 
 No external libraries are necessary. The only API needed is StAX (Streaming API
 for XML), which should be included with JRE 6 and later. An independent
@@ -15,7 +17,8 @@ be careful to read/write null terminated strings instead of a MapleAsciiString
 (which is basically just an ASCII encoding with a 2-byte prefix that indicates
 the string's length).
 
-I included a sample WzInterpreter. It is extremely simple, but it should be able
-to help you get familiar with the binary structure so you can put it in your own
-OdinMS environment. I didn't model any of the map structures exactly like the
-OdinMS classes, so you have to figure it out somewhat.
+If you wish to find an example on the usage/parsing of these files, just take a
+look in the ArgonMS source files in the package and any subpackages of
+argonms.loading. I removed KvjInterpreter, which was present in earlier
+revisions, because it was outdated and it was pointless to maintain when there
+is a better demonstration available.

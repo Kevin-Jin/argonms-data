@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler.skill.structure;
 
 import java.awt.Point;
@@ -27,6 +28,10 @@ import kvjcompiler.IStructure;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 
+/**
+ *
+ * @author GoldenKevin
+ */
 public class SkillEffect implements IStructure {
 	private Map<Byte, Integer> intProps;
 	private Map<Byte, Short> shortProps;

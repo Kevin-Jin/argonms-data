@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package kvjcompiler.item.structure;
+package kvjcompiler.quest.structure;
 
 import kvjcompiler.IStructure;
 import kvjcompiler.LittleEndianWriter;
@@ -26,30 +26,27 @@ import kvjcompiler.Size;
  *
  * @author GoldenKevin
  */
-public class PetCommand implements IStructure {
-	private byte command;
-	private int prob;
-	private int expInc;
-	
-	public PetCommand(byte command) {
-		this.command = command;
-	}
-	
+public class QuestSkillRequirement implements IStructure {
+	private int id;
+	private int acquire;
+
 	public void setProperty(String key, String value) {
-		if (key.equals("prob")) {
-			prob = Integer.parseInt(value);
-		} else if (key.equals("inc")) {
-			expInc = Integer.parseInt(value);
+		if (key.equals("id")) {
+			id = Integer.parseInt(value);
+		} else if (key.equals("acquire")) {
+			acquire = Integer.parseInt(value);
 		}
 	}
-	
+
 	public int size() {
-		return (Size.BYTE + 2 * Size.INT);
+		return
+			Size.INT //id
+			+ Size.INT //acquire
+		;
 	}
-	
+
 	public void writeBytes(LittleEndianWriter lew) {
-		lew.writeByte(command);
-		lew.writeInt(prob);
-		lew.writeInt(expInc);
+		lew.writeInt(id);
+		lew.writeInt(acquire);
 	}
 }

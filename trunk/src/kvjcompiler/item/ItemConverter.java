@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler.item;
 
 import java.io.BufferedOutputStream;
@@ -34,6 +35,10 @@ import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 import kvjcompiler.item.structure.*;
 
+/**
+ *
+ * @author GoldenKevin
+ */
 public class ItemConverter extends Converter {
 	private static final byte
 		WHOLE_PRICE = 1,

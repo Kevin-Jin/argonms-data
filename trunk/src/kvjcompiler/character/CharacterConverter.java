@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler.character;
 
 import java.io.IOException;
@@ -24,6 +25,10 @@ import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 import kvjcompiler.item.ItemConverter;
 
+/**
+ *
+ * @author GoldenKevin
+ */
 public class CharacterConverter extends Converter {
 	private static final byte
 		WHOLE_PRICE = 1,

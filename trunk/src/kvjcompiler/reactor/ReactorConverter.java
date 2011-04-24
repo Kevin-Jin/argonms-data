@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler.reactor;
 
 import java.io.IOException;
@@ -25,6 +26,10 @@ import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 import kvjcompiler.reactor.structure.Event;
 
+/**
+ *
+ * @author GoldenKevin
+ */
 public class ReactorConverter extends Converter {
 	private static final byte
 		LINK = 1,

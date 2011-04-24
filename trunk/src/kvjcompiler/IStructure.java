@@ -15,8 +15,13 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler;
 
+/**
+ *
+ * @author GoldenKevin
+ */
 public interface IStructure {
 	void setProperty(String key, String value);
 	int size();

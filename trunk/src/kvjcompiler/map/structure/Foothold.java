@@ -15,12 +15,17 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler.map.structure;
 
 import kvjcompiler.IStructure;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 
+/**
+ *
+ * @author GoldenKevin
+ */
 public class Foothold implements IStructure {
 	private short id;
 	private short x1;

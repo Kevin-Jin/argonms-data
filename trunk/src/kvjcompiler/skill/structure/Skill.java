@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler.skill.structure;
 
 import java.util.Map;
@@ -26,6 +27,10 @@ import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 import kvjcompiler.skill.SkillConverter;
 
+/**
+ *
+ * @author GoldenKevin
+ */
 public class Skill implements IStructure {
 	private int skillid;
 	private Map<Byte, SkillEffect> levels;

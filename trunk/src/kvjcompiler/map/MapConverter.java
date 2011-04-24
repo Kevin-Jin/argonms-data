@@ -15,18 +15,21 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler.map;
 
 import java.io.IOException;
-
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-
 import kvjcompiler.Converter;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
 import kvjcompiler.map.structure.*;
 
+/**
+ *
+ * @author GoldenKevin
+ */
 public class MapConverter extends Converter {
 	private static final byte
 		TOWN = 1,

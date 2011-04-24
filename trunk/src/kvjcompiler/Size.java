@@ -15,8 +15,13 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler;
 
+/**
+ *
+ * @author GoldenKevin
+ */
 public class Size {
 	public static final int HEADER = 1; //currently 1-byte (255 possible values)
 	

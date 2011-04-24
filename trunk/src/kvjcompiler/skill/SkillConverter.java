@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package kvjcompiler.skill;
 
 import java.io.IOException;
@@ -27,6 +28,10 @@ import kvjcompiler.Size;
 import kvjcompiler.skill.structure.Skill;
 import kvjcompiler.skill.structure.SkillEffect;
 
+/**
+ *
+ * @author GoldenKevin
+ */
 public class SkillConverter extends Converter {
 	public String getWzName() {
 		return "Skill.wz";
