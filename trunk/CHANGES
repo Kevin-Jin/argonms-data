@@ -183,6 +183,11 @@
 	* Removed the passing of unnecessary indices to various quest structures.
 	* Quest id is now a 2-byte integer.
 
+2011-04-25  GoldenKevin  (revision 22)
+	* Added several bits of quest data that I forgot to parse and write in the
+	past two revisions (jobs, intervals, scripted quest names, minimum pet
+	tameness, minimum mount tameness, required mesos, required world population)
+
 Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

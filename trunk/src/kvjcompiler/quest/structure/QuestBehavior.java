@@ -31,13 +31,16 @@ import kvjcompiler.Size;
 public abstract class QuestBehavior implements IStructure {
 	private final List<QuestItem> items;
 	private final List<QuestQuest> quests;
+	private final List<Short> jobs;
 	protected short minLevel;
 	protected short fame;
 	protected int endDate;
+	protected int repeatInterval;
 
 	public QuestBehavior() {
 		items = new ArrayList<QuestItem>();
 		quests = new ArrayList<QuestQuest>();
+		jobs = new ArrayList<Short>();
 	}
 
 	public void addItem(QuestItem item) {
@@ -48,12 +51,20 @@ public abstract class QuestBehavior implements IStructure {
 		quests.add(qu);
 	}
 
+	public void addJob(short jobId) {
+		jobs.add(Short.valueOf(jobId));
+	}
+
 	public void setMinLevel(short level) {
 		this.minLevel = level;
 	}
 
 	public void setFame(short fame) {
 		this.fame = fame;
+	}
+
+	public void setRepeatInterval(int interval) {
+		this.repeatInterval = interval;
 	}
 
 	public int size() {
@@ -63,6 +74,8 @@ public abstract class QuestBehavior implements IStructure {
 		size += Size.BYTE; //amount of quests
 		for (QuestQuest qu : quests)
 			size += qu.size();
+		size += Size.BYTE; //amount of jobs
+		size += jobs.size() * Size.SHORT;
 		return size;
 	}
 
@@ -73,6 +86,9 @@ public abstract class QuestBehavior implements IStructure {
 		lew.writeByte((byte) quests.size());
 		for (QuestQuest qu : quests)
 			qu.writeBytes(lew);
+		lew.writeByte((byte) jobs.size());
+		for (Short jobId : jobs)
+			lew.writeShort(jobId.shortValue());
 	}
 
 	public void setEndDate(int idate) {
