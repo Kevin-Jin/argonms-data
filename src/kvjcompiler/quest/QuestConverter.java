@@ -118,12 +118,14 @@ public class QuestConverter extends Converter {
 				event = r.next();
 				if (event == XMLStreamReader.START_ELEMENT) {
 					job++;
+					q.addJob(Short.parseShort(r.getAttributeValue(1)));
 				}
 				if (event == XMLStreamReader.END_ELEMENT) {
 					job--;
 				}
 			}
 		} else if (key.equals("interval")) {
+			q.setRepeatInterval(Integer.parseInt(r.getAttributeValue(1)));
 		} else if (key.equals("end")) {
 			q.setEndDate(Integer.parseInt(r.getAttributeValue(1)));
 		//conversation stuff. we don't care about them, but we still have to skip them...

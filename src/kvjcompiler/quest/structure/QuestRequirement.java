@@ -32,6 +32,11 @@ public class QuestRequirement extends QuestBehavior {
 	private final List<QuestMob> mobs;
 	private final List<Integer> pets;
 	private short maxLevel;
+	private String startScript, endScript;
+	private short petTamenessMin;
+	private short reqMesos;
+	private short mountTamenessMin;
+	private short minPopulation, maxPopulation;
 
 	public QuestRequirement() {
 		skills = new ArrayList<QuestSkillRequirement>();
@@ -44,30 +49,30 @@ public class QuestRequirement extends QuestBehavior {
 			maxLevel = Short.parseShort(value);
 		}/* else if (key.equals("start")) {
 			
-		} else if (key.equals("startscript")) {
-			
-		}*/ else if (key.equals("normalAutoStart")) {
+		}*/ else if (key.equals("startscript")) {
+			startScript = value;
+		} else if (key.equals("normalAutoStart")) {
 			
 		} else if (key.equals("pettamenessmin")) {
-			
+			petTamenessMin = Short.parseShort(value);
 		}/* else if (key.equals("infoNumber")) {
 			
 		}*/ else if (key.equals("endmeso")) {
-			
-		}/* else if (key.equals("endscript")) {
-			
-		}*/ else if (key.equals("petRecallLimit")) {
+			reqMesos = Short.parseShort(value);
+		} else if (key.equals("endscript")) {
+			endScript = value;
+		}/* else if (key.equals("petRecallLimit")) {
 			
 		} else if (key.equals("petAutoSpeakingLimit")) {
 			
 		} else if (key.equals("dayByDay")) {
 			
-		} else if (key.equals("tamingmoblevelmin")) {
-			
+		}*/ else if (key.equals("tamingmoblevelmin")) {
+			mountTamenessMin = Short.parseShort(value);
 		} else if (key.equals("worldmin")) {
-			
+			minPopulation = Short.parseShort(value);
 		} else if (key.equals("worldmax")) {
-			
+			maxPopulation = Short.parseShort(value);
 		}
 	}
 
@@ -101,6 +106,22 @@ public class QuestRequirement extends QuestBehavior {
 			size += Size.BYTE + Size.SHORT;
 		if (endDate != 0)
 			size += Size.BYTE + Size.INT;
+		if (startScript != null)
+			size += Size.BYTE + startScript.length() + Size.BYTE;
+		if (endScript != null)
+			size += Size.BYTE + endScript.length() + Size.BYTE;
+		if (repeatInterval != 0)
+			size += Size.BYTE + Size.INT;
+		if (petTamenessMin != 0)
+			size += Size.BYTE + Size.SHORT;
+		if (mountTamenessMin != 0)
+			size += Size.BYTE + Size.SHORT;
+		if (reqMesos != 0)
+			size += Size.BYTE + Size.SHORT;
+		if (minPopulation != 0)
+			size += Size.BYTE + Size.SHORT;
+		if (maxPopulation != 0)
+			size += Size.BYTE + Size.SHORT;
 		return size;
 	}
 
@@ -123,5 +144,21 @@ public class QuestRequirement extends QuestBehavior {
 			lew.writeByte(QuestBehaviors.FAME).writeShort(fame);
 		if (endDate != 0)
 			lew.writeByte(QuestBehaviors.QUEST_END_DATE).writeInt(endDate);
+		if (startScript != null)
+			lew.writeByte(QuestBehaviors.START_SCRIPT).writeNullTerminatedString(startScript);
+		if (endScript != null)
+			lew.writeByte(QuestBehaviors.END_SCRIPT).writeNullTerminatedString(endScript);
+		if (repeatInterval != 0)
+			lew.writeByte(QuestBehaviors.REPEAT_INTERVAL).writeInt(repeatInterval);
+		if (petTamenessMin != 0)
+			lew.writeByte(QuestBehaviors.REQ_PET_TAMENESS).writeShort(petTamenessMin);
+		if (mountTamenessMin != 0)
+			lew.writeByte(QuestBehaviors.REQ_MOUNT_TAMENESS).writeShort(mountTamenessMin);
+		if (reqMesos != 0)
+			lew.writeByte(QuestBehaviors.REQ_MESOS).writeShort(reqMesos);
+		if (minPopulation != 0)
+			lew.writeByte(QuestBehaviors.MIN_POPULATION).writeShort(minPopulation);
+		if (maxPopulation != 0)
+			lew.writeByte(QuestBehaviors.MAX_POPULATION).writeShort(maxPopulation);
 	}
 }
