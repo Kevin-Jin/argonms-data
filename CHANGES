@@ -188,6 +188,11 @@
 	past two revisions (jobs, intervals, scripted quest names, minimum pet
 	tameness, minimum mount tameness, required mesos, required world population)
 
+2011-05-05  GoldenKevin  (revision 23)
+	* No longer hard code the skills with charge. Instead, make the skill
+	charged if there is a keydown property. This broke earlier revisions of
+	ArgonMS, but ArgonMS r32 will now function correctly for all charged skills.
+
 Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

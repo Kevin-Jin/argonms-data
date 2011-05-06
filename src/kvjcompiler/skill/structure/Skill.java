@@ -44,12 +44,13 @@ public class Skill implements IStructure {
 		this.skillid = skillid;
 		this.levels = new TreeMap<Byte, SkillEffect>();
 		this.isBuff = isBuff();
-		this.isCharged = isChargedSkill();
 	}
 
 	public void setProperty(String key, String value) {
 		if (key.equals("elemAttr")) {
 			this.elemAttr = value;
+		} else if (key.equals("keydown")) {
+			this.isCharged = true;
 		}/* else if (key.equals("skillType")) {
 			skillType = Integer.parseInt(value);
 		} else if (key.equals("hit")) {
@@ -100,19 +101,6 @@ public class Skill implements IStructure {
 			lew.writeByte(SkillConverter.NEXT_LEVEL).writeByte(entry.getKey().byteValue());
 			entry.getValue().writeBytes(lew);
 			lew.writeByte(Effects.END_EFFECT);
-		}
-	}
-
-	private boolean isChargedSkill() {
-		switch (skillid) {
-			case 2121001:
-			case 2221001:
-			case 2321001:
-			case 5101004:
-			case 5201002:
-				return true;
-			default:
-				return false;
 		}
 	}
 

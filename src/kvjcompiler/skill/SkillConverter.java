@@ -99,43 +99,41 @@ public class SkillConverter extends Converter {
 								open1--;
 							}
 						}
-					} else {
-						/*if (r.getAttributeValue(0).equals("action")) {
-							for (int open1 = 1; open1 > 0;) {
-								event = r.next();
-								if (event == XMLStreamReader.START_ELEMENT) {
-									open1++;
-									if (r.getAttributeValue(0).equals("0") && r.getAttributeValue(1).equals("alert2"))
-										s.setProperty("action", null);
-								}
-								if (event == XMLStreamReader.END_ELEMENT) {
-									open1--;
-								}
+					}/* else if (key.equals("action")) {
+						for (int open1 = 1; open1 > 0;) {
+							event = r.next();
+							if (event == XMLStreamReader.START_ELEMENT) {
+								open1++;
+								if (r.getAttributeValue(0).equals("0") && r.getAttributeValue(1).equals("alert2"))
+									s.setProperty("action", null);
 							}
-						} else*/ if (key.equals("effect")) {
-							for (int open1 = 1; open1 > 0;) {
-								event = r.next();
-								if (event == XMLStreamReader.START_ELEMENT) {
-									open1++;
-									for (int open = 1; open > 0;) {
-										event = r.next();
-										if (event == XMLStreamReader.START_ELEMENT) {
-											open++;
-											if (r.getAttributeValue(0).equals("delay"))
-												s.addDelay(Integer.parseInt(r.getAttributeValue(1)));
-										}
-										if (event == XMLStreamReader.END_ELEMENT) {
-											open--;
-										}
+							if (event == XMLStreamReader.END_ELEMENT) {
+								open1--;
+							}
+						}
+					}*/ else if (key.equals("effect")) {
+						for (int open1 = 1; open1 > 0;) {
+							event = r.next();
+							if (event == XMLStreamReader.START_ELEMENT) {
+								open1++;
+								for (int open = 1; open > 0;) {
+									event = r.next();
+									if (event == XMLStreamReader.START_ELEMENT) {
+										open++;
+										if (r.getAttributeValue(0).equals("delay"))
+											s.addDelay(Integer.parseInt(r.getAttributeValue(1)));
+									}
+									if (event == XMLStreamReader.END_ELEMENT) {
+										open--;
 									}
 								}
-								if (event == XMLStreamReader.END_ELEMENT) {
-									open1--;
-								}
 							}
-						} else
-							s.setProperty(key, r.getAttributeValue(1));
-					}
+							if (event == XMLStreamReader.END_ELEMENT) {
+								open1--;
+							}
+						}
+					} else
+						s.setProperty(key, r.getAttributeValue(1));
 				}
 				if (event == XMLStreamReader.END_ELEMENT) {
 					open2--;
