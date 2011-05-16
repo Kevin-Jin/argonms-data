@@ -193,6 +193,16 @@
 	charged if there is a keydown property. This broke earlier revisions of
 	ArgonMS, but ArgonMS r32 will now function correctly for all charged skills.
 
+2011-05-15  GoldenKevin  (revision 24)
+	* Quest.wz compiling added to CompileAll scripts.
+	* Removed property for isBuff in SkillConverter. There are better ways of
+	determining if a skill is a buff than by having to update a hardcoded list
+	every version that introduces new skills. Plus it was a waste of space as
+	the majority of skills are buffs, and each buff skill used up one more byte.
+	* Renamed SkillConverter.IS_CHARGED to KEYDOWN, and added PREPARED and
+	KEY_DOWN_END. Two properties that ArgonMS actually needs.
+	* Added in info for summon skills.
+
 Copyright 2010, 2011 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

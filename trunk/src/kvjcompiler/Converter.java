@@ -92,12 +92,13 @@ public abstract class Converter {
 		}
 	}
 	
-	protected void traverseBlock(String nestedPath) throws XMLStreamException, IOException {
+	protected int traverseBlock(String nestedPath) throws XMLStreamException, IOException {
 		//System.out.println("DEBUG: Entering " + nestedPath);
 		DataType type;
 		String key, value;
-		
-		for (int nestedLevel = 1, event; nestedLevel > 0;) {
+
+		int event = r.getEventType();
+		for (int nestedLevel = 1; nestedLevel > 0;) {
 			event = r.next();
 			if (event == XMLStreamReader.START_ELEMENT) {
 				nestedLevel++;
@@ -121,7 +122,7 @@ public abstract class Converter {
 				}
 			}
 		}
-		//System.out.println("DEBUG: Leaving " + nestedPath);
+		return event;
 	}
 	
 	protected abstract void handleDir(String nestedPath) throws XMLStreamException, IOException;
