@@ -40,10 +40,12 @@ public class SkillConverter extends Converter {
 	public static final byte //skill props
 		NEXT_SKILL = 1,
 		ELEM_ATTR = 2,
-		IS_BUFF = 3,
-		DELAY = 4,
-		IS_CHARGE = 5,
-		NEXT_LEVEL = 6
+		DELAY = 3,
+		SUMMON = 4,
+		PREPARED = 5,
+		KEY_DOWN = 6,
+		KEY_DOWN_END = 7,
+		NEXT_LEVEL = 8
 	;
 
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
@@ -132,6 +134,32 @@ public class SkillConverter extends Converter {
 								open1--;
 							}
 						}
+					} else if (key.equals("summon")) {
+						byte type = 0;
+						for (int open1 = 1; open1 > 0;) {
+							event = r.next();
+							if (event == XMLStreamReader.START_ELEMENT) {
+								open1++;
+								key = r.getAttributeValue(0);
+								if (key.equals("fly")) {
+									if (Integer.parseInt(nestedPath) == 2321003) //bahamut
+										type = 1;
+									else
+										type = 3;
+								} else if (key.equals("move")) {
+									type = 1;
+								} else if (key.equals("hit")) {
+									type = 0;
+								} else if (key.startsWith("attack") || key.startsWith("skill")) {
+									//there are some properties with "hit" in their name in attack
+									event = traverseBlock(nestedPath);
+								}
+							}
+							if (event == XMLStreamReader.END_ELEMENT) {
+								open1--;
+							}
+						}
+						s.setSummonType(type);
 					} else
 						s.setProperty(key, r.getAttributeValue(1));
 				}
