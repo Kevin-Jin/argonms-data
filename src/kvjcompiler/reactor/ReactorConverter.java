@@ -34,7 +34,8 @@ public class ReactorConverter extends Converter {
 	private static final byte
 		LINK = 1,
 		HIT_EVENT = 2,
-		ITEM_EVENT = 3
+		ITEM_EVENT = 3,
+		SCRIPT_NAME = 4
 	;
 	
 	public String getWzName() {
@@ -84,6 +85,8 @@ public class ReactorConverter extends Converter {
 			if (dirs[1].equals("link")) {
 				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, LINK).writeInt(Integer.parseInt(value)).toArray());
 			}
+		} else if (dirs[0].equals("action")) {
+			fos.write(new LittleEndianWriter(Size.HEADER + value.length() + Size.BOOL, SCRIPT_NAME).writeNullTerminatedString(value).toArray());
 		}
 	}
 }

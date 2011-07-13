@@ -29,6 +29,7 @@ import kvjcompiler.character.CharacterConverter;
 import kvjcompiler.item.ItemConverter;
 import kvjcompiler.map.MapConverter;
 import kvjcompiler.mob.MobConverter;
+import kvjcompiler.npc.NpcConverter;
 import kvjcompiler.quest.QuestConverter;
 import kvjcompiler.reactor.ReactorConverter;
 import kvjcompiler.skill.SkillConverter;
@@ -155,6 +156,8 @@ public abstract class Converter {
 			return new SkillConverter();
 		} else if (source.equals("Quest.wz")) {
 			return new QuestConverter();
+		} else if (source.equals("Npc.wz")) {
+			return new NpcConverter();
 		}
 		return null;
 	}
