@@ -157,7 +157,7 @@ public class WzCompiler {
 						System.out.println("Skipping " + dir.getPath());
 					}
 				}
-			} else if (converter.getWzName().equals("Mob.wz") || converter.getWzName().equals("Reactor.wz")) {
+			} else if (converter.getWzName().equals("Mob.wz") || converter.getWzName().equals("Reactor.wz") || converter.getWzName().equals("Npc.wz")) {
 				if (converter.getWzName().equals("Mob.wz")) {
 					r = f.createXMLStreamReader(new FileInputStream(new File(wzPath + "String.wz" + File.separatorChar + "MonsterBook.img.xml")));
 					DropConverter d = new DropConverter();
