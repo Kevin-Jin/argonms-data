@@ -229,6 +229,10 @@
 	* Npc.wz compiling - currently only extracts the storage deposit and
 	withdrawal fees and gets the script names for NPCs.
 
-Copyright 2010, 2011 GoldenKevin
+2012-01-29  GoldenKevin  (revision 26)
+
+	* Updated copyright years.
+
+Copyright 2010-2012 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.
