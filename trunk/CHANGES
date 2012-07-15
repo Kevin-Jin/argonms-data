@@ -1,9 +1,14 @@
-2010-10-10  GoldenKevin  (revision 1)
+2012-07-14  GoldenKevin  (revision 1)
+
+	* Created /trunk folder to make layout more compliant with SVN best
+	practices.
+
+2010-10-10  GoldenKevin  (revision 2)
 
 	* Initial import, with fully working Map.wz compiling and a fully working
 	sample interpreter for map data.
 
-2010-10-10  GoldenKevin  (revision 2)
+2010-10-10  GoldenKevin  (revision 3)
 
 	* Modified existing code to add an executable class for KvjInterpreter:
 	kvjinterpreter.WzInterpreter. (MapDataReader, WzInterpreter, DataReader)
@@ -19,7 +24,7 @@
 	between the unsigned bytes stored in the files and Java's signed bytes.
 	* Changed the default path constants in the WzCompiler source file.
 
-2010-10-11  GoldenKevin  (revision 3)
+2010-10-11  GoldenKevin  (revision 4)
 
 	* Modified XmlReader.traverseBlock so that it doesn't skip the first
 	element. This was necessary for the addition of mob compiling. However, it
@@ -34,14 +39,14 @@
 	* Changed the default path (I'm now developing on a Windows environment) and
 	the default wz file to Mob.wz.
 
-2010-10-12  GoldenKevin  (revision 4)
+2010-10-12  GoldenKevin  (revision 5)
 
 	* Added toString method to kvjinterpreter.map.structure.Reactor
 	* Renamed setTarget method in kvjinterpreter.map.structure.Portal to
 	setTargetName. Modified comments in kvjcompiler.map.structure.Portal.
 	* Added support for reactor compiling.
 
-2010-11-19  GoldenKevin  (revision 5)
+2010-11-19  GoldenKevin  (revision 6)
 
 	* Complete rewrite of KvjCompiler. Expected behavior has not changed, and
 	generated code should still be identical to previous revisions. Performance
@@ -52,13 +57,13 @@
 	different files inside a folder that is named after the XML WZ file that
 	contains the specific item.
 
-2010-11-25  GoldenKevin  (revision 6)
+2010-11-25  GoldenKevin  (revision 7)
 
 	* Added preliminary Item.wz compiling as well as part of the Kvj parser for
 	Item.wz. Please excuse all the comments in KvjInterpreter regarding items
 	because it still is a work in progress after all.
 
-2011-01-09  GoldenKevin  (revision 7)
+2011-01-09  GoldenKevin  (revision 8)
 
 	* Replaced references of FileOutputStream with a BufferedOutputStream that
 	uses an underlying FileOutputStream. This should improve performance
@@ -76,7 +81,7 @@
 	exist (kvjcompiler.item.ItemConverter).
 	* It's 2011 now people! Added current year on all license headers.
 
-2011-01-09  GoldenKevin  (revision 8)
+2011-01-09  GoldenKevin  (revision 9)
 
 	* Finished creating the sample interpreter for Item.wz. Unlike previous
 	demos, there is no output and the class ItemConverter is only there to show
@@ -88,12 +93,12 @@
 	the java.util.Calendar constants instead of using magic numbers. The
 	constants are equivalent though.
 
-2011-01-10  GoldenKevin  (revision 9)
+2011-01-10  GoldenKevin  (revision 10)
 
 	* String.wz compiling is now possible and the corresponding interpreter has
 	been released as well.
 
-2011-01-12  GoldenKevin  (revision 10)
+2011-01-12  GoldenKevin  (revision 11)
 
 	* Added Skill.wz compiling. There are way too many properties to handle, so
 	I won't add a sample interpreter. I think it would be easy enough to make
@@ -108,7 +113,7 @@
 	using NetBeans, as well as the in and out paths that are specified in the
 	batch file variables (I believe it should be KvjCompiler\bin for Eclipse).
 
-2011-01-20  GoldenKevin  (revision 11)
+2011-01-20  GoldenKevin  (revision 12)
 
 	* Rewrote code for Skill compiling so that the effect codes aren't with of
 	the rest of the Skill codes.
@@ -119,33 +124,33 @@
 	* Fixed the batch scripts. They should now print out the correct name of the
 	WZ files currently being compiled.
 
-2011-01-20  GoldenKevin  (revision 12)
+2011-01-20  GoldenKevin  (revision 13)
 
 	* Fixed repeated Effects constant.
 	* Cleaned up code that I meant to remove last revision.
 
-2011-01-25  GoldenKevin  (revision 13)
+2011-01-25  GoldenKevin  (revision 14)
 
 	* Cleaned up MobConverter so that unnecessary bytes aren't written.
 	* Somewhat started on Character.wz compiling.
 
-2011-01-29  GoldenKevin  (revision 14)
+2011-01-29  GoldenKevin  (revision 15)
 
 	* Completed Character.wz compiling support.
 	* Reduced size of Mob data a little bit.
 
-2011-02-19  GoldenKevin  (revision 15)
+2011-02-19  GoldenKevin  (revision 16)
 
 	* Reduced size of Map data a little bit. Removed SelfDestruct structure of
 	Mobs and replaced it with the selfDestructHp and removeAfter props.
 	* Added drop chances to mob Kvj files by using String.wz/MonsterBook.img
 	Note this probably won't work for any GMS version lower than v0.62.
 
-2011-02-27  GoldenKevin  (revision 16)
+2011-02-27  GoldenKevin  (revision 17)
 
 	* Fixed Skill.wz compiling.
 
-2011-03-21  GoldenKevin  (revision 17)
+2011-03-21  GoldenKevin  (revision 18)
 
 	* Reworked argument passing. Now you can specify multiple files to compile
 	without having to re run the program, so your logs will not be overwritten
@@ -161,11 +166,11 @@
 	that you won't have to recompile the converter in order to change custom
 	drops.
 
-2011-04-13  GoldenKevin  (revision 18)
+2011-04-13  GoldenKevin  (revision 19)
 
 	* Updated status effect stat names to conform to ArgonMS r25.
 
-2011-04-22  GoldenKevin  (revision 19)
+2011-04-22  GoldenKevin  (revision 20)
 
 	* Readded foothold IDs to Map.wz data.
 	* Updated Linux launcher to support the new argument parsing system
@@ -176,7 +181,7 @@
 	* Moved files from KvjCompiler into the root directory now that it is the
 	only project in this repository (since KvjInterpreter is now gone).
 
-2011-04-23  GoldenKevin  (revision 20)
+2011-04-23  GoldenKevin  (revision 21)
 
 	* Escaped backslashes in CompileAll.bat to fix Windows issues.
 	* Added support for Quest.wz compiling. Expect a lot of updates on this one
@@ -195,24 +200,24 @@
 	tab; @author javadoc tags have been added to each class file; and new lines
 	have been added between license headers and package declarations.
 
-2011-04-24  GoldenKevin  (revision 21)
+2011-04-24  GoldenKevin  (revision 22)
 
 	* Removed the passing of unnecessary indices to various quest structures.
 	* Quest id is now a 2-byte integer.
 
-2011-04-25  GoldenKevin  (revision 22)
+2011-04-25  GoldenKevin  (revision 23)
 
 	* Added several bits of quest data that I forgot to parse and write in the
 	past two revisions (jobs, intervals, scripted quest names, minimum pet
 	tameness, minimum mount tameness, required mesos, required world population)
 
-2011-05-05  GoldenKevin  (revision 23)
+2011-05-05  GoldenKevin  (revision 24)
 
 	* No longer hard code the skills with charge. Instead, make the skill
 	charged if there is a keydown property. This broke earlier revisions of
 	ArgonMS, but ArgonMS r32 will now function correctly for all charged skills.
 
-2011-05-15  GoldenKevin  (revision 24)
+2011-05-15  GoldenKevin  (revision 25)
 
 	* Quest.wz compiling added to CompileAll scripts.
 	* Removed property for isBuff in SkillConverter. There are better ways of
@@ -223,15 +228,19 @@
 	KEY_DOWN_END. Two properties that ArgonMS actually needs.
 	* Added in info for summon skills.
 
-2011-07-13  GoldenKevin  (revision 25)
+2011-07-13  GoldenKevin  (revision 26)
 
 	* Included script names for reactors, in case it may be used in the future.
 	* Npc.wz compiling - currently only extracts the storage deposit and
 	withdrawal fees and gets the script names for NPCs.
 
-2012-01-29  GoldenKevin  (revision 26)
+2012-01-29  GoldenKevin  (revision 27)
 
 	* Updated copyright years.
+
+2012-07-14  GoldenKevin  (revision 28)
+
+	* Corrected changelog revision numbers after moving / to /trunk.
 
 Copyright 2010-2012 GoldenKevin
 Copying and distribution of this file, with or without modification, are
