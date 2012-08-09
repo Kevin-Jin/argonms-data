@@ -33,10 +33,6 @@ import kvjcompiler.skill.structure.SkillEffect;
  * @author GoldenKevin
  */
 public class SkillConverter extends Converter {
-	public String getWzName() {
-		return "Skill.wz";
-	}
-
 	public static final byte //skill props
 		NEXT_SKILL = 1,
 		ELEM_ATTR = 2,
@@ -48,6 +44,12 @@ public class SkillConverter extends Converter {
 		NEXT_LEVEL = 8
 	;
 
+	@Override
+	public String getWzName() {
+		return "Skill.wz";
+	}
+
+	@Override
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
 		Skill s;
 		SkillEffect e;
@@ -173,6 +175,7 @@ public class SkillConverter extends Converter {
 		}
 	}
 
+	@Override
 	protected void handleProperty(String nestedPath, String value) throws IOException {
 	}
 }

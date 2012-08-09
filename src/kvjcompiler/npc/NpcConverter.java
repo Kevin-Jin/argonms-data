@@ -34,15 +34,18 @@ public class NpcConverter extends Converter {
 		TRUNK_PUT = 2,
 		TRUNK_GET = 3
 	;
-	
+
+	@Override
 	public String getWzName() {
 		return "Npc.wz";
 	}
-	
+
+	@Override
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
 		traverseBlock(nestedPath);
 	}
-	
+
+	@Override
 	protected void handleProperty(String nestedPath, String value) throws IOException {
 		String[] dirs = nestedPath.split("/");
 		if (dirs[0].equals("info")) {

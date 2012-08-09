@@ -30,6 +30,7 @@ public class QuestQuest implements IStructure {
 	private short id;
 	private byte state;
 
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("id")) {
 			id = Short.parseShort(value);
@@ -38,6 +39,7 @@ public class QuestQuest implements IStructure {
 		}
 	}
 
+	@Override
 	public int size() {
 		return
 			Size.SHORT //quest id
@@ -45,6 +47,7 @@ public class QuestQuest implements IStructure {
 		;
 	}
 
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeShort(id);
 		lew.writeByte(state);

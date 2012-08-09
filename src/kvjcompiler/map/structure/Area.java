@@ -27,16 +27,17 @@ import kvjcompiler.Size;
  * @author GoldenKevin
  */
 public class Area implements IStructure {
-	private String areaid;
+	private final String areaid;
 	private short x1;
 	private short y1;
 	private short x2;
 	private short y2;
-	
+
 	public Area(String id) {
 		this.areaid = id;
 	}
-	
+
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("x1")) {
 			this.x1 = Short.parseShort(value);
@@ -50,7 +51,8 @@ public class Area implements IStructure {
 			System.out.println("WARNING: Unhandled property " + key + " in area " + areaid + ".");
 		}
 	}
-	
+
+	@Override
 	public int size() {
 		int size = areaid.length() + 1; //areaid
 		size += Size.SHORT; //x1
@@ -59,7 +61,8 @@ public class Area implements IStructure {
 		size += Size.SHORT; //y2
 		return size;
 	}
-	
+
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeNullTerminatedString(areaid);
 		lew.writeShort(x1);

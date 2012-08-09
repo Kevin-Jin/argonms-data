@@ -37,11 +37,13 @@ public class ReactorConverter extends Converter {
 		ITEM_EVENT = 3,
 		SCRIPT_NAME = 4
 	;
-	
+
+	@Override
 	public String getWzName() {
 		return "Reactor.wz";
 	}
-	
+
+	@Override
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
 		String[] dirs = nestedPath.split("/");
 		if (!dirs[0].equals("info")) {
@@ -77,7 +79,8 @@ public class ReactorConverter extends Converter {
 		}
 		traverseBlock(nestedPath);
 	}
-	
+
+	@Override
 	protected void handleProperty(String nestedPath, String value) throws IOException {
 		//System.out.println("DEBUG: Handling " + nestedPath);
 		String[] dirs = nestedPath.split("/");

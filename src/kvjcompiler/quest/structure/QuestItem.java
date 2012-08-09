@@ -35,6 +35,7 @@ public class QuestItem implements IStructure {
 	private int dateExpire;
 	private int period;
 
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("id")) {
 			id = Integer.parseInt(value);
@@ -58,6 +59,7 @@ public class QuestItem implements IStructure {
 		}*/
 	}
 
+	@Override
 	public int size() {
 		int size = Size.INT; //itemid
 		size += Size.SHORT; //quantity
@@ -75,6 +77,7 @@ public class QuestItem implements IStructure {
 		return size;
 	}
 
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeInt(id);
 		lew.writeShort(count);

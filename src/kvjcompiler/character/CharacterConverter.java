@@ -43,14 +43,17 @@ public class CharacterConverter extends Converter {
 		TAMING_MOB_ID = 23
 	;
 
+	@Override
 	public String getWzName() {
 		return "Character.wz";
 	}
 
+	@Override
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
 		traverseBlock(nestedPath);
 	}
 
+	@Override
 	protected void handleProperty(String nestedPath, String value) throws IOException {
 		String[] dirs = nestedPath.split("/");
 		if (dirs[0].equals("info")) {

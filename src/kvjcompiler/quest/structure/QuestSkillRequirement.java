@@ -30,6 +30,7 @@ public class QuestSkillRequirement implements IStructure {
 	private int id;
 	private int acquire;
 
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("id")) {
 			id = Integer.parseInt(value);
@@ -38,6 +39,7 @@ public class QuestSkillRequirement implements IStructure {
 		}
 	}
 
+	@Override
 	public int size() {
 		return
 			Size.INT //id
@@ -45,6 +47,7 @@ public class QuestSkillRequirement implements IStructure {
 		;
 	}
 
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeInt(id);
 		lew.writeInt(acquire);

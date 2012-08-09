@@ -29,7 +29,8 @@ import kvjcompiler.Size;
 public class SummonMob implements IStructure {
 	private int mid;
 	private int prob;
-	
+
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("id")) {
 			mid = Integer.parseInt(value);
@@ -37,11 +38,13 @@ public class SummonMob implements IStructure {
 			prob = Integer.parseInt(value);
 		}
 	}
-	
+
+	@Override
 	public int size() {
 		return (2 * Size.INT);
 	}
-	
+
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeInt(mid);
 		lew.writeInt(prob);

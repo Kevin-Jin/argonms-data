@@ -27,20 +27,21 @@ import kvjcompiler.Size;
  * @author GoldenKevin
  */
 public class Event implements IStructure {
-	private byte eventid;
+	private final byte eventid;
 	private byte type;
 	private byte nextState;
-	
+
 	//item event only
 	private int itemid;
 	private short quantity;
 	private short ltx, lty;
 	private short rbx, rby;
-	
+
 	public Event(byte id) {
 		this.eventid = id;
 	}
-	
+
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("type")) {
 			this.type = Byte.parseByte(value);
@@ -62,7 +63,8 @@ public class Event implements IStructure {
 			System.out.println("WARNING: Unhandled property " + key + " in event " + eventid + ".");
 		}
 	}
-	
+
+	@Override
 	public int size() {
 		int size = Size.BYTE; //eventid
 		size += Size.BYTE; //type
@@ -77,7 +79,8 @@ public class Event implements IStructure {
 		}
 		return size;
 	}
-	
+
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeByte(eventid);
 		lew.writeByte(type);
@@ -91,7 +94,7 @@ public class Event implements IStructure {
 			lew.writeShort(rby);
 		}
 	}
-	
+
 	public boolean isItemEvent() {
 		return (type == 100);
 	}

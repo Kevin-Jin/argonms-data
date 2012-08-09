@@ -30,6 +30,7 @@ public class QuestMob implements IStructure {
 	private int id;
 	private short count;
 
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("id")) {
 			id = Integer.parseInt(value);
@@ -38,6 +39,7 @@ public class QuestMob implements IStructure {
 		}
 	}
 
+	@Override
 	public int size() {
 		return
 			Size.INT //id
@@ -45,6 +47,7 @@ public class QuestMob implements IStructure {
 		;
 	}
 
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeInt(id);
 		lew.writeShort(count);

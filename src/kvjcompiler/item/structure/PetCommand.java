@@ -27,14 +27,15 @@ import kvjcompiler.Size;
  * @author GoldenKevin
  */
 public class PetCommand implements IStructure {
-	private byte command;
+	private final byte command;
 	private int prob;
 	private int expInc;
-	
+
 	public PetCommand(byte command) {
 		this.command = command;
 	}
-	
+
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("prob")) {
 			prob = Integer.parseInt(value);
@@ -42,11 +43,13 @@ public class PetCommand implements IStructure {
 			expInc = Integer.parseInt(value);
 		}
 	}
-	
+
+	@Override
 	public int size() {
 		return (Size.BYTE + 2 * Size.INT);
 	}
-	
+
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeByte(command);
 		lew.writeInt(prob);

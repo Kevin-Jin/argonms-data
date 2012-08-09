@@ -242,6 +242,13 @@
 
 	* Corrected changelog revision numbers after moving / to /trunk.
 
+2012-08-09  GoldenKevin  (revision 29)
+
+	* Added drops for Kerning PQ.
+	* Added opcode that prevents certain mobs from dropping mesos.
+	* Drop rate of Todd's How-to-Hunt mobs is now 80%.
+	* Source code formatting more consistent with other projects.
+
 Copyright 2010-2012 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

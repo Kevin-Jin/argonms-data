@@ -67,6 +67,7 @@ public abstract class QuestBehavior implements IStructure {
 		this.repeatInterval = interval;
 	}
 
+	@Override
 	public int size() {
 		int size = Size.BYTE; //amount of items
 		for (QuestItem item : items)
@@ -79,6 +80,7 @@ public abstract class QuestBehavior implements IStructure {
 		return size;
 	}
 
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeByte((byte) items.size());
 		for (QuestItem item : items)

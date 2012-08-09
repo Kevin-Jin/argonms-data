@@ -29,20 +29,23 @@ import kvjcompiler.Size;
  * @author GoldenKevin
  */
 public class ScrollRequirements implements IStructure {
-	private List<Integer> reqs;
-	
+	private final List<Integer> reqs;
+
 	public ScrollRequirements() {
 		reqs = new ArrayList<Integer>();
 	}
-	
+
+	@Override
 	public void setProperty(String key, String value) {
 		reqs.add(Integer.valueOf(value));
 	}
 
+	@Override
 	public int size() {
 		return Size.INT + Size.INT * reqs.size();
 	}
 
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeInt(reqs.size());
 		for (Integer i : reqs)

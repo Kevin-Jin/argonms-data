@@ -60,7 +60,7 @@ public class ItemConverter extends Converter {
 		ITEM_EFFECT = 17,
 		TRIGGER_ITEM = 18,
 		MESO_VALUE = 19,
-		
+
 		PET_COMMAND = 20,
 		PET_HUNGER = 21,
 		PET_EVOLVE = 22
@@ -72,36 +72,39 @@ public class ItemConverter extends Converter {
 	private Map<Integer, Integer> evolIds;
 	private Map<Integer, Integer> evolProbs;
 
+	@Override
 	public String getWzName() {
 		return "Item.wz";
 	}
 
+	@Override
 	public void compile(String outPath, String internalPath, String imgName, XMLStreamReader r) throws XMLStreamException, IOException {
 		this.evolIds = new HashMap<Integer, Integer>();
 		this.evolProbs = new HashMap<Integer, Integer>();
 		startCompile(outPath, internalPath, imgName, r);
-		
+
 		for (Entry<Integer, Integer> pair : evolIds.entrySet())
 			System.out.println("Evolve petid #" + pair.getKey() + " (value " + pair.getValue() + ") not paired with a probability.");
-		
+
 		for (Entry<Integer, Integer> pair : evolProbs.entrySet())
 			System.out.println("Evolve probability #" + pair.getKey() + " (value " + pair.getValue() + ") not paired with a pet id.");
-		
+
 		finalizeCompile(internalPath, imgName);
 	}
-	
+
+	@Override
 	protected void startCompile(String outPath, String internalPath, String imgName, XMLStreamReader r) throws XMLStreamException, IOException {
 		System.err.print("Building " + internalPath + imgName + "...\t");
-		
+
 		if (r.getEventType() != XMLStreamReader.START_DOCUMENT)
 			throw new IllegalStateException("ERROR: Received an XML that has already been partially read.");
-		
+
 		r.next();
 		if (DataType.getFromString(r.getLocalName()) != DataType.IMGDIR || !r.getAttributeValue(0).equals(imgName))
 			throw new IllegalStateException("ERROR: Received a non-WZ XML file.");
-		
+
 		this.r = r;
-		
+
 		String id = imgName.substring(0, imgName.lastIndexOf(".img"));
 		if (!isNumber(id)) {
 			return;
@@ -121,10 +124,11 @@ public class ItemConverter extends Converter {
 						throw new IllegalStateException("ERROR: Could not create compiled directory " + binDir.getAbsolutePath());
 			}
 		}
-		
+
 		traverseBlock("");
 	}
-	
+
+	@Override
 	protected void finalizeCompile(String internalPath, String imgName) throws IOException, XMLStreamException {
 		try {
 			if (r.getEventType() != XMLStreamReader.END_ELEMENT || DataType.getFromString(r.getLocalName()) != DataType.IMGDIR || r.next() != XMLStreamReader.END_DOCUMENT) {
@@ -132,7 +136,7 @@ public class ItemConverter extends Converter {
 				System.err.println("Skipped.");
 				return;
 			}
-			
+
 			System.out.println(getWzName() + File.separatorChar + internalPath + imgName + " done.");
 			System.err.println("Complete.");
 		} finally {
@@ -146,10 +150,11 @@ public class ItemConverter extends Converter {
 			}
 		}
 	}
-	
+
+	@Override
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
 		String[] dirs = nestedPath.split("/");
-		
+
 		if (!pet) {
 			if (handleItemDir(dirs))
 				return;
@@ -157,10 +162,10 @@ public class ItemConverter extends Converter {
 			if (handlePetDir(dirs))
 				return;
 		}
-		
+
 		traverseBlock(nestedPath);
 	}
-	
+
 	private boolean handleItemDir(String[] dirs) throws XMLStreamException, IOException {
 		if (!dirs[0].equals(current))
 			if (isNumber(dirs[0])) {
@@ -253,7 +258,7 @@ public class ItemConverter extends Converter {
 		}
 		return false;
 	}
-	
+
 	private boolean handlePetDir(String[] dirs) throws XMLStreamException, IOException {
 		if (dirs[0].equals("interact")) {
 			PetCommand c;
@@ -284,7 +289,8 @@ public class ItemConverter extends Converter {
 		}
 		return false;
 	}
-	
+
+	@Override
 	protected void handleProperty(String nestedPath, String value) throws IOException {
 		String[] dirs = nestedPath.split("/");
 		if (!pet)
@@ -292,7 +298,7 @@ public class ItemConverter extends Converter {
 		else
 			handlePetProperty(dirs, value);
 	}
-	
+
 	private void handleItemProperty(String[] dirs, String value) throws IOException {
 		if (dirs[1].equals("info")) {
 			if (dirs[2].equals("stateChangeItem")) {
@@ -352,7 +358,7 @@ public class ItemConverter extends Converter {
 			}
 		}
 	}
-	
+
 	private void handlePetProperty(String[] dirs, String value) throws IOException {
 		if (dirs[0].equals("info")) {
 			if (dirs[1].equals("hungry")) {
@@ -363,79 +369,75 @@ public class ItemConverter extends Converter {
 				//unnecessary... once you processed the entire binary, you can realize how many evolve paths there are...
 			} else if (dirs[1].length() > 8 && dirs[1].substring(0, 8).equals("evolProb")) {
 				int num = Integer.parseInt(dirs[1].substring(8, dirs[1].length()));
-				if (evolIds.containsKey(Integer.valueOf(num))) {
+				if (evolIds.containsKey(Integer.valueOf(num)))
 					fos.write(new LittleEndianWriter(Size.HEADER + 2 * Size.INT, PET_EVOLVE).writeInt(evolIds.remove(Integer.valueOf(num)).intValue()).writeInt(Integer.parseInt(value)).toArray());
-				} else {
+				else
 					evolProbs.put(Integer.valueOf(num), Integer.valueOf(value));
-				}
 			} else if (dirs[1].length() > 4 && dirs[1].substring(0, 4).equals("evol")) {
 				String end = dirs[1].substring(4, dirs[1].length());
 				if (isNumber(end)) {
 					int num = Integer.parseInt(end);
-					if (evolProbs.containsKey(Integer.valueOf(num))) {
+					if (evolProbs.containsKey(Integer.valueOf(num)))
 						fos.write(new LittleEndianWriter(Size.HEADER + 2 * Size.INT, PET_EVOLVE).writeInt(Integer.parseInt(value)).writeInt(evolProbs.remove(Integer.valueOf(num)).intValue()).toArray());
-					} else {
+					else
 						evolIds.put(Integer.valueOf(num), Integer.valueOf(value));
-					}
 				}
 			}
 		}
 	}
-	
+
 	private static byte getDayByteFromString(String str) {
-		if (str.equals("SUN")) {
+		if (str.equals("SUN"))
 			return Calendar.SUNDAY;
-		} else if (str.equals("MON")) {
+		else if (str.equals("MON"))
 			return Calendar.MONDAY;
-		} else if (str.equals("TUE")) {
+		else if (str.equals("TUE"))
 			return Calendar.TUESDAY;
-		} else if (str.equals("WED")) {
+		else if (str.equals("WED"))
 			return Calendar.WEDNESDAY;
-		} else if (str.equals("THU")) {
+		else if (str.equals("THU"))
 			return Calendar.THURSDAY;
-		} else if (str.equals("FRI")) {
+		else if (str.equals("FRI"))
 			return Calendar.FRIDAY;
-		} else if (str.equals("SAT")) {
+		else if (str.equals("SAT"))
 			return Calendar.SATURDAY;
-		} else if (str.equals("HOL")) {
+		else if (str.equals("HOL"))
 			return 8;
-		} else {
+		else
 			return 0;
-		}
 	}
-	
+
 	public static byte getStat(String str) {
-		if (str.equals("STR")) {
+		if (str.equals("STR"))
 			return Effects.STR;
-		} else if (str.equals("DEX")) {
+		else if (str.equals("DEX"))
 			return Effects.DEX;
-		} else if (str.equals("INT")) {
+		else if (str.equals("INT"))
 			return Effects.INT;
-		} else if (str.equals("LUK")) {
+		else if (str.equals("LUK"))
 			return Effects.LUK;
-		} else if (str.equals("PAD")) {
+		else if (str.equals("PAD"))
 			return Effects.PAD;
-		} else if (str.equals("PDD")) {
+		else if (str.equals("PDD"))
 			return Effects.PDD;
-		} else if (str.equals("MAD")) {
+		else if (str.equals("MAD"))
 			return Effects.MAD;
-		} else if (str.equals("MDD")) {
+		else if (str.equals("MDD"))
 			return Effects.MDD;
-		} else if (str.equals("ACC")) {
+		else if (str.equals("ACC"))
 			return Effects.ACC;
-		} else if (str.equals("EVA")) {
+		else if (str.equals("EVA"))
 			return Effects.EVA;
-		} else if (str.equals("MHP")) {
+		else if (str.equals("MHP"))
 			return Effects.MHP;
-		} else if (str.equals("MMP")) {
+		else if (str.equals("MMP"))
 			return Effects.MMP;
-		} else if (str.equals("Speed")) {
+		else if (str.equals("Speed"))
 			return Effects.Speed;
-		} else if (str.equals("Jump")) {
+		else if (str.equals("Jump"))
 			return Effects.Jump;
-		} else if (str.equals("Level")) {
+		else if (str.equals("Level"))
 			return Effects.Level;
-		}
 		return -1;
 	}
 }

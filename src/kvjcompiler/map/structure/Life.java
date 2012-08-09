@@ -27,7 +27,7 @@ import kvjcompiler.Size;
  * @author GoldenKevin
  */
 public class Life implements IStructure {
-	private int lifeid;
+	private final int lifeid;
 	private char type;
 	private int id;
 	private short x;
@@ -39,16 +39,17 @@ public class Life implements IStructure {
 	private short cy;
 	private short rx0;
 	private short rx1;
-	
+
 	public Life(int id) {
 		lifeid = id;
 	}
-	
+
 	/* known unhandleds:
 	 * int life/info (in 103000002)
 	 * int life/team
 	 * string life/limitedname
 	 */
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("type")) {
 			this.type = value.charAt(0);
@@ -76,7 +77,8 @@ public class Life implements IStructure {
 			System.out.println("WARNING: Unhandled property " + key + " in life " + lifeid + ".");
 		}
 	}
-	
+
+	@Override
 	public int size() {
 		int size = Size.INT; //lifeid
 		size += Size.CHAR; //type
@@ -90,10 +92,11 @@ public class Life implements IStructure {
 		size += Size.SHORT; //cy
 		size += Size.SHORT; //rx0
 		size += Size.SHORT; //rx1
-		
+
 		return size;
 	}
-	
+
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeInt(lifeid);
 		lew.writeChar(type);

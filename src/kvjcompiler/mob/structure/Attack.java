@@ -27,17 +27,18 @@ import kvjcompiler.Size;
  * @author GoldenKevin
  */
 public class Attack implements IStructure {
-	private byte attackid;
+	private final byte attackid;
 	private boolean deadlyAttack;
 	private short mpBurn;
 	private byte diseaseSkill;
 	private byte diseaseLevel;
 	private int conMp;
-	
+
 	public Attack(byte id) {
 		this.attackid = id;
 	}
-	
+
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("deadlyAttack")) {
 			this.deadlyAttack = Integer.parseInt(value) > 0;
@@ -54,7 +55,8 @@ public class Attack implements IStructure {
 			System.out.println("WARNING: Unhandled property " + key + " in attack " + attackid + ".");
 		}*/
 	}
-	
+
+	@Override
 	public int size() {
 		int size = Size.BYTE; //attackid
 		size += Size.BOOL; //deadlyAttack
@@ -64,7 +66,8 @@ public class Attack implements IStructure {
 		size += Size.INT; //conMp
 		return size;
 	}
-	
+
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeByte(attackid);
 		lew.writeBool(deadlyAttack);

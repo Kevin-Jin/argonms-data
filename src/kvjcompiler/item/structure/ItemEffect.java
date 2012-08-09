@@ -34,11 +34,11 @@ import kvjcompiler.Size;
  * @author GoldenKevin
  */
 public class ItemEffect implements IStructure {
-	private Map<Byte, Short> shortProps;
-	private Map<Byte, Integer> intProps;
+	private final Map<Byte, Short> shortProps;
+	private final Map<Byte, Integer> intProps;
 	private boolean poison, seal, darkness, weakness, curse;
 	private boolean consumeOnPickup;
-	private List<Integer> consumableByPets;
+	private final List<Integer> consumableByPets;
 
 	public ItemEffect() {
 		shortProps = new HashMap<Byte, Short>();
@@ -46,6 +46,7 @@ public class ItemEffect implements IStructure {
 		consumableByPets = new ArrayList<Integer>();
 	}
 
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("time")) {
 			intProps.put(Byte.valueOf(Effects.DURATION), Integer.valueOf(Integer.parseInt(value) * 1000));
@@ -96,6 +97,7 @@ public class ItemEffect implements IStructure {
 		}
 	}
 
+	@Override
 	public int size() {
 		int sum = 0;
 		sum += (intProps.size() * (Size.INT + Size.BYTE));
@@ -116,6 +118,7 @@ public class ItemEffect implements IStructure {
 		return sum;
 	}
 
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		for (Entry<Byte, Integer> entry : intProps.entrySet())
 			lew.writeByte(entry.getKey().byteValue()).writeInt(entry.getValue().intValue());

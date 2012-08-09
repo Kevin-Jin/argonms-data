@@ -31,10 +31,6 @@ import kvjcompiler.string.structure.StringEntry;
  * @author GoldenKevin
  */
 public class StringConverter extends Converter {
-	public String getWzName() {
-		return "String.wz";
-	}
-	
 	public static final byte
 		NEXT = 1,
 		NAME = 2,
@@ -42,7 +38,13 @@ public class StringConverter extends Converter {
 		STREET_NAME = 4,
 		MSG = 5
 	;
-	
+
+	@Override
+	public String getWzName() {
+		return "String.wz";
+	}
+
+	@Override
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
 		LittleEndianWriter lew;
 		int size;
@@ -65,7 +67,8 @@ public class StringConverter extends Converter {
 			}
 		}
 	}
-	
+
+	@Override
 	protected void handleProperty(String nestedPath, String value) throws IOException {
 	}
 }

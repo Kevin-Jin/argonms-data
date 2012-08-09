@@ -27,17 +27,18 @@ import kvjcompiler.Size;
  * @author GoldenKevin
  */
 public class Reactor implements IStructure {
-	private int reactorid;
+	private final int reactorid;
 	private int id;
 	private short x;
 	private short y;
 	private int reactorTime;
 	private String name;
-	
+
 	public Reactor(int id) {
 		this.reactorid = id;
 	}
-	
+
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("id")) {
 			this.id = Integer.parseInt(value);
@@ -55,7 +56,8 @@ public class Reactor implements IStructure {
 			System.out.println("WARNING: Unhandled property " + key + " in reactor " + reactorid + ".");
 		}
 	}
-	
+
+	@Override
 	public int size() {
 		int size = Size.INT; //reactorid
 		size += Size.INT; //id
@@ -63,10 +65,11 @@ public class Reactor implements IStructure {
 		size += Size.SHORT; //y
 		size += Size.INT; //reactorTime
 		size += name != null ? name.length() + 1 : 1; //name
-		
+
 		return size;
 	}
-	
+
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeInt(reactorid);
 		lew.writeInt(id);
