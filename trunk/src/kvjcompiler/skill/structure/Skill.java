@@ -32,8 +32,8 @@ import kvjcompiler.skill.SkillConverter;
  * @author GoldenKevin
  */
 public class Skill implements IStructure {
-	private int skillid;
-	private Map<Byte, SkillEffect> levels;
+	private final int skillid;
+	private final Map<Byte, SkillEffect> levels;
 	private String elemAttr;
 	private byte summon;
 	private boolean prepared, keydown, keydownend;
@@ -47,6 +47,7 @@ public class Skill implements IStructure {
 		this.summon = -1;
 	}
 
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("elemAttr")) {
 			this.elemAttr = value;
@@ -81,6 +82,7 @@ public class Skill implements IStructure {
 		summon = type;
 	}
 
+	@Override
 	public int size() {
 		int sum = Size.INT;
 		if (elemAttr != null)
@@ -100,6 +102,7 @@ public class Skill implements IStructure {
 		return sum;
 	}
 
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeInt(skillid);
 		if (elemAttr != null)

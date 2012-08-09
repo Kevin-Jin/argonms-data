@@ -39,6 +39,7 @@ public class QuestSkillAction implements IStructure {
 		jobs = new ArrayList<Short>();
 	}
 
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("id")) {
 			id = Integer.parseInt(value);
@@ -55,6 +56,7 @@ public class QuestSkillAction implements IStructure {
 		jobs.add(Short.valueOf(jobId));
 	}
 
+	@Override
 	public int size() {
 		int size = Size.INT; //skill id
 		size += Size.BYTE; //skill level
@@ -65,6 +67,7 @@ public class QuestSkillAction implements IStructure {
 		return size;
 	}
 
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeInt(id);
 		lew.writeByte(skillLevel);

@@ -91,5 +91,6 @@ public final class Effects {
 	;
 
 	private Effects() {
+
 	}
 }

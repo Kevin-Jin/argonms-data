@@ -28,17 +28,18 @@ import kvjcompiler.string.StringConverter;
  * @author GoldenKevin
  */
 public class StringEntry implements IStructure {
-	private int entryid;
-	
+	private final int entryid;
+
 	private String name;
 	private String mapName;
 	private String streetName;
 	private String msg;
-	
+
 	public StringEntry(int id) {
 		this.entryid = id;
 	}
-	
+
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("name")) {
 			this.name = value;
@@ -52,7 +53,8 @@ public class StringEntry implements IStructure {
 			System.out.println("WARNING: Unhandled property " + key + " in entry " + entryid + ".");
 		}*/
 	}
-	
+
+	@Override
 	public int size() {
 		int size = Size.INT;
 		if (name != null) size += name.length() + Size.BYTE + Size.BYTE;
@@ -61,7 +63,8 @@ public class StringEntry implements IStructure {
 		if (msg != null) size += msg.length() + Size.BYTE + Size.BYTE;
 		return (size == Size.INT) ? 0 : size;
 	}
-	
+
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeInt(entryid);
 		if (name != null) lew.writeByte(StringConverter.NAME).writeNullTerminatedString(name);

@@ -24,7 +24,7 @@ package kvjcompiler;
  */
 public class Size {
 	public static final int HEADER = 1; //currently 1-byte (255 possible values)
-	
+
 	public static final int
 		LONG = 8,
 		INT = 4,
@@ -35,8 +35,12 @@ public class Size {
 		CHAR = 1,
 		BOOL = 1
 	;
-	
+
 	public static final int NULL_TERMINATED_STRING(String str) {
 		return str.length() + 1;
+	}
+
+	private Size() {
+
 	}
 }

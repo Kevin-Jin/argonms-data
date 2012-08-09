@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import kvjcompiler.Converter;
@@ -58,32 +59,37 @@ public class MobConverter extends Converter {
 		SKILL = 20,
 		BUFF = 21,
 		DELAY = 22,
-		DROPS = 23
+		DROPS = 23,
+		NO_MESOS = 24
 	;
-	
+
 	private Map<String, Integer> delays;
 	private boolean isBoss;
 	private Map<Integer, Map<Integer, Integer>> drops;
-	
+	private Set<Integer> noMesos;
+
+	@Override
 	public void compile(String outPath, String internalPath, String imgName, XMLStreamReader r) throws XMLStreamException, IOException {
 		this.delays = new HashMap<String, Integer>();
 		this.isBoss = false;
 		startCompile(outPath, internalPath, imgName, r);
-		
+
 		String key;
 		for (Entry<String, Integer> pair : delays.entrySet()) {
 			key = pair.getKey();
 			fos.write(new LittleEndianWriter(Size.HEADER + key.length() + 1 + Size.INT, DELAY).writeNullTerminatedString(key).writeInt(pair.getValue().intValue()).toArray());
 		}
 		writeDrops(imgName);
-		
+
 		finalizeCompile(internalPath, imgName);
 	}
-	
+
+	@Override
 	public String getWzName() {
 		return "Mob.wz";
 	}
-	
+
+	@Override
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
 		String[] dirs = nestedPath.split("/");
 		if (dirs[0].equals("info")) {
@@ -245,16 +251,21 @@ public class MobConverter extends Converter {
 		}
 		//traverseBlock(nestedPath);
 	}
-	
+
+	@Override
 	protected void handleProperty(String nestedPath, String value) throws IOException {
 		//System.out.println("DEBUG: Handling " + nestedPath);
 		//String[] dirs = nestedPath.split("/");
 	}
-	
+
 	public void setDrops(Map<Integer, Map<Integer, Integer>> drops) {
 		this.drops = drops;
 	}
-	
+
+	public void setNoMesos(Set<Integer> mobs) {
+		this.noMesos = mobs;
+	}
+
 	private void writeDrops(String imgName) throws IOException {
 		int mobid = Integer.parseInt(imgName.substring(0, imgName.indexOf(".img")));
 		Map<Integer, Integer> idAndChance = drops.get(Integer.valueOf(mobid));
@@ -294,5 +305,7 @@ public class MobConverter extends Converter {
 			}
 			fos.write(lew.toArray());
 		}
+		if (noMesos.contains(Integer.valueOf(mobid)))
+			fos.write(NO_MESOS);
 	}
 }

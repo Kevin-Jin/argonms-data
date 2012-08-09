@@ -27,7 +27,7 @@ public enum DataType {
 	CANVAS,
 	VECTOR,
 	UNKNOWN;
-	
+
 	public boolean isDirectory() {
 		return (this == IMGDIR || this == CANVAS);
 	}

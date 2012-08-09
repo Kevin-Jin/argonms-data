@@ -21,10 +21,12 @@ package kvjcompiler.mob;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import kvjcompiler.Converter;
@@ -42,18 +44,24 @@ import kvjcompiler.DataType;
  *         LightPepsi (chance logic)
  */
 public class DropConverter extends Converter {
-	private Map<Integer, Map<Integer, Integer>> drops;
-	private CustomDropsMap customDrops;
+	private final Map<Integer, Map<Integer, Integer>> drops;
+	private final Set<Integer> noMesos;
+	private final CustomDropsMap customDrops;
 
 	public DropConverter() {
 		drops = new HashMap<Integer, Map<Integer, Integer>>();
+		noMesos = new HashSet<Integer>();
+		customDrops = new CustomDropsMap();
+
 		populateCustomDrops();
 	}
 
+	@Override
 	public String getWzName() {
 		return null;
 	}
 
+	@Override
 	protected void startCompile(String outPath, String internalPath, String imgName, XMLStreamReader r) throws XMLStreamException, IOException {
 		System.err.print("Getting drop chances...\t");
 
@@ -63,17 +71,18 @@ public class DropConverter extends Converter {
 		r.next();
 		if (DataType.getFromString(r.getLocalName()) != DataType.IMGDIR || !r.getAttributeValue(0).equals("MonsterBook.img"))
 			throw new IllegalStateException("ERROR: Received a non-WZ XML file.");
-		
+
 		this.r = r;
 		traverseBlock("");
 	}
 
+	@Override
 	protected void finalizeCompile(String internalPath, String imgName) throws IOException, XMLStreamException {
 		try {
 			customDrops.appendRemaining(drops);
 			if (r.getEventType() != XMLStreamReader.END_ELEMENT || DataType.getFromString(r.getLocalName()) != DataType.IMGDIR || r.next() != XMLStreamReader.END_DOCUMENT)
 				throw new IllegalStateException("ERROR: End of " + internalPath + imgName + " not yet reached.");
-			
+
 			System.out.println("MonsterDrops done.");
 			System.err.println("Finished loading drop chances.");
 		} finally {
@@ -84,6 +93,7 @@ public class DropConverter extends Converter {
 		}
 	}
 
+	@Override
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
 		for (int open1 = 1, event, open; open1 > 0;) {
 			event = r.next();
@@ -113,18 +123,23 @@ public class DropConverter extends Converter {
 		}
 	}
 
+	@Override
 	protected void handleProperty(String nestedPath, String value) throws IOException {
-		
+
 	}
 
 	public Map<Integer, Map<Integer, Integer>> getDrops() {
 		return drops;
 	}
 
-    private static final int COMMON_ETC_RATE = 600000; // 60% Rate
-    private static final int SUPER_BOSS_ITEM_RATE = 300000; // 30% Rate
-    private static final int POTION_RATE = 20000; //2%
-    private static final int ARROWS_RATE = 25000; //2.5%
+	public Set<Integer> getNoMesos() {
+		return noMesos;
+	}
+
+	private static final int COMMON_ETC_RATE = 600000; // 60% Rate
+	private static final int SUPER_BOSS_ITEM_RATE = 300000; // 30% Rate
+	private static final int POTION_RATE = 20000; //2%
+	private static final int ARROWS_RATE = 25000; //2.5%
 
 	//I love you, LightPepsi...
 	private static int getChance(int id) {
@@ -377,10 +392,27 @@ public class DropConverter extends Converter {
 		return 999999; //99.9999%
 	}
 
+	private void addToNoMesos(int mobId) {
+		noMesos.add(Integer.valueOf(mobId));
+	}
+
+	//TODO: read these from a script or text file rather than hardcode
 	private void populateCustomDrops() {
-		customDrops = new CustomDropsMap();
-		customDrops.add(9409000, 4000300, 500000);
-		customDrops.add(9409001, 4000301, 500000);
+		//Todd's How-to-Hunt
+		customDrops.add(9409000, 4000300, 800000);
+		customDrops.add(9409001, 4000301, 800000);
+		addToNoMesos(9409000);
+		addToNoMesos(9409001);
+
+		//Kerning PQ
+		customDrops.add(9300000, 4001008, 1000000);
+		customDrops.add(9300001, 4001007, 1000000);
+		customDrops.add(9300002, 4001008, 1000000);
+		customDrops.add(9300003, 4001008, 1000000);
+		addToNoMesos(9300000);
+		addToNoMesos(9300001);
+		addToNoMesos(9300002);
+		addToNoMesos(9300003);
 	}
 
 	private static class IdAndChance {

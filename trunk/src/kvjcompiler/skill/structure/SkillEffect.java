@@ -33,10 +33,10 @@ import kvjcompiler.Size;
  * @author GoldenKevin
  */
 public class SkillEffect implements IStructure {
-	private Map<Byte, Integer> intProps;
-	private Map<Byte, Short> shortProps;
-	private Map<Byte, Byte> byteProps;
-	private Map<Byte, Integer> summons;
+	private final Map<Byte, Integer> intProps;
+	private final Map<Byte, Short> shortProps;
+	private final Map<Byte, Byte> byteProps;
+	private final Map<Byte, Integer> summons;
 	private Point lt;
 	private Point rb;
 
@@ -47,6 +47,7 @@ public class SkillEffect implements IStructure {
 		this.summons = new TreeMap<Byte, Integer>();
 	}
 
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("mpCon")) {
 			shortProps.put(Byte.valueOf(Effects.MP_CONSUME), Short.valueOf(Short.parseShort(value)));
@@ -125,6 +126,7 @@ public class SkillEffect implements IStructure {
 		}
 	}
 
+	@Override
 	public int size() {
 		int sum = 0;
 		sum += (intProps.size() * (Size.INT + Size.BYTE));
@@ -138,6 +140,7 @@ public class SkillEffect implements IStructure {
 		return sum;
 	}
 
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		for (Entry<Byte, Integer> entry : intProps.entrySet())
 			lew.writeByte(entry.getKey().byteValue()).writeInt(entry.getValue().intValue());

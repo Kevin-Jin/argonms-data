@@ -29,7 +29,8 @@ import kvjcompiler.Size;
 public class Skill implements IStructure {
 	private short skill;
 	private byte level;
-	
+
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("skill")) {
 			this.skill = Short.parseShort(value);
@@ -39,13 +40,15 @@ public class Skill implements IStructure {
 			System.out.println("WARNING: Unhandled property " + key + " in skill " + skillid + ".");
 		}*/
 	}
-	
+
+	@Override
 	public int size() {
 		int size = Size.SHORT; //skill
 		size += Size.BYTE; //level
 		return size;
 	}
-	
+
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeShort(skill);
 		lew.writeByte(level);

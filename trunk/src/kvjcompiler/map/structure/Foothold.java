@@ -27,18 +27,19 @@ import kvjcompiler.Size;
  * @author GoldenKevin
  */
 public class Foothold implements IStructure {
-	private short id;
+	private final short id;
 	private short x1;
 	private short y1;
 	private short x2;
 	private short y2;
 	private short prev;
 	private short next;
-	
+
 	public Foothold(short fhId) {
 		this.id = fhId;
 	}
-	
+
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("x1")) {
 			this.x1 = Short.parseShort(value);
@@ -56,7 +57,8 @@ public class Foothold implements IStructure {
 			System.out.println("WARNING: Unhandled property " + key + " in foothold.");
 		}
 	}
-	
+
+	@Override
 	public int size() {
 		int size = Size.SHORT; //id
 		size += Size.SHORT; //x1
@@ -67,7 +69,8 @@ public class Foothold implements IStructure {
 		size += Size.SHORT; //next
 		return size;
 	}
-	
+
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeShort(id);
 		lew.writeShort(x1);

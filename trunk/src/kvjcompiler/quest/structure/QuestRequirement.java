@@ -44,29 +44,30 @@ public class QuestRequirement extends QuestBehavior {
 		pets = new ArrayList<Integer>();
 	}
 
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("lvmax")) {
 			maxLevel = Short.parseShort(value);
 		}/* else if (key.equals("start")) {
-			
+
 		}*/ else if (key.equals("startscript")) {
 			startScript = value;
 		} else if (key.equals("normalAutoStart")) {
-			
+
 		} else if (key.equals("pettamenessmin")) {
 			petTamenessMin = Short.parseShort(value);
 		}/* else if (key.equals("infoNumber")) {
-			
+
 		}*/ else if (key.equals("endmeso")) {
 			reqMesos = Short.parseShort(value);
 		} else if (key.equals("endscript")) {
 			endScript = value;
 		}/* else if (key.equals("petRecallLimit")) {
-			
+
 		} else if (key.equals("petAutoSpeakingLimit")) {
-			
+
 		} else if (key.equals("dayByDay")) {
-			
+
 		}*/ else if (key.equals("tamingmoblevelmin")) {
 			mountTamenessMin = Short.parseShort(value);
 		} else if (key.equals("worldmin")) {
@@ -88,6 +89,7 @@ public class QuestRequirement extends QuestBehavior {
 		pets.add(Integer.valueOf(itemId));
 	}
 
+	@Override
 	public int size() {
 		int size = super.size();
 		size += Size.BYTE; //amount of skills
@@ -125,6 +127,7 @@ public class QuestRequirement extends QuestBehavior {
 		return size;
 	}
 
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		super.writeBytes(lew);
 		lew.writeByte((byte) skills.size());

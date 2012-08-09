@@ -48,11 +48,13 @@ public class MapConverter extends Converter {
 		FOOTHOLD = 14,
 		PORTAL = 15
 	;
-	
+
+	@Override
 	public String getWzName() {
 		return "Map.wz";
 	}
-	
+
+	@Override
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
 		String[] dirs = nestedPath.split("/");
 		if (dirs[0].equals("portal")) {
@@ -162,7 +164,7 @@ public class MapConverter extends Converter {
 		} else if (dirs[0].equals("foothold")) {
 			Foothold f;
 			LittleEndianWriter lew;
-			
+
 			for (int open3 = 1, open2, open1, open, event; open3 > 0;) {
 				event = r.next();
 				if (event == XMLStreamReader.START_ELEMENT) {
@@ -212,7 +214,8 @@ public class MapConverter extends Converter {
 		}
 		traverseBlock(nestedPath);
 	}
-	
+
+	@Override
 	protected void handleProperty(String nestedPath, String value) throws IOException {
 		//System.out.println("DEBUG: Handling " + nestedPath);
 		String[] dirs = nestedPath.split("/");

@@ -35,10 +35,12 @@ import kvjcompiler.quest.structure.QuestSkillAction;
 public class QuestActionsConverter extends Converter {
 	private QuestAction a;
 
+	@Override
 	public String getWzName() {
 		return "Quest.wz";
 	}
 
+	@Override
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
 		QuestBehaviors group = new QuestBehaviors(Short.parseShort(r.getAttributeValue(0)));
 		LittleEndianWriter lew;
@@ -127,7 +129,8 @@ public class QuestActionsConverter extends Converter {
 		return event;
 	}
 
+	@Override
 	protected void handleProperty(String nestedPath, String value) throws IOException {
-		
+
 	}
 }

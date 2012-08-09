@@ -57,7 +57,7 @@ public class QuestBehaviors implements IStructure {
 		REWARD_PET_SKILL = 24
 	;
 
-	private short questId;
+	private final short questId;
 	private QuestBehavior start, complete;
 
 	public QuestBehaviors(short questId) {
@@ -71,10 +71,12 @@ public class QuestBehaviors implements IStructure {
 			complete = q;
 	}
 
+	@Override
 	public void setProperty(String key, String value) {
-		
+
 	}
 
+	@Override
 	public int size() {
 		int size = Size.SHORT; //quest Id
 		size += start.size(); //start
@@ -84,6 +86,7 @@ public class QuestBehaviors implements IStructure {
 		return size;
 	}
 
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeShort(questId);
 		start.writeBytes(lew);

@@ -40,6 +40,7 @@ public class QuestAction extends QuestBehavior {
 		skills = new ArrayList<QuestSkillAction>();
 	}
 
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("exp")) {
 			expGain = Integer.parseInt(value);
@@ -58,9 +59,9 @@ public class QuestAction extends QuestBehavior {
 			petSkill = Short.parseShort(value);
 		} /*else if (key.equals("message")) {
 		} else if (key.equals("info")) { //what the heck is this???
-			
+
 		} else if (key.equals("ask")) {
-			
+
 		}*/
 	}
 
@@ -68,6 +69,7 @@ public class QuestAction extends QuestBehavior {
 		skills.add(s);
 	}
 
+	@Override
 	public int size() {
 		int size = super.size();
 		size += Size.BYTE; //amount of skills
@@ -96,6 +98,7 @@ public class QuestAction extends QuestBehavior {
 		return size;
 	}
 
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		super.writeBytes(lew);
 		lew.writeByte((byte) skills.size());

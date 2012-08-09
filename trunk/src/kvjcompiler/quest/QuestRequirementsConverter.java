@@ -34,10 +34,12 @@ import kvjcompiler.quest.structure.QuestSkillRequirement;
  * @author GoldenKevin
  */
 public class QuestRequirementsConverter extends Converter {
+	@Override
 	public String getWzName() {
 		return "Quest.wz";
 	}
 
+	@Override
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
 		QuestBehaviors group = new QuestBehaviors(Short.parseShort(r.getAttributeValue(0)));
 		QuestRequirement req;
@@ -199,7 +201,8 @@ public class QuestRequirementsConverter extends Converter {
 		fos.write(lew.toArray());
 	}
 
+	@Override
 	protected void handleProperty(String nestedPath, String value) throws IOException {
-		
+
 	}
 }

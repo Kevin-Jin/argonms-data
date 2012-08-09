@@ -28,7 +28,7 @@ import kvjcompiler.quest.QuestInfoConverter;
  * @author GoldenKevin
  */
 public class QuestInfo implements IStructure {
-	private short questId;
+	private final short questId;
 
 	public QuestInfo(short questId) {
 		this.questId = questId;
@@ -37,6 +37,7 @@ public class QuestInfo implements IStructure {
 	private String name;
 	private boolean autoStart, autoPreComplete;
 
+	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("name")) {
 			name = value;
@@ -47,6 +48,7 @@ public class QuestInfo implements IStructure {
 		}
 	}
 
+	@Override
 	public int size() {
 		int size = Size.SHORT; //questid
 		size += name.length() + 1; //name
@@ -58,6 +60,7 @@ public class QuestInfo implements IStructure {
 		return size;
 	}
 
+	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeShort(questId);
 		lew.writeNullTerminatedString(name);

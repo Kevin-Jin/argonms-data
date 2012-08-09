@@ -37,10 +37,12 @@ public class QuestInfoConverter extends Converter {
 		AUTO_PRE_COMPLETE = 2
 	;
 
+	@Override
 	public String getWzName() {
 		return "Quest.wz";
 	}
 
+	@Override
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
 		QuestInfo i = new QuestInfo(Short.parseShort(r.getAttributeValue(0)));
 		for (int open1 = 1, event, open; open1 > 0;) {
@@ -70,7 +72,8 @@ public class QuestInfoConverter extends Converter {
 		fos.write(lew.toArray());
 	}
 
+	@Override
 	protected void handleProperty(String nestedPath, String value) throws IOException {
-		
+
 	}
 }

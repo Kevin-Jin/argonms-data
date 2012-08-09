@@ -47,24 +47,24 @@ import kvjcompiler.string.StringConverter;
 public abstract class Converter {
 	protected OutputStream fos;
 	protected XMLStreamReader r;
-	
+
 	public abstract String getWzName();
-	
+
 	public void compile(String outPath, String internalPath, String imgName, XMLStreamReader r) throws XMLStreamException, IOException {
 		startCompile(outPath, internalPath, imgName, r);
 		finalizeCompile(internalPath, imgName);
 	}
-	
+
 	protected void startCompile(String outPath, String internalPath, String imgName, XMLStreamReader r) throws XMLStreamException, IOException {
 		System.err.print("Building " + internalPath + imgName + "...\t");
-		
+
 		if (r.getEventType() != XMLStreamReader.START_DOCUMENT)
 			throw new IllegalStateException("ERROR: Received an XML that has already been partially read.");
-		
+
 		r.next();
 		if (DataType.getFromString(r.getLocalName()) != DataType.IMGDIR || !r.getAttributeValue(0).equals(imgName))
 			throw new IllegalStateException("ERROR: Received a non-WZ XML file.");
-		
+
 		File binDir = new File(outPath + getWzName() + File.separatorChar + internalPath);
 		if (!binDir.exists())
 			if (!binDir.mkdirs())
@@ -73,12 +73,12 @@ public abstract class Converter {
 		this.r = r;
 		traverseBlock("");
 	}
-	
+
 	protected void finalizeCompile(String internalPath, String imgName) throws IOException, XMLStreamException {
 		try {
 			if (r.getEventType() != XMLStreamReader.END_ELEMENT || DataType.getFromString(r.getLocalName()) != DataType.IMGDIR || r.next() != XMLStreamReader.END_DOCUMENT)
 				throw new IllegalStateException("ERROR: End of " + internalPath + imgName + " not yet reached.");
-			
+
 			System.out.println(getWzName() + File.separatorChar + internalPath + imgName + " done.");
 			System.err.println("Complete.");
 		} finally {
@@ -92,7 +92,7 @@ public abstract class Converter {
 			}
 		}
 	}
-	
+
 	protected int traverseBlock(String nestedPath) throws XMLStreamException, IOException {
 		//System.out.println("DEBUG: Entering " + nestedPath);
 		DataType type;
@@ -105,7 +105,7 @@ public abstract class Converter {
 				nestedLevel++;
 				type = DataType.getFromString(r.getLocalName());
 				key = r.getAttributeValue(0);
-				
+
 				if (type.isDirectory()) {
 					handleDir((nestedPath.length() == 0 ? "" : nestedPath + '/') + key);
 				} else {
@@ -117,15 +117,15 @@ public abstract class Converter {
 			if (event == XMLStreamReader.END_ELEMENT) {
 				nestedLevel--;
 				type = DataType.getFromString(r.getLocalName());
-				
+
 				if (type.isDirectory()) {
-					
+
 				}
 			}
 		}
 		return event;
 	}
-	
+
 	protected abstract void handleDir(String nestedPath) throws XMLStreamException, IOException;
 	protected abstract void handleProperty(String nestedPath, String value) throws IOException;
 
@@ -138,27 +138,26 @@ public abstract class Converter {
 		}
 		return true;
 	}
-	
+
 	public static Converter getConverter(String source) {
-		if (source.equals("Character.wz")) {
+		if (source.equals("Character.wz"))
 			return new CharacterConverter();
-		} else if (source.equals("Map.wz")) {
+		else if (source.equals("Map.wz"))
 			return new MapConverter();
-		} else if (source.equals("Mob.wz")) {
+		else if (source.equals("Mob.wz"))
 			return new MobConverter();
-		} else if (source.equals("Reactor.wz")) {
+		else if (source.equals("Reactor.wz"))
 			return new ReactorConverter();
-		} else if (source.equals("Item.wz")) {
+		else if (source.equals("Item.wz"))
 			return new ItemConverter();
-		} else if (source.equals("String.wz")) {
+		else if (source.equals("String.wz"))
 			return new StringConverter();
-		} else if (source.equals("Skill.wz")) {
+		else if (source.equals("Skill.wz"))
 			return new SkillConverter();
-		} else if (source.equals("Quest.wz")) {
+		else if (source.equals("Quest.wz"))
 			return new QuestConverter();
-		} else if (source.equals("Npc.wz")) {
+		else if (source.equals("Npc.wz"))
 			return new NpcConverter();
-		}
 		return null;
 	}
 }

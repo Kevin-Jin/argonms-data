@@ -37,10 +37,12 @@ public class QuestConverter extends Converter {
 		QUEST_INFO = 3
 	;
 
+	@Override
 	public String getWzName() {
 		return "Quest.wz";
 	}
 
+	@Override
 	public void compile(String outPath, String internalPath, String imgName, XMLStreamReader r) throws XMLStreamException, IOException {
 		//don't worry about not using a singleton, we're only instantiating each once (only one copy of each file)
 		if (imgName.equals("Act.img"))
@@ -51,12 +53,14 @@ public class QuestConverter extends Converter {
 			new QuestInfoConverter().compile(outPath, internalPath, imgName, r);
 	}
 
+	@Override
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
-		
+
 	}
 
+	@Override
 	protected void handleProperty(String nestedPath, String value) throws IOException {
-		
+
 	}
 
 	public static int[] convertCommon(XMLStreamReader r, QuestBehavior q) throws XMLStreamException {
@@ -87,7 +91,7 @@ public class QuestConverter extends Converter {
 		} else if (key.equals("pop")) {
 			q.setFame(Short.parseShort(r.getAttributeValue(1)));
 		} else if (key.equals("npc")) {
-			
+
 		} else if (key.equals("lvmin")) {
 			//quest 4900 start requirements check has a lvmin of 100200 for some reason. T.T
 			q.setMinLevel((short) Math.min(Integer.parseInt(r.getAttributeValue(1)), 200));
@@ -130,7 +134,7 @@ public class QuestConverter extends Converter {
 			q.setEndDate(Integer.parseInt(r.getAttributeValue(1)));
 		//conversation stuff. we don't care about them, but we still have to skip them...
 		} else if (isNumber(key)) {
-			
+
 		} else {
 			return new int[] { event, 0 };
 		}

@@ -163,6 +163,7 @@ public class WzCompiler {
 					DropConverter d = new DropConverter();
 					d.compile(null, null, null, r);
 					((MobConverter) converter).setDrops(d.getDrops());
+					((MobConverter) converter).setNoMesos(d.getNoMesos());
 				}
 				dir = new File(inputPath);
 				for (String fileName : dir.list()) {
@@ -214,7 +215,7 @@ public class WzCompiler {
 		end = System.currentTimeMillis();
 		System.out.println(separator + "Processing completed in " + (end - start) + "ms!");
 		ps.close();
-		
+
 		System.err.println(count + " file(s) compiled successfully in " + (end - start) + "ms! Check the logs at " + log + " for more information.");
 	}
 }
