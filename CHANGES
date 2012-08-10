@@ -249,6 +249,10 @@
 	* Drop rate of Todd's How-to-Hunt mobs is now 80%.
 	* Source code formatting more consistent with other projects.
 
+2012-08-10  GoldenKevin  (revision 30)
+
+	* Field limit is now included with compiled map files.
+
 Copyright 2010-2012 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.
