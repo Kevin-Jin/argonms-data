@@ -36,9 +36,9 @@ public class CharacterConverter extends Converter {
 		IS_ONE_ONLY = 4,
 		IS_QUEST_ITEM = 5,
 		BONUS_STAT = 6,
-		CASH = 10,
-		REQ_STAT = 14,
-		UPGRADE_SLOTS = 15,
+		CASH = 14,
+		REQ_STAT = 18,
+		UPGRADE_SLOTS = 19,
 
 		TAMING_MOB_ID = 27
 	;
