@@ -50,20 +50,24 @@ public class ItemConverter extends Converter {
 		SUMMON = 7,
 		SUCCESS = 8,
 		CURSED = 9,
-		CASH = 10,
-		OPERATING_HOURS = 11,
-		SKILL = 12,
-		UNIT_PRICE = 13,
-		REQ_STAT = 14,
-		UPGRADE_SLOTS = 15,
-		SCROLL_REQUIREMENTS = 16,
-		ITEM_EFFECT = 17,
-		TRIGGER_ITEM = 18,
-		MESO_VALUE = 19,
+		RECOVER = 10,
+		RAND_STAT = 11,
+		PREVENT_SLIP = 12,
+		WARM_SUPPORT = 13,
+		CASH = 14,
+		OPERATING_HOURS = 15,
+		SKILL = 16,
+		UNIT_PRICE = 17,
+		REQ_STAT = 18,
+		UPGRADE_SLOTS = 19,
+		SCROLL_REQUIREMENTS = 20,
+		ITEM_EFFECT = 21,
+		TRIGGER_ITEM = 22,
+		MESO_VALUE = 23,
 
-		PET_COMMAND = 20,
-		PET_HUNGER = 21,
-		PET_EVOLVE = 22
+		PET_COMMAND = 24,
+		PET_HUNGER = 25,
+		PET_EVOLVE = 26
 	;
 
 	private File binDir;
@@ -322,10 +326,22 @@ public class ItemConverter extends Converter {
 					fos.write(new LittleEndianWriter(Size.HEADER, IS_ONE_ONLY).toArray());
 			} else if (dirs[2].equals("tuc")) {
 				fos.write(new LittleEndianWriter(Size.HEADER + Size.BYTE, UPGRADE_SLOTS).writeByte(Byte.parseByte(value)).toArray());
-			} else if (dirs[2].equals("cursed")) {
-				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, CURSED).writeInt(Integer.parseInt(value)).toArray());
 			} else if (dirs[2].equals("success")) {
 				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, SUCCESS).writeInt(Integer.parseInt(value)).toArray());
+			} else if (dirs[2].equals("cursed")) {
+				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, CURSED).writeInt(Integer.parseInt(value)).toArray());
+			} else if (dirs[2].equals("recover")) {
+				if (Integer.parseInt(value) == 1)
+					fos.write(new LittleEndianWriter(Size.HEADER, RECOVER).toArray());
+			} else if (dirs[2].equals("randstat")) {
+				if (Integer.parseInt(value) == 1)
+					fos.write(new LittleEndianWriter(Size.HEADER, RAND_STAT).toArray());
+			} else if (dirs[2].equals("preventslip")) {
+				if (Integer.parseInt(value) == 1)
+					fos.write(new LittleEndianWriter(Size.HEADER, PREVENT_SLIP).toArray());
+			} else if (dirs[2].equals("warmsupport")) {
+				if (Integer.parseInt(value) == 1)
+					fos.write(new LittleEndianWriter(Size.HEADER, WARM_SUPPORT).toArray());
 			} else if (dirs[2].equals("cash")) {
 				if (Integer.parseInt(value) == 1)
 					fos.write(new LittleEndianWriter(Size.HEADER, CASH).toArray());
