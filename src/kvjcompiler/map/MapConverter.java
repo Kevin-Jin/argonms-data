@@ -212,6 +212,22 @@ public class MapConverter extends Converter {
 				}
 			}
 			return;
+		} else if (dirs[0].equals("shipObj")) {
+			LittleEndianWriter lew;
+			Ship ship = new Ship();
+			for (int open = 1, event; open > 0;) {
+				event = r.next();
+				if (event == XMLStreamReader.START_ELEMENT) {
+					open++;
+					ship.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
+				} else if (event == XMLStreamReader.END_ELEMENT) {
+					open--;
+				}
+			}
+			lew = new LittleEndianWriter(Size.HEADER + ship.size(), BOAT);
+			ship.writeBytes(lew);
+			fos.write(lew.toArray());
+			return;
 		}
 		traverseBlock(nestedPath);
 	}
@@ -244,8 +260,6 @@ public class MapConverter extends Converter {
 			}
 		} else if (dirs[0].equals("clock")) {
 			fos.write(new LittleEndianWriter(Size.HEADER, CLOCK).toArray());
-		} else if (dirs[0].equals("shipObj")) {
-			fos.write(new LittleEndianWriter(Size.HEADER, BOAT).toArray());
 		}
 	}
 }
