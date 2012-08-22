@@ -40,7 +40,7 @@ public class CharacterConverter extends Converter {
 		REQ_STAT = 14,
 		UPGRADE_SLOTS = 15,
 
-		TAMING_MOB_ID = 23
+		TAMING_MOB_ID = 27
 	;
 
 	@Override

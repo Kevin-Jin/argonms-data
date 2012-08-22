@@ -253,6 +253,10 @@
 
 	* Field limit is now included with compiled map files.
 
+2012-08-21  GoldenKevin  (revision 31)
+
+	* Added full support for upgrade scrolls.
+
 Copyright 2010-2012 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.
