@@ -413,6 +413,23 @@ public class DropConverter extends Converter {
 		addToNoMesos(9300001);
 		addToNoMesos(9300002);
 		addToNoMesos(9300003);
+
+		//dark marble drops for magician's 2nd job advancement challenge
+		customDrops.add(9000001, 4031013, 1000000);
+		customDrops.add(9000002, 4031013, 1000000);
+		//dark marble drops for warrior's 2nd job advancement challenge
+		customDrops.add(9000100, 4031013, 1000000);
+		customDrops.add(9000101, 4031013, 1000000);
+		//dark marble drops for bowmen's 2nd job advancement challenge
+		customDrops.add(9000200, 4031013, 1000000);
+		customDrops.add(9000201, 4031013, 1000000);
+		//dark marble drops for thief's 2nd job advancement challenge
+		customDrops.add(9000300, 4031013, 1000000);
+		customDrops.add(9000301, 4031013, 1000000);
+		//How to Become a Brawler
+		customDrops.add(9001006, 4031856, 1000000);
+		//How to Become a Gunslinger
+		customDrops.add(9001005, 4031857, 1000000);
 	}
 
 	private static class IdAndChance {

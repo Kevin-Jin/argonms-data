@@ -135,11 +135,17 @@ public class WzCompiler {
 				for (String cat : new File(inputPath).list()) {
 					absDir = inputPath + cat + File.separatorChar;
 					dir = new File(absDir);
-					if (dir.isDirectory() && !cat.equals("Afterimage") && !cat.equals("Face") && !cat.equals("Hair")) {
-						for (String fileName : dir.list()) {
-							r = f.createXMLStreamReader(new FileInputStream(new File(absDir + fileName)));
-							converter.compile(outPath, cat + File.separatorChar, fileName.substring(0, fileName.lastIndexOf(".xml")), r);
-							count++;
+					if (dir.isDirectory()) {
+						if (cat.equals("Face") || cat.equals("Hair")) {
+							for (String fileName : dir.list()) {
+								converter.compile(outPath, cat, fileName.substring(0, fileName.lastIndexOf(".xml")), null);
+							}
+						} else if (!cat.equals("Afterimage")) {
+							for (String fileName : dir.list()) {
+								r = f.createXMLStreamReader(new FileInputStream(new File(absDir + fileName)));
+								converter.compile(outPath, cat + File.separatorChar, fileName.substring(0, fileName.lastIndexOf(".xml")), r);
+								count++;
+							}
 						}
 					}
 				}

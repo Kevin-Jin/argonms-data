@@ -18,8 +18,12 @@
 
 package kvjcompiler.character;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import kvjcompiler.Converter;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
@@ -43,9 +47,52 @@ public class CharacterConverter extends Converter {
 		TAMING_MOB_ID = 27
 	;
 
+	private String beautyCategory;
+
 	@Override
 	public String getWzName() {
 		return "Character.wz";
+	}
+
+	@Override
+	public void compile(String outPath, String internalPath, String imgName, XMLStreamReader r) throws XMLStreamException, IOException {
+		if (r != null) {
+			//equips
+			if (beautyCategory != null) {
+				//first, cleanup last beauty category if there was one.
+				System.out.println(getWzName() + File.separatorChar + beautyCategory + " done.");
+				System.err.println("Complete.");
+				fos.close();
+				beautyCategory = null;
+			}
+
+			startCompile(outPath, internalPath, imgName, r);
+			finalizeCompile(internalPath, imgName);
+		} else {
+			//beauty
+			File binDir = new File(outPath + getWzName() + File.separatorChar);
+			if (!binDir.exists())
+				if (!binDir.mkdirs())
+					throw new IllegalStateException("ERROR: Could not create compiled directory " + binDir.getAbsolutePath());
+
+			if (beautyCategory == null) {
+				//first iteration in a beauty category (after an equip category).
+				System.err.print("Building " + internalPath + "...\t");
+				fos = new BufferedOutputStream(new FileOutputStream(binDir.getAbsolutePath() + File.separatorChar + internalPath + ".kvj"));
+				beautyCategory = internalPath;
+			} else if (!beautyCategory.equals(internalPath)) {
+				//first iteration in a beauty category after another beauty category.
+				//first, cleanup last beauty category.
+				System.out.println(getWzName() + File.separatorChar + beautyCategory + " done.");
+				System.err.println("Complete.");
+				fos.close();
+
+				System.err.print("Building " + internalPath + "...\t");
+				fos = new BufferedOutputStream(new FileOutputStream(binDir.getAbsolutePath() + File.separatorChar + internalPath + ".kvj"));
+				beautyCategory = internalPath;
+			}
+			fos.write(new LittleEndianWriter(Size.SHORT).writeShort(Short.parseShort(imgName.substring(0, imgName.lastIndexOf(".img")))).toArray());
+		}
 	}
 
 	@Override

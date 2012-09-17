@@ -266,6 +266,12 @@
 	* Fixed syntax error in Ship.
 	* Fixed incorrect opcodes used in CharacterConverter.
 
+2012-09-17  GoldenKevin  (revision 34)
+
+	* Added custom drops for 2nd job advancement challenges.
+	* The compiled Character.wz/Face.kvj and Character.wz/Hair.kvj now list the
+	IDs of every eye style and hair style the client supports.
+
 Copyright 2010-2012 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.
