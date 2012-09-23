@@ -78,7 +78,7 @@ public class SkillConverter extends Converter {
 											value = r.getAttributeValue(1);
 											DataType type = DataType.getFromString(r.getLocalName());
 											if (type.isPoint())
-												value += ',' + r.getAttributeValue(1);
+												value += ',' + r.getAttributeValue(2);
 											if (!type.isDirectory()) {
 												e.setProperty(key, value);
 											} else {

@@ -272,6 +272,10 @@
 	* The compiled Character.wz/Face.kvj and Character.wz/Hair.kvj now list the
 	IDs of every eye style and hair style the client supports.
 
+2012-09-23  GoldenKevin  (revision 35)
+
+	* Fixed compiling of point data types in SkillConverter.
+
 Copyright 2010-2012 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.
