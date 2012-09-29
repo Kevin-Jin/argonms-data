@@ -280,6 +280,13 @@
 
 	* trunk/CHANGES now uses native EOL style and has mime-type text/plain.
 
+2012-09-26  GoldenKevin  (revision 37)
+
+	* Henesys PQ mobs do not drop mesos.
+	* MobConverter writes probabilities for LOSE_ITEM.
+	* MobConverter writes the animation effect of self destructing mobs.
+	* MobConverter writes the "drop item period" of a mob.
+
 Copyright 2010-2012 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

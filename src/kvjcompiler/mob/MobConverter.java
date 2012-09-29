@@ -60,7 +60,9 @@ public class MobConverter extends Converter {
 		BUFF = 21,
 		DELAY = 22,
 		DROPS = 23,
-		NO_MESOS = 24
+		NO_MESOS = 24,
+		DESTROY_ANIMATION = 25,
+		DROP_ITEM_PERIOD = 26
 	;
 
 	private Map<String, Integer> delays;
@@ -133,23 +135,30 @@ public class MobConverter extends Converter {
 								String value = r.getAttributeValue(1);
 								if (key.equals("removeAfter"))
 									fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, REMOVE_AFTER).writeInt(Integer.parseInt(value)).toArray());
-								else if(key.equals("hp"))
+								else if (key.equals("hp"))
 									fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, SELF_DESTRUCT).writeInt(Integer.parseInt(value)).toArray());
+								else if (key.equals("action"))
+									fos.write(new LittleEndianWriter(Size.HEADER + Size.BYTE, DESTROY_ANIMATION).writeByte(Byte.parseByte(value)).toArray());
 							} else if (event == XMLStreamReader.END_ELEMENT) {
 								open--;
 							}
 						}
 					} else if (key.equals("loseItem")) {
+						int id = 0;
+						byte prop = 100;
 						for (open = 1; open > 0;) {
 							event = r.next();
 							if (event == XMLStreamReader.START_ELEMENT) {
 								open++;
 								if (r.getAttributeValue(0).equals("id"))
-									fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, LOSE_ITEM).writeInt(Integer.parseInt(r.getAttributeValue(1))).toArray());
+									id = Integer.parseInt(r.getAttributeValue(1));
+								else if (r.getAttributeValue(0).equals("prop"))
+									prop = Byte.parseByte(r.getAttributeValue(1));
 							} else if (event == XMLStreamReader.END_ELEMENT) {
 								open--;
 							}
 						}
+						fos.write(new LittleEndianWriter(Size.HEADER + Size.INT + Size.BYTE, LOSE_ITEM).writeInt(id).writeByte(prop).toArray());
 					} else if (key.equals("revive")) {
 						for (open = 1; open > 0;) {
 							event = r.next();
@@ -202,6 +211,8 @@ public class MobConverter extends Converter {
 								fos.write(new LittleEndianWriter(Size.HEADER, FIRST_ATTACK).toArray());
 						} else if (key.equals("buff")) {
 							fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, BUFF).writeInt(Integer.parseInt(value)).toArray());
+						} else if (key.equals("dropItemPeriod")) {
+							fos.write(new LittleEndianWriter(Size.HEADER + Size.BYTE, DROP_ITEM_PERIOD).writeByte(Byte.parseByte(value)).toArray());
 						}
 					}
 				}
