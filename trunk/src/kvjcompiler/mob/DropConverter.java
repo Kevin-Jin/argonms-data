@@ -430,6 +430,14 @@ public class DropConverter extends Converter {
 		customDrops.add(9001006, 4031856, 1000000);
 		//How to Become a Gunslinger
 		customDrops.add(9001005, 4031857, 1000000);
+
+		//Henesys PQ
+		addToNoMesos(9300062);
+		addToNoMesos(9300063);
+		addToNoMesos(9300064);
+		addToNoMesos(9300081);
+		addToNoMesos(9300082);
+		addToNoMesos(9300083);
 	}
 
 	private static class IdAndChance {
