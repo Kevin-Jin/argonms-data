@@ -49,7 +49,7 @@ public class ItemEffect implements IStructure {
 	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("time")) {
-			intProps.put(Byte.valueOf(Effects.DURATION), Integer.valueOf(Integer.parseInt(value) * 1000));
+			intProps.put(Byte.valueOf(Effects.DURATION), Integer.valueOf(Integer.parseInt(value)));
 		} else if (key.equals("pad")) {
 			shortProps.put(Byte.valueOf(Effects.WATK), Short.valueOf(Short.parseShort(value)));
 		} else if (key.equals("pdd")) {

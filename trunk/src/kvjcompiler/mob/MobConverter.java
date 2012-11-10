@@ -20,6 +20,7 @@ package kvjcompiler.mob;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -61,14 +62,16 @@ public class MobConverter extends Converter {
 		DELAY = 22,
 		DROPS = 23,
 		NO_MESOS = 24,
-		DESTROY_ANIMATION = 25,
-		DROP_ITEM_PERIOD = 26
+		QUEST_ITEM_DROPS = 25,
+		DESTROY_ANIMATION = 26,
+		DROP_ITEM_PERIOD = 27
 	;
 
 	private Map<String, Integer> delays;
 	private boolean isBoss;
 	private Map<Integer, Map<Integer, Integer>> drops;
 	private Set<Integer> noMesos;
+	private Map<Integer, List<DropConverter.QuestItemDropEntry>> questItemDrops;
 
 	@Override
 	public void compile(String outPath, String internalPath, String imgName, XMLStreamReader r) throws XMLStreamException, IOException {
@@ -277,6 +280,10 @@ public class MobConverter extends Converter {
 		this.noMesos = mobs;
 	}
 
+	public void setQuestItemDrops(Map<Integer, List<DropConverter.QuestItemDropEntry>> drops) {
+		this.questItemDrops = drops;
+	}
+
 	private void writeDrops(String imgName) throws IOException {
 		int mobid = Integer.parseInt(imgName.substring(0, imgName.indexOf(".img")));
 		Map<Integer, Integer> idAndChance = drops.get(Integer.valueOf(mobid));
@@ -312,11 +319,23 @@ public class MobConverter extends Converter {
 				int chance = entry.getValue().intValue();
 				if (chance <= 100000) //10%. Don't question LightPepsi
 					chance *= multiplier;
-				lew.writeInt(chance); //chance
+				lew.writeInt(chance);
 			}
 			fos.write(lew.toArray());
 		}
 		if (noMesos.contains(Integer.valueOf(mobid)))
 			fos.write(NO_MESOS);
+		List<DropConverter.QuestItemDropEntry> questDrops = questItemDrops.get(Integer.valueOf(mobid));
+		if (questDrops != null) {
+			LittleEndianWriter lew = new LittleEndianWriter(Size.HEADER + Size.BYTE + (questDrops.size() * Size.INT * 2), QUEST_ITEM_DROPS);
+			lew.writeByte((byte) idAndChance.size());
+
+			for (DropConverter.QuestItemDropEntry item : questDrops) {
+				lew.writeInt(item.getItemId()); //itemid
+				lew.writeInt(item.getDropChance()); //chance
+				lew.writeShort(item.getQuestId());
+			}
+			fos.write(lew.toArray());
+		}
 	}
 }
