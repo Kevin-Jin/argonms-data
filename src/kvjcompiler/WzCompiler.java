@@ -170,6 +170,7 @@ public class WzCompiler {
 					d.compile(null, null, null, r);
 					((MobConverter) converter).setDrops(d.getDrops());
 					((MobConverter) converter).setNoMesos(d.getNoMesos());
+					((MobConverter) converter).setQuestItemDrops(d.getQuestItemDrops());
 				}
 				dir = new File(inputPath);
 				for (String fileName : dir.list()) {

@@ -287,6 +287,16 @@
 	* MobConverter writes the animation effect of self destructing mobs.
 	* MobConverter writes the "drop item period" of a mob.
 
+2012-11-10  GoldenKevin  (revision 38)
+
+	* Imported LightPepsi's MonsterDropCreator.getDropsNotInMonsterBook into
+	DropConverter.populateCustomDrops().
+	* Tidied up whitespace and documentation in DropConverter.
+	* Sap of Ancient Tree now has a four percent chance of dropping.
+	* Fixed buff items lasting a thousand times longer than they should.
+	* Support for specifying custom quest mob drops in DropConverter and
+	MobConverter.
+
 Copyright 2010-2012 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

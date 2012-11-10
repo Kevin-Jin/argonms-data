@@ -47,13 +47,16 @@ public class DropConverter extends Converter {
 	private final Map<Integer, Map<Integer, Integer>> drops;
 	private final Set<Integer> noMesos;
 	private final CustomDropsMap customDrops;
+	private final Map<Integer, List<QuestItemDropEntry>> questItemDrops;
 
 	public DropConverter() {
 		drops = new HashMap<Integer, Map<Integer, Integer>>();
 		noMesos = new HashSet<Integer>();
 		customDrops = new CustomDropsMap();
+		questItemDrops = new HashMap<Integer, List<QuestItemDropEntry>>();
 
 		populateCustomDrops();
+		populateQuestItemDrops();
 	}
 
 	@Override
@@ -113,7 +116,6 @@ public class DropConverter extends Converter {
 							open--;
 						}
 					}
-					customDrops.appendCustomDrops(mobid, idAndChance);
 					drops.put(Integer.valueOf(mobid), idAndChance);
 				}
 			}
@@ -130,6 +132,10 @@ public class DropConverter extends Converter {
 
 	public Map<Integer, Map<Integer, Integer>> getDrops() {
 		return drops;
+	}
+
+	public Map<Integer, List<QuestItemDropEntry>> getQuestItemDrops() {
+		return questItemDrops;
 	}
 
 	public Set<Integer> getNoMesos() {
@@ -160,14 +166,14 @@ public class DropConverter extends Converter {
 			case 103: // Earring
 				switch (id) {
 					case 1032062: // Element Pierce - Neo Tokyo
-					return 100; // 7 Slots earring with +2 to str/dex/int/luk/ma
+						return 100; // 7 Slots earring with +2 to str/dex/int/luk/ma
 				}
 				return 1000;
 			case 105: // Overall
 			case 109: // Shield
 				switch (id) {
 					case 1092049: // Dragon Khanjar
-					return 100;
+						return 100;
 				}
 				return 700;
 			case 104: // Topwear
@@ -175,7 +181,7 @@ public class DropConverter extends Converter {
 			case 107: // Shoes
 				switch (id) {
 					case 1072369: // Squachy shoe [King slime, Kerning PQ]
-					return 300000; // 30%
+						return 300000; // 30%
 				}
 				return 800;
 			case 108: // Gloves
@@ -184,10 +190,10 @@ public class DropConverter extends Converter {
 			case 112: // Pendant
 				switch (id) {
 					case 1122000: // HT Necklace
-					return SUPER_BOSS_ITEM_RATE;
+						return SUPER_BOSS_ITEM_RATE;
 					case 1122011: // Timeless pendant lvl 30
 					case 1122012: // Timeless pendant lvl 140
-					return 800000; // 80%
+						return 800000; // 80%
 				}
 			case 130: // 1 Handed sword
 			case 131: // 1 Handed Axe
@@ -195,7 +201,7 @@ public class DropConverter extends Converter {
 			case 137: // Wand
 				switch (id) {
 					case 1372049: // Zakum Tree Branch
-					return 999999;
+						return 999999;
 				}
 				return 700;
 			case 138: // Staff
@@ -215,7 +221,7 @@ public class DropConverter extends Converter {
 			case 204: // Scrolls
 				switch (id) {
 					case 2049000: // Chaos scroll
-					return 150;
+						return 150;
 				}
 				return 300;
 			case 205: // All cure potion, Antidote, eyedrop
@@ -227,15 +233,15 @@ public class DropConverter extends Converter {
 			case 229: // Mastery book
 				switch (id) {
 					case 2290096: // Maple Hero 20
-					return 800000; // 80% rate for HT
+						return 800000; // 80% rate for HT
 					case 2290125: // Maple Hero 30
-					return 100000;
+						return 100000;
 				}
 				return 500;
 			case 233: // Bullets and capsules
 				switch (id) {
 					case 2330007: // Armor-Piercing bullet
-					return 50;
+						return 50;
 				}
 				return 500;
 			case 400:
@@ -347,7 +353,7 @@ public class DropConverter extends Converter {
 					case 2022345: // Power up Drink - Neo Tokyo
 						return /*boss ? 999999 : */3000; // 0.3%
 					case 2012002: // Sap of Ancient Tree
-						return 6000;
+						return 40000; //4%
 					case 2020013:
 					case 2020015:
 						return /*boss ? 999999 : */POTION_RATE;
@@ -370,7 +376,7 @@ public class DropConverter extends Converter {
 					case 2070006: // Ilbi Throwing-Stars
 					case 2070007: // Hwabi Throwing-Stars
 						return 200;
-				   // case 2070011: // Maple Throwing star
+					//case 2070011: // Maple Throwing star
 					case 2070012: // Paper Fighter Plane
 					case 2070013: // Orange
 						return 1500;
@@ -398,46 +404,161 @@ public class DropConverter extends Converter {
 
 	//TODO: read these from a script or text file rather than hardcode
 	private void populateCustomDrops() {
-		//Todd's How-to-Hunt
-		customDrops.add(9409000, 4000300, 800000);
-		customDrops.add(9409001, 4000301, 800000);
+		//Bodyguard A mob
+		customDrops.add(9400112, 4000139); //Bodyguard A's Tie Pin
+		customDrops.add(9400112, 2002011, POTION_RATE * 3); //Pain Reliever
+		customDrops.add(9400112, 2000004, POTION_RATE * 2); //Elixir
+		//Bodyguard B mob
+		customDrops.add(9400113, 4000140); //Bodyguard B's Bullet Shell
+		customDrops.add(9400113, 2022027, POTION_RATE * 2); //Yakisoba (x2)
+		customDrops.add(9400113, 2000004, POTION_RATE * 2); //Elixir
+		customDrops.add(9400113, 2002008, POTION_RATE * 2); //Sniper Pill
+		//The Boss mob
+		customDrops.add(9400300, 4000141); //Big Boss's flashlight
+		customDrops.add(9400300, 2000004); //Elixir
+		customDrops.add(9400300, 2040813); //Cursed Scroll for Gloves for HP 30%
+		customDrops.add(9400300, 2041030); //Cursed Scroll for Cape for HP 70%
+		customDrops.add(9400300, 2041040); //Cursed Scroll for Cape for LUK 70%
+		customDrops.add(9400300, 1072238); //Violet Snowshoes
+		customDrops.add(9400300, 1032026); //Gold Emerald Earrings
+		customDrops.add(9400300, 1372011); //Zhu-Ge-Liang Wand
+		//Dreamy Ghost mob
+		customDrops.add(9400013, 4000225); //Kimono Piece
+		customDrops.add(9400013, 2000006); //Mana Elixir
+		customDrops.add(9400013, 2000004); //Elixir
+		customDrops.add(9400013, 2070013); //Orange
+		customDrops.add(9400013, 2002005); //Sniper Potion
+		customDrops.add(9400013, 2022018); //Kinoko Ramen (Roasted Pork)
+		customDrops.add(9400013, 2040306); //Cursed Scroll for Earring for DEX 70%
+		customDrops.add(9400013, 2043704); //Cursed Scroll for Wand for Magic Att 70%
+		customDrops.add(9400013, 2044605); //Cursed Scroll for Crossbow for ATT 30%
+		customDrops.add(9400013, 2041034); //Cursed Scroll for Cape for STR 70%
+		customDrops.add(9400013, 1032019); //Crystal Flower Earrings
+		customDrops.add(9400013, 1102013); //White Justice Cape
+		customDrops.add(9400013, 1322026); //Colorful Tube
+		customDrops.add(9400013, 1092015); //Steel Ancient Shield
+		customDrops.add(9400013, 1382016); //Pyogo Mushroom
+		customDrops.add(9400013, 1002276); //Red Falcon
+		customDrops.add(9400013, 1002403); //Blue Arlic Helmet
+		customDrops.add(9400013, 1472027); //Green Scarab
+		//Zakum mob
+		customDrops.add(8800002, 1372049); //Zakum Tree Branch
+		//Horntail mob
+		customDrops.add(8810018, 4001094); //Nine Spirit Egg
+		customDrops.add(8810018, 2290125); //Maple Warrior 30
+		//Female Boss mob
+		customDrops.add(9400121, 4000138); //Lady Boss Comb
+		customDrops.add(9400121, 4010006); //Gold Ore
+		customDrops.add(9400121, 2000006); //Mana Elixir
+		customDrops.add(9400121, 2000011); //Mana Elixir Pill
+		customDrops.add(9400121, 2020016); //Cheesecake
+		customDrops.add(9400121, 2022024); //Takoyaki (Octopus Ball)
+		customDrops.add(9400121, 2022026); //Yakisoba
+		customDrops.add(9400121, 2043705); //Cursed Scroll for Wand for Magic Att 30%
+		customDrops.add(9400121, 2040716); //Cursed Scroll for Shoes for Speed 30%
+		customDrops.add(9400121, 2040908); //Cursed Scroll for Shield for HP 70%
+		customDrops.add(9400121, 2040510); //Cursed Scroll for Overall Armor for DEF 70%
+		customDrops.add(9400121, 1072239); //Yellow Snowshoes
+		customDrops.add(9400121, 1422013); //Leomite
+		customDrops.add(9400121, 1402016); //Devil's Sunrise
+		customDrops.add(9400121, 1442020); //Hellslayer
+		customDrops.add(9400121, 1432011); //Fairfrozen
+		customDrops.add(9400121, 1332022); //Angelic Betrayal
+		customDrops.add(9400121, 1312015); //Bipennis
+		customDrops.add(9400121, 1382010); //Dark Ritual
+		customDrops.add(9400121, 1372009); //Magicodar
+		customDrops.add(9400121, 1082085); //Red Willow
+		customDrops.add(9400121, 1332022); //Angelic Betrayal
+		customDrops.add(9400121, 1472033); //Casters
+		//Wolf Spider mob
+		customDrops.add(9400545, 4032024); //Jumper Cable
+		customDrops.add(9400545, 4032025); //T-1 Socket Adapter
+		customDrops.add(9400545, 4020006); //Topaz Ore
+		customDrops.add(9400545, 4020008); //Black Crystal Ore
+		customDrops.add(9400545, 4010001); //Steel Ore
+		customDrops.add(9400545, 4004001); //Wisdom Crystal Ore
+		customDrops.add(9400545, 2070006); //Ilbi Throwing Star
+		customDrops.add(9400545, 2044404); //Cursed Scroll for Pole Arm for ATT 70%
+		customDrops.add(9400545, 2044702); //Scroll for Claw for ATT 10%
+		customDrops.add(9400545, 2044305); //Cursed Scroll for Spear for ATT 30^
+		customDrops.add(9400545, 1102029); //White Seraph Cape
+		customDrops.add(9400545, 1032023); //Strawberry Earrings
+		customDrops.add(9400545, 1402004); //Blue Screamer
+		customDrops.add(9400545, 1072210); //Red Rivers Boots
+		customDrops.add(9400545, 1040104); //Orihalcon Platine
+		customDrops.add(9400545, 1060092); //Orihalcon Platine Pants
+		customDrops.add(9400545, 1082129); //Purple Imperial
+		customDrops.add(9400545, 1442008); //The Gold Dragon
+		customDrops.add(9400545, 1072178); //Purple Enigma Shoes
+		customDrops.add(9400545, 1050092); //Green Oriental Fury Coat
+		customDrops.add(9400545, 1002271); //Green Galaxy
+		customDrops.add(9400545, 1051053); //Red Requierre
+		customDrops.add(9400545, 1382008); //Kage
+		customDrops.add(9400545, 1002275); //Blue Falcon
+		customDrops.add(9400545, 1051082); //Red Anes
+		customDrops.add(9400545, 1050064); //Dark Linnex
+		customDrops.add(9400545, 1472028); //Blue Scarab
+		customDrops.add(9400545, 1072193); //Brown Osfa Boots
+		customDrops.add(9400545, 1072172); //Green Pirate Boots
+		customDrops.add(9400545, 1002285); //Blood Nightfox
+
+		//Todd's How-to-Hunt quest
+		customDrops.add(9409000, 4000300, 800000); //Tutorial Leatty => Letty's Hairball
+		customDrops.add(9409001, 4000301, 800000); //Tutorial Drumming Rabbit => Toy Drum
 		addToNoMesos(9409000);
 		addToNoMesos(9409001);
 
 		//Kerning PQ
-		customDrops.add(9300000, 4001008, 1000000);
-		customDrops.add(9300001, 4001007, 1000000);
-		customDrops.add(9300002, 4001008, 1000000);
-		customDrops.add(9300003, 4001008, 1000000);
-		addToNoMesos(9300000);
-		addToNoMesos(9300001);
-		addToNoMesos(9300002);
-		addToNoMesos(9300003);
+		customDrops.add(9300000, 4001008, 1000000); //Jr. Necki (PC) => Pass
+		customDrops.add(9300001, 4001007, 1000000); //Ligator (PC) => Coupon
+		customDrops.add(9300002, 4001008, 1000000); //Curse Eye (PC) => Pass
+		customDrops.add(9300003, 4001008, 1000000); //King Slime (PC) => Pass
+		addToNoMesos(9300000); //Jr. Necki (PC)
+		addToNoMesos(9300001); //Ligator (PC)
+		addToNoMesos(9300002); //Curse Eye (PC)
+		addToNoMesos(9300003); //King Slime (PC)
 
-		//dark marble drops for magician's 2nd job advancement challenge
-		customDrops.add(9000001, 4031013, 1000000);
-		customDrops.add(9000002, 4031013, 1000000);
-		//dark marble drops for warrior's 2nd job advancement challenge
-		customDrops.add(9000100, 4031013, 1000000);
-		customDrops.add(9000101, 4031013, 1000000);
-		//dark marble drops for bowmen's 2nd job advancement challenge
-		customDrops.add(9000200, 4031013, 1000000);
-		customDrops.add(9000201, 4031013, 1000000);
-		//dark marble drops for thief's 2nd job advancement challenge
-		customDrops.add(9000300, 4031013, 1000000);
-		customDrops.add(9000301, 4031013, 1000000);
-		//How to Become a Brawler
-		customDrops.add(9001006, 4031856, 1000000);
-		//How to Become a Gunslinger
-		customDrops.add(9001005, 4031857, 1000000);
+		//Magician's 2nd job advancement challenge
+		customDrops.add(9000001, 4031013, 1000000); //Curse Eye 2 => Dark Marble
+		customDrops.add(9000002, 4031013, 1000000); //Horned Mushroom 2 => Dark Marble
+		//Warrior's 2nd job advancement challenge
+		customDrops.add(9000100, 4031013, 1000000); //Fire Boar 2 => Dark Marble
+		customDrops.add(9000101, 4031013, 1000000); //Lupin 2 => Dark Marble
+		//Bowmen's 2nd job advancement challenge
+		customDrops.add(9000200, 4031013, 1000000); //Evil Eye 2 => Dark Marble
+		customDrops.add(9000201, 4031013, 1000000); //Zombie Mushroom 2 => Dark Marble
+		//Thief's 2nd job advancement challenge
+		customDrops.add(9000300, 4031013, 1000000); //Cold Eye 2 => Dark Marble
+		customDrops.add(9000301, 4031013, 1000000); //Blue Mushroom 2 => Dark Marble
+		//How to Become a Brawler quest
+		customDrops.add(9001006, 4031856, 1000000); //OctoPirate => Potent Power Crystal
+		//How to Become a Gunslinger quest
+		customDrops.add(9001005, 4031857, 1000000); //OctoPirate => Potent Wind Crystal
 
 		//Henesys PQ
-		addToNoMesos(9300062);
-		addToNoMesos(9300063);
-		addToNoMesos(9300064);
-		addToNoMesos(9300081);
-		addToNoMesos(9300082);
-		addToNoMesos(9300083);
+		addToNoMesos(9300062); //Flyeye
+		addToNoMesos(9300063); //Stirge
+		addToNoMesos(9300064); //Goblin Fire
+		addToNoMesos(9300081); //Flyeye
+		addToNoMesos(9300082); //Stirge
+		addToNoMesos(9300083); //Goblin Fire
+	}
+
+	private void addQuestItemDrop(int mobId, int itemId, int chance, int questId) {
+		List<QuestItemDropEntry> existingDrops = questItemDrops.get(Integer.valueOf(mobId));
+		if (existingDrops == null) {
+			existingDrops = new ArrayList<QuestItemDropEntry>();
+			questItemDrops.put(Integer.valueOf(mobId), existingDrops);
+		}
+		existingDrops.add(new QuestItemDropEntry(itemId, chance, (short) questId));
+	}
+
+	private void addQuestItemDrop(int mobId, int itemId, int questId) {
+		addQuestItemDrop(mobId, itemId, getChance(itemId), questId);
+	}
+
+	private void populateQuestItemDrops() {
+		addQuestItemDrop(2230102, 4031155, 2071);
 	}
 
 	private static class IdAndChance {
@@ -460,6 +581,10 @@ public class DropConverter extends Converter {
 				put(oKey, list);
 			}
 			list.add(new IdAndChance(itemid, chance));
+		}
+
+		public void add(int mobid, int itemid) {
+			add(mobid, itemid, getChance(itemid));
 		}
 
 		public void appendCustomDrops(int mobid, Map<Integer, Integer> originals) {
@@ -486,6 +611,30 @@ public class DropConverter extends Converter {
 				}
 				drops.put(entry.getKey(), retList);
 			}
+		}
+	}
+
+	public static class QuestItemDropEntry {
+		private int itemId;
+		private int chance;
+		private short questId;
+
+		public QuestItemDropEntry(int itemId, int chance, short questId) {
+			this.itemId = itemId;
+			this.chance = chance;
+			this.questId = questId;
+		}
+
+		public int getItemId() {
+			return itemId;
+		}
+
+		public int getDropChance() {
+			return chance;
+		}
+
+		public short getQuestId() {
+			return questId;
 		}
 	}
 }
