@@ -15,3 +15,6 @@
 ## You should have received a copy of the GNU Affero General Public License
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
+
+# Mystery of Naora Hospital - Stranger's Request quest
+2230102	4031155	2071			# Wild Boar => Broken Mirror Glass

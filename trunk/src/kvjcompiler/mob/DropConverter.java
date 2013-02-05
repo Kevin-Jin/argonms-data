@@ -210,7 +210,7 @@ public class DropConverter extends Converter {
 			case 142: // 2 Handed BW
 			case 144: // Pole arm
 				return 700;
-			case 133: // Dangger
+			case 133: // Dagger
 			case 143: // Spear
 			case 145: // Bow
 			case 146: // Crossbow
