@@ -1,0 +1,142 @@
+##
+## KvJ Compiler for XML WZ data files
+## Copyright (C) 2010-2012  GoldenKevin
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU Affero General Public License as
+## published by the Free Software Foundation, either version 3 of the
+## License, or (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU Affero General Public License for more details.
+##
+## You should have received a copy of the GNU Affero General Public License
+## along with this program.  If not, see <http://www.gnu.org/licenses/>.
+##
+
+# Bodyguard A mob
+9400112	4000139			# Bodyguard A's Tie Pin
+9400112	2002011	*3		# Pain Reliever
+9400112	2000004	*2		# Elixir
+# Bodyguard B mob
+9400113	4000140			# Bodyguard B's Bullet Shell
+9400113	2022027	*2		# Yakisoba (x2)
+9400113	2000004	*2		# Elixir
+9400113	2002008	*2		# Sniper Pill
+# The Boss mob
+9400300	4000141			# Big Boss's flashlight
+9400300	2000004			# Elixir
+9400300	2040813			# Cursed Scroll for Gloves for HP 30%
+9400300	2041030			# Cursed Scroll for Cape for HP 70%
+9400300	2041040			# Cursed Scroll for Cape for LUK 70%
+9400300	1072238			# Violet Snowshoes
+9400300	1032026			# Gold Emerald Earrings
+9400300	1372011			# Zhu-Ge-Liang Wand
+# Dreamy Ghost mob
+9400013	4000225			# Kimono Piece
+9400013	2000006			# Mana Elixir
+9400013	2000004			# Elixir
+9400013	2070013			# Orange
+9400013	2002005			# Sniper Potion
+9400013	2022018			# Kinoko Ramen (Roasted Pork)
+9400013	2040306			# Cursed Scroll for Earring for DEX 70%
+9400013	2043704			# Cursed Scroll for Wand for Magic Att 70%
+9400013	2044605			# Cursed Scroll for Crossbow for ATT 30%
+9400013	2041034			# Cursed Scroll for Cape for STR 70%
+9400013	1032019			# Crystal Flower Earrings
+9400013	1102013			# White Justice Cape
+9400013	1322026			# Colorful Tube
+9400013	1092015			# Steel Ancient Shield
+9400013	1382016			# Pyogo Mushroom
+9400013	1002276			# Red Falcon
+9400013	1002403			# Blue Arlic Helmet
+9400013	1472027			# Green Scarab
+# Zakum mob
+8800002	1372049			# Zakum Tree Branch
+# Horntail mob
+8810018	4001094			# Nine Spirit Egg
+8810018	2290125			# Maple Warrior 30
+# Female Boss mob
+9400121	4000138			# Lady Boss Comb
+9400121	4010006			# Gold Ore
+9400121	2000006			# Mana Elixir
+9400121	2000011			# Mana Elixir Pill
+9400121	2020016			# Cheesecake
+9400121	2022024			# Takoyaki (Octopus Ball)
+9400121	2022026			# Yakisoba
+9400121	2043705			# Cursed Scroll for Wand for Magic Att 30%
+9400121	2040716			# Cursed Scroll for Shoes for Speed 30%
+9400121	2040908			# Cursed Scroll for Shield for HP 70%
+9400121	2040510			# Cursed Scroll for Overall Armor for DEF 70%
+9400121	1072239			# Yellow Snowshoes
+9400121	1422013			# Leomite
+9400121	1402016			# Devil's Sunrise
+9400121	1442020			# Hellslayer
+9400121	1432011			# Fairfrozen
+9400121	1332022			# Angelic Betrayal
+9400121	1312015			# Bipennis
+9400121	1382010			# Dark Ritual
+9400121	1372009			# Magicodar
+9400121	1082085			# Red Willow
+9400121	1332022			# Angelic Betrayal
+9400121	1472033			# Casters
+# Wolf Spider mob
+9400545	4032024			# Jumper Cable
+9400545	4032025			# T-1 Socket Adapter
+9400545	4020006			# Topaz Ore
+9400545	4020008			# Black Crystal Ore
+9400545	4010001			# Steel Ore
+9400545	4004001			# Wisdom Crystal Ore
+9400545	2070006			# Ilbi Throwing Star
+9400545	2044404			# Cursed Scroll for Pole Arm for ATT 70%
+9400545	2044702			# Scroll for Claw for ATT 10%
+9400545	2044305			# Cursed Scroll for Spear for ATT 30^
+9400545	1102029			# White Seraph Cape
+9400545	1032023			# Strawberry Earrings
+9400545	1402004			# Blue Screamer
+9400545	1072210			# Red Rivers Boots
+9400545	1040104			# Orihalcon Platine
+9400545	1060092			# Orihalcon Platine Pants
+9400545	1082129			# Purple Imperial
+9400545	1442008			# The Gold Dragon
+9400545	1072178			# Purple Enigma Shoes
+9400545	1050092			# Green Oriental Fury Coat
+9400545	1002271			# Green Galaxy
+9400545	1051053			# Red Requierre
+9400545	1382008			# Kage
+9400545	1002275			# Blue Falcon
+9400545	1051082			# Red Anes
+9400545	1050064			# Dark Linnex
+9400545	1472028			# Blue Scarab
+9400545	1072193			# Brown Osfa Boots
+9400545	1072172			# Green Pirate Boots
+9400545	1002285			# Blood Nightfox
+
+# Todd's How-to-Hunt quest
+9409000	4000300	800000	# Tutorial Leatty => Letty's Hairball
+9409001	4000301	800000	# Tutorial Drumming Rabbit => Toy Drum
+
+# Kerning PQ
+9300000	4001008	1000000	# Jr. Necki (PC) => Pass
+9300001	4001007	1000000	# Ligator (PC) => Coupon
+9300002	4001008	1000000	# Curse Eye (PC) => Pass
+9300003	4001008	1000000	# King Slime (PC) => Pass
+
+# Magician's 2nd job advancement challenge
+9000001	4031013	1000000	# Curse Eye 2 => Dark Marble
+9000002	4031013	1000000	# Horned Mushroom 2 => Dark Marble
+# Warrior's 2nd job advancement challenge
+9000100	4031013	1000000	# Fire Boar 2 => Dark Marble
+9000101	4031013	1000000	# Lupin 2 => Dark Marble
+# Bowmen's 2nd job advancement challenge
+9000200	4031013	1000000	# Evil Eye 2 => Dark Marble
+9000201	4031013	1000000	# Zombie Mushroom 2 => Dark Marble
+# Thief's 2nd job advancement challenge
+9000300	4031013	1000000	# Cold Eye 2 => Dark Marble
+9000301	4031013	1000000	# Blue Mushroom 2 => Dark Marble
+# How to Become a Brawler quest
+9001006	4031856	1000000	# OctoPirate => Potent Power Crystal
+# How to Become a Gunslinger quest
+9001005	4031857	1000000	# OctoPirate => Potent Wind Crystal
