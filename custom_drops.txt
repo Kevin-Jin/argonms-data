@@ -113,6 +113,10 @@
 9400545	1072193			# Brown Osfa Boots
 9400545	1072172			# Green Pirate Boots
 9400545	1002285			# Blood Nightfox
+# Lorang mob
+3230102	1322021			# Black Tube
+# Grupin mob
+5120003	1322025			# Emergency Rescue Tube
 
 # Todd's How-to-Hunt quest
 9409000	4000300	800000	# Tutorial Leatty => Letty's Hairball
@@ -140,3 +144,143 @@
 9001006	4031856	1000000	# OctoPirate => Potent Power Crystal
 # How to Become a Gunslinger quest
 9001005	4031857	1000000	# OctoPirate => Potent Wind Crystal
+
+# Maple Items
+1130100	1472032			# Axe Stump => Maple Kandayo
+2110200	1382012			# Horny Mushroom => Maple Lama Staff
+2230101	1472030			# Zombie Mushroom => Maple Claw
+2230101	1482020			# Zombie Mushroom => Maple Knuckle
+2230102	1412011			# Wild Boar => Maple Dragon Axe
+2230102	1432012			# Wild Boar => Maple Impaler
+2230102	1452016			# Wild Boar => Maple Bow
+2230102	1452022			# Wild Boar => Maple Soul Searcher
+2230102	1472032			# Wild Boar => Maple Kandayo
+2230102	1332025			# Wild Boar => Maple Wagner
+2230103	1332025			# Trixter => Maple Wagner
+3000000	1382009			# Sentinel => Maple Staff
+3000005	1302030			# Brown Teddy => Maple Soul Singer
+3000005	1422014			# Brown Teddy => Maple Doom Singer
+3110100	1442024			# Ligator => Maple Scorpio
+3110100	1382009			# Ligator => Maple Staff
+3110102	1382012			# Ratz => Maple Lama Staff
+3210100	1472032			# Fire Boar => Maple Kandayo
+3210200	1472030			# Jr. Cellion => Maple Claw
+3230200	1462014			# Star Pixie => Maple Crow
+3230305	1432012			# Toy Trojan => Maple Impaler
+3230400	1452022			# Drumming Bunny => Maple Soul Searcher
+3230400	1482020			# Drumming Bunny => Maple Knuckle
+4130100	1472032			# Copper Drake => Maple Kandayo
+4230100	1422014			# Cold Eye => Maple Doom Singer
+4230101	1472030			# Zombie Lupin => Maple Claw
+4230101	1332025			# Zombie Lupin => Maple Wagner
+4230102	1472030			# Wraith => Maple Claw
+4230103	1452016			# Iron Hog => Maple Bow
+4230103	1452022			# Iron Hog => Maple Soul Searcher
+4230105	1442024			# Nependeath => Maple Scorpio
+4230109	1302020			# Block Golem => Maple Sword
+4230109	1452016			# Block Golem => Maple Bow
+4230109	1462014			# Block Golem => Maple Crow
+4230109	1462019			# Block Golem => Maple Crossbow
+4230110	1462019			# King Block Golem => Maple Crossbow
+4230111	1472032			# Robo => Maple Kandayo
+4230112	1472032			# Master Robo => Maple Kandayo
+4230113	1452016			# Tick-Tock => Maple Bow
+4230114	1092030			# Platoon Chronos => Maple Shield
+4230500	1482021			# Chipmunk => Maple Storm Finger
+4230506	1482020			# Ginseng Jar => Maple Knuckle
+4240000	1482021			# Chief Gray => Maple Storm Finger
+5100000	1092030			# Jr. Yeti => Maple Shield
+5130100	1422014			# Drake => Maple Doom Singer
+5130100	1452022			# Drake => Maple Soul Searcher
+5130104	1482020			# Hector => Maple Knuckle
+5300100	1462019			# Malady => Maple Crossbow
+6130100	1452022			# Red Drake => Maple Soul Searcher
+6130208	1482021			# Kru => Maple Storm Finger
+6230100	1452016			# Wild Kargo => Maple Bow
+6230300	1432012			# Lazy Buffy => Maple Impaler
+7130000	1422014			# Lucida => Maple Doom Singer
+7130001	1422014			# Cerebes => Maple Doom Singer
+7130001	1412011			# Cerebes => Maple Dragon Axe
+7130020	1442030			# Goby => Maple Snowboard
+7130100	1422014			# Tauromacis => Maple Doom Singer
+7130100	1472030			# Tauromacis => Maple Claw
+7130102	1472032			# Yeti and Pepe => Maple Kandayo
+7130200	1472030			# Werewolf => Maple Claw
+7130300	1382009			# Master Death Teddy => Maple Staff
+7130501	1482021			# Dark Rash => Maple Storm Finger
+7160000	1482021			# Dual Ghost Pirate => Maple Storm Finger
+8140500	1332025			# Bain => Maple Wagner
+9400512	1302030			# Cake Mob(2nd)  => Maple Soul Singer
+9400556	2022251	50		# Glutton Ghoul => Maple Pop
+9400563	2022251	50		# Nightmare => Maple Pop
+9400567	2022251	75		# Loki Box Tr => Maple Pop
+9500144	2022035	50		# Coke Snail => Maple Cola
+# Anniversary Cake mobs
+9400569	1302020	600000	# Big Puff Daddy => Maple Sword
+9400569	1302030	600000	# Big Puff Daddy => Maple Soul Singer
+9400569	1302058	600000	# Big Puff Daddy => Maple Umbrella
+9400569	1302064	600000	# Big Puff Daddy => Maple Glory Sword
+9400569	1312032	600000	# Big Puff Daddy => Maple Steel Axe
+9400569	1322054	600000	# Big Puff Daddy => Maple Havoc Hammer
+9400569	1332025	600000	# Big Puff Daddy => Maple Wagner
+9400569	1332055	600000	# Big Puff Daddy => Maple Dark Mate
+9400569	1332056	600000	# Big Puff Daddy => Maple Asura Dagger
+9400569	1372034	600000	# Big Puff Daddy => Maple Shine Wand
+9400569	1382009	600000	# Big Puff Daddy => Maple Staff
+9400569	1382012	600000	# Big Puff Daddy => Maple Lama Staff
+9400569	1382039	600000	# Big Puff Daddy => Maple Wisdom Staff
+9400569	1402039	600000	# Big Puff Daddy => Maple Soul Rohen
+9400569	1412011	600000	# Big Puff Daddy => Maple Dragon Axe
+9400569	1422014	600000	# Big Puff Daddy => Maple Doom Singer
+9400569	1422029	600000	# Big Puff Daddy => Maple Belzet
+9400569	1432012	600000	# Big Puff Daddy => Maple Impaler
+9400569	1432040	600000	# Big Puff Daddy => Maple Soul Spear
+9400569	1442024	600000	# Big Puff Daddy => Maple Scorpio
+9400569	1442030	600000	# Big Puff Daddy => Maple Snowboard
+9400569	1442051	600000	# Big Puff Daddy => Maple Karstan
+9400569	1452016	600000	# Big Puff Daddy => Maple Bow
+9400569	1452022	600000	# Big Puff Daddy => Maple Soul Searcher
+9400569	1452045	600000	# Big Puff Daddy => Maple Kandiva Bow
+9400569	1462014	600000	# Big Puff Daddy => Maple Crow
+9400569	1462019	600000	# Big Puff Daddy => Maple Crossbow
+9400569	1462040	600000	# Big Puff Daddy => Maple Nishada
+9400569	1472030	600000	# Big Puff Daddy => Maple Claw
+9400569	1472032	600000	# Big Puff Daddy => Maple Kandayo
+9400569	1472055	600000	# Big Puff Daddy => Maple Skanda
+9400570	1002511	500		# Anniversary Cake => Maple Hat
+9400570	1032042	500		# Anniversary Cake => Maple Earring
+9400570	1092045	5000	# Anniversary Cake => Maple Magician shield
+9400570	1092046	5000	# Anniversary Cake => Maple Warrior shield
+9400570	1092047	5000	# Anniversary Cake => Maple Theif shield
+9400570	1302020	7000	# Anniversary Cake => Maple Sword
+9400570	1302030	7000	# Anniversary Cake => Maple Soul Singer
+9400570	1302058	7000	# Anniversary Cake => Maple Umbrella
+9400570	1302064	7000	# Anniversary Cake => Maple Glory Sword
+9400570	1312032	7000	# Anniversary Cake => Maple Steel Axe
+9400570	1322054	7000	# Anniversary Cake => Maple Havoc Hammer
+9400570	1332025	7000	# Anniversary Cake => Maple Wagner
+9400570	1332055	7000	# Anniversary Cake => Maple Dark Mate
+9400570	1332056	7000	# Anniversary Cake => Maple Asura Dagger
+9400570	1372034	7000	# Anniversary Cake => Maple Shine Wand
+9400570	1382009	7000	# Anniversary Cake => Maple Staff
+9400570	1382012	7000	# Anniversary Cake => Maple Lama Staff
+9400570	1382039	7000	# Anniversary Cake => Maple Wisdom Staff
+9400570	1402039	7000	# Anniversary Cake => Maple Soul Rohen
+9400570	1412011	7000	# Anniversary Cake => Maple Dragon Axe
+9400570	1412027	7000	# Anniversary Cake => Maple Demon Axe
+9400570	1422014	7000	# Anniversary Cake => Maple Doom Singer
+9400570	1422029	7000	# Anniversary Cake => Maple Belzet
+9400570	1432012	7000	# Anniversary Cake => Maple Impaler
+9400570	1432040	7000	# Anniversary Cake => Maple Soul Spear
+9400570	1442024	7000	# Anniversary Cake => Maple Scorpio
+9400570	1442051	7000	# Anniversary Cake => Maple Karstan
+9400570	1452016	7000	# Anniversary Cake => Maple Bow
+9400570	1452022	7000	# Anniversary Cake => Maple Soul Searcher
+9400570	1452045	7000	# Anniversary Cake => Maple Kandiva Bow
+9400570	1462014	7000	# Anniversary Cake => Maple Crow
+9400570	1462019	7000	# Anniversary Cake => Maple Crossbow
+9400570	1462040	7000	# Anniversary Cake => Maple Nishada
+9400570	1472030	7000	# Anniversary Cake => Maple Claw
+9400570	1472032	7000	# Anniversary Cake => Maple Kandayo
+9400570	1472055	7000	# Anniversary Cake => Maple Skanda
+9400570	2070011	10000	# Anniversary Cake => Maple Throwing-Stars
