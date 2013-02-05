@@ -297,6 +297,11 @@
 	* Support for specifying custom quest mob drops in DropConverter and
 	MobConverter.
 
+2013-02-04  GoldenKevin  (revision 39)
+
+	* Fixed CustomDropsMap overwriting drops from WZ files.
+	* Implemented loading custom drops from text files.
+
 Copyright 2010-2012 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

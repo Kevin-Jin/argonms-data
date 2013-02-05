@@ -42,6 +42,8 @@ public class WzCompiler {
 	private static String wzPath;
 	private static List<String> files;
 
+	private static String customDropsFile, noMesosFile, questDropsFile;
+
 	private static void printUsage() {
 		System.out.println("Please check your arguments.");
 		System.out.println("The -i, -o, and -l options are mandatory, and at least one -f must be provided.");
@@ -63,28 +65,43 @@ public class WzCompiler {
 			switch (arg.charAt(1)) {
 				case 'l':
 					log = args[i++];
-					if (log.length() < 1)
+					if (log.isEmpty())
 						return false;
 					break;
 				case 'o':
 					outPath = args[i++];
-					if (outPath.length() < 1)
+					if (outPath.isEmpty())
 						return false;
 					if (outPath.charAt(outPath.length() - 1) != File.separatorChar)
 						outPath += File.separatorChar;
 					break;
 				case 'i':
 					wzPath = args[i++];
-					if (wzPath.length() < 1)
+					if (wzPath.isEmpty())
 						return false;
 					if (wzPath.charAt(wzPath.length() - 1) != File.separatorChar)
 						wzPath += File.separatorChar;
 					break;
 				case 'f':
 					String wzFile = args[i++];
-					if (wzFile.length() < 1)
+					if (wzFile.isEmpty())
 						return false;
 					files.add(wzFile);
+					break;
+				case 'd':
+					customDropsFile = args[i++];
+					if (customDropsFile.isEmpty())
+						return false;
+					break;
+				case 'm':
+					noMesosFile = args[i++];
+					if (noMesosFile.isEmpty())
+						return false;
+					break;
+				case 'q':
+					questDropsFile = args[i++];
+					if (questDropsFile.isEmpty())
+						return false;
 					break;
 				default:
 					return false;
@@ -167,6 +184,7 @@ public class WzCompiler {
 				if (converter.getWzName().equals("Mob.wz")) {
 					r = f.createXMLStreamReader(new FileInputStream(new File(wzPath + "String.wz" + File.separatorChar + "MonsterBook.img.xml")));
 					DropConverter d = new DropConverter();
+					d.populateCustomDrops(customDropsFile, noMesosFile, questDropsFile);
 					d.compile(null, null, null, r);
 					((MobConverter) converter).setDrops(d.getDrops());
 					((MobConverter) converter).setNoMesos(d.getNoMesos());

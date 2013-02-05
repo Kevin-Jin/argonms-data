@@ -1,0 +1,35 @@
+##
+## KvJ Compiler for XML WZ data files
+## Copyright (C) 2010-2012  GoldenKevin
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU Affero General Public License as
+## published by the Free Software Foundation, either version 3 of the
+## License, or (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU Affero General Public License for more details.
+##
+## You should have received a copy of the GNU Affero General Public License
+## along with this program.  If not, see <http://www.gnu.org/licenses/>.
+##
+
+# Todd's How-to-Hunt quest
+9409000
+9409001
+
+# Kerning PQ
+9300000	# Jr. Necki (PC)
+9300001	# Ligator (PC)
+9300002	# Curse Eye (PC)
+9300003	# King Slime (PC)
+
+# Henesys PQ
+9300062	# Flyeye
+9300063	# Stirge
+9300064	# Goblin Fire
+9300081	# Flyeye
+9300082	# Stirge
+9300083	# Goblin Fire
