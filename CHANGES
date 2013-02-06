@@ -308,6 +308,11 @@
 	* Added Black Tube and Emergency Rescue Tube drops to custom_drops.txt.
 	* Added Broken Mirror Glass to quest_drops.txt.
 
-Copyright 2010-2012 GoldenKevin
+2013-02-05  GoldenKevin  (revision 41)
+
+	* Updated copyright years.
+	* Added AGPLv3 license headers to shell/batch script files.
+
+Copyright 2010-2013 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.
