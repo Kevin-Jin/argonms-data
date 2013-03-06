@@ -312,6 +312,7 @@ public class DropConverter extends Converter {
 				switch (id) {
 					case 4032024: // Jumper Cable [Wolf Spider]
 						return 50000; // 5%
+					case 4032005: // Typhon Feather
 					case 4032025: // T-1 Socket Adapter [Wolf Spider]
 					case 4032156: // Overload Lens - Neo Tokyo
 					case 4032155: // Afterroad Caterpillar - Neo Tokyo

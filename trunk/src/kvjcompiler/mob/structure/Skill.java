@@ -29,6 +29,7 @@ import kvjcompiler.Size;
 public class Skill implements IStructure {
 	private short skill;
 	private byte level;
+	private short effectDelay;
 
 	@Override
 	public void setProperty(String key, String value) {
@@ -36,6 +37,8 @@ public class Skill implements IStructure {
 			this.skill = Short.parseShort(value);
 		} else if (key.equals("level")) {
 			this.level = Byte.parseByte(value);
+		} else if (key.equals("effectAfter")) {
+			this.effectDelay = Short.parseShort(value);
 		}/* else {
 			System.out.println("WARNING: Unhandled property " + key + " in skill " + skillid + ".");
 		}*/
@@ -45,6 +48,7 @@ public class Skill implements IStructure {
 	public int size() {
 		int size = Size.SHORT; //skill
 		size += Size.BYTE; //level
+		size += Size.SHORT; //effectDelay
 		return size;
 	}
 
@@ -52,5 +56,6 @@ public class Skill implements IStructure {
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeShort(skill);
 		lew.writeByte(level);
+		lew.writeShort(effectDelay);
 	}
 }
