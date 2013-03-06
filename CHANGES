@@ -313,6 +313,11 @@
 	* Updated copyright years.
 	* Added AGPLv3 license headers to shell/batch script files.
 
+2013-03-06  GoldenKevin  (revision 42)
+
+	* Added Typhon Feather to custom_drops.txt.
+	* Parse effectAfter field in kvjcompiler.mob.structure.Skill.
+
 Copyright 2010-2013 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

@@ -117,6 +117,8 @@
 3230102	1322021			# Black Tube
 # Grupin mob
 5120003	1322025			# Emergency Rescue Tube
+# Typhon mob
+9400574 4032005			# Typhon Feather
 
 # Todd's How-to-Hunt quest
 9409000	4000300	800000	# Tutorial Leatty => Letty's Hairball
