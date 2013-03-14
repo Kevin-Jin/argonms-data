@@ -318,6 +318,10 @@
 	* Added Typhon Feather to custom_drops.txt.
 	* Parse effectAfter field in kvjcompiler.mob.structure.Skill.
 
+2013-03-13  GoldenKevin  (revision 43)
+
+	* Fixed male only quest reward items being given to females too.
+
 Copyright 2010-2013 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

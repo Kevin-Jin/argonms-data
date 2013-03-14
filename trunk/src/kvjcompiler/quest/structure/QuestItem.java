@@ -35,6 +35,12 @@ public class QuestItem implements IStructure {
 	private int dateExpire;
 	private int period;
 
+	public QuestItem() {
+		this.prop = 100;
+		this.gender = 2;
+		this.job = -1;
+	}
+
 	@Override
 	public void setProperty(String key, String value) {
 		if (key.equals("id")) {
@@ -63,11 +69,11 @@ public class QuestItem implements IStructure {
 	public int size() {
 		int size = Size.INT; //itemid
 		size += Size.SHORT; //quantity
-		if (prop != 0)
+		if (prop != 100)
 			size += Size.BYTE + Size.INT; //prop
-		if (gender != 0)
+		if (gender != 2)
 			size += Size.BYTE + Size.BYTE; //gender
-		if (job != 0)
+		if (job != -1)
 			size += Size.BYTE + Size.SHORT; //job
 		if (dateExpire != 0)
 			size += Size.BYTE + Size.INT; //dateExpiration
@@ -81,11 +87,11 @@ public class QuestItem implements IStructure {
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeInt(id);
 		lew.writeShort(count);
-		if (prop != 0)
+		if (prop != 100)
 			lew.writeByte(QuestBehaviors.ITEM_PROP).writeInt(prop);
-		if (gender != 0)
+		if (gender != 2)
 			lew.writeByte(QuestBehaviors.ITEM_GENDER).writeByte(gender);
-		if (job != 0)
+		if (job != -1)
 			lew.writeByte(QuestBehaviors.ITEM_JOB).writeShort(job);
 		if (dateExpire != 0)
 			lew.writeByte(QuestBehaviors.ITEM_DATE_EXPIRE).writeInt(dateExpire);
