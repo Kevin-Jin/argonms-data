@@ -99,7 +99,8 @@ public class LittleEndianWriter {
 	}
 
 	public LittleEndianWriter writeNullTerminatedString(String str) {
-		writeBytes(str.getBytes(asciiEncoder));
+		if (str != null)
+			writeBytes(str.getBytes(asciiEncoder));
 		writeByte((byte) 0);
 		return this;
 	}

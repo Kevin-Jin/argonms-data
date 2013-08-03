@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import kvjcompiler.cashshop.EtcConverter;
 import kvjcompiler.character.CharacterConverter;
 import kvjcompiler.item.ItemConverter;
 import kvjcompiler.map.MapConverter;
@@ -158,6 +159,8 @@ public abstract class Converter {
 			return new QuestConverter();
 		else if (source.equals("Npc.wz"))
 			return new NpcConverter();
+		else if (source.equals("Etc.wz"))
+			return new EtcConverter();
 		return null;
 	}
 }

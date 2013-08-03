@@ -322,6 +322,12 @@
 
 	* Fixed male only quest reward items being given to females too.
 
+2013-08-03  GoldenKevin  (revision 44)
+
+	* Rewrite StringConverter as to reduce overhead. Compiled files total size
+	reduced up to 8.7%.
+	* Compile cash shop related files in Etc.wz.
+
 Copyright 2010-2013 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.

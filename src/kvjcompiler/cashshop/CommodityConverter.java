@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package kvjcompiler.string;
+package kvjcompiler.cashshop;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,16 +26,16 @@ import kvjcompiler.Converter;
 import kvjcompiler.DataType;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
-import kvjcompiler.string.structure.*;
+import kvjcompiler.cashshop.structure.*;
 
 /**
  *
  * @author GoldenKevin
  */
-public class StringConverter extends Converter {
+public class CommodityConverter extends Converter {
 	@Override
 	public String getWzName() {
-		return "String.wz";
+		return "Etc.wz";
 	}
 
 	@Override
@@ -61,38 +61,20 @@ public class StringConverter extends Converter {
 	}
 
 	@Override
-	public void compile(String outPath, String internalPath, String imgName, XMLStreamReader r) throws XMLStreamException, IOException {
-		//don't worry about not using a singleton, we're only instantiating each once (only one copy of each file)
-		if (imgName.equals("Cash.img"))
-			new CashStringConverter().compile(outPath, internalPath, imgName, r);
-		else if (imgName.equals("Map.img"))
-			new MapStringConverter().compile(outPath, internalPath, imgName, r);
-		else
-			super.compile(outPath, internalPath, imgName, r);
-	}
-
-	@Override
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
-		LittleEndianWriter lew;
-		int size;
-		if (isNumber(nestedPath)) {
-			StringEntry e = new StringEntry(Integer.parseInt(nestedPath));
-			for (int open = 1, event; open > 0;) {
-				event = r.next();
-				if (event == XMLStreamReader.START_ELEMENT) {
-					open++;
-					e.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
-				} else if (event == XMLStreamReader.END_ELEMENT) {
-					open--;
-				}
-			}
-			size = e.size();
-			if (size != 0) {
-				lew = new LittleEndianWriter(size);
-				e.writeBytes(lew);
-				fos.write(lew.toArray());
+		Commodity c = new Commodity();
+		for (int open = 1, event; open > 0;) {
+			event = r.next();
+			if (event == XMLStreamReader.START_ELEMENT) {
+				open++;
+				c.setProperty(r.getAttributeValue(0), r.getAttributeValue(1));
+			} else if (event == XMLStreamReader.END_ELEMENT) {
+				open--;
 			}
 		}
+		LittleEndianWriter lew = new LittleEndianWriter(c.size());
+		c.writeBytes(lew);
+		fos.write(lew.toArray());
 	}
 
 	@Override

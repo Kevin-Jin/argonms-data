@@ -26,12 +26,13 @@ import kvjcompiler.Size;
  *
  * @author GoldenKevin
  */
-public class StringEntry implements IStructure {
+public class CashStrings implements IStructure {
 	private final int entryid;
 
 	private String name;
+	private String msg;
 
-	public StringEntry(int id) {
+	public CashStrings(int id) {
 		this.entryid = id;
 	}
 
@@ -39,6 +40,8 @@ public class StringEntry implements IStructure {
 	public void setProperty(String key, String value) {
 		if (key.equals("name")) {
 			this.name = value;
+		} else if (key.equals("msg")) {
+			this.msg = value;
 		}/* else {
 			System.out.println("WARNING: Unhandled property " + key + " in entry " + entryid + ".");
 		}*/
@@ -49,12 +52,15 @@ public class StringEntry implements IStructure {
 		int size = Size.INT;
 		if (name != null) size += name.length();
 		size += Size.BYTE;
-		return (size == Size.INT + Size.BYTE) ? 0 : size;
+		if (msg != null) size += msg.length();
+		size += Size.BYTE;
+		return size;
 	}
 
 	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeInt(entryid);
 		lew.writeNullTerminatedString(name);
+		lew.writeNullTerminatedString(msg);
 	}
 }

@@ -26,19 +26,22 @@ import kvjcompiler.Size;
  *
  * @author GoldenKevin
  */
-public class StringEntry implements IStructure {
+public class MapStrings implements IStructure {
 	private final int entryid;
 
-	private String name;
+	private String mapName;
+	private String streetName;
 
-	public StringEntry(int id) {
+	public MapStrings(int id) {
 		this.entryid = id;
 	}
 
 	@Override
 	public void setProperty(String key, String value) {
-		if (key.equals("name")) {
-			this.name = value;
+		if (key.equals("mapName")) {
+			this.mapName = value;
+		} else if (key.equals("streetName")) {
+			this.streetName = value;
 		}/* else {
 			System.out.println("WARNING: Unhandled property " + key + " in entry " + entryid + ".");
 		}*/
@@ -47,14 +50,17 @@ public class StringEntry implements IStructure {
 	@Override
 	public int size() {
 		int size = Size.INT;
-		if (name != null) size += name.length();
+		if (mapName != null) size += mapName.length();
 		size += Size.BYTE;
-		return (size == Size.INT + Size.BYTE) ? 0 : size;
+		if (streetName != null) size += streetName.length();
+		size += Size.BYTE;
+		return (size == Size.INT + Size.BYTE + Size.BYTE) ? 0 : size;
 	}
 
 	@Override
 	public void writeBytes(LittleEndianWriter lew) {
 		lew.writeInt(entryid);
-		lew.writeNullTerminatedString(name);
+		lew.writeNullTerminatedString(mapName);
+		lew.writeNullTerminatedString(streetName);
 	}
 }
