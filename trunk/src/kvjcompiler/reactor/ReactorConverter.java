@@ -24,7 +24,7 @@ import javax.xml.stream.XMLStreamReader;
 import kvjcompiler.Converter;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
-import kvjcompiler.reactor.structure.Event;
+import kvjcompiler.reactor.structure.*;
 
 /**
  *

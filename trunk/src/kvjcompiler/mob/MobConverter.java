@@ -29,8 +29,7 @@ import javax.xml.stream.XMLStreamReader;
 import kvjcompiler.Converter;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
-import kvjcompiler.mob.structure.Attack;
-import kvjcompiler.mob.structure.Skill;
+import kvjcompiler.mob.structure.*;
 
 /**
  *

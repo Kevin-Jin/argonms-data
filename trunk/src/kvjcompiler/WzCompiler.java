@@ -233,6 +233,11 @@ public class WzCompiler {
 				converter.compile(outPath, "", "Check.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "Check.img.xml"))));
 				converter.compile(outPath, "", "QuestInfo.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "QuestInfo.img.xml"))));
 				count += 3;
+			} else if (converter.getWzName().equals("Etc.wz")) {
+				//server only need these files...
+				converter.compile(outPath, "", "Commodity.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "Commodity.img.xml"))));
+				converter.compile(outPath, "", "CashPackage.img", f.createXMLStreamReader(new FileInputStream(new File(inputPath + "CashPackage.img.xml"))));
+				count += 2;
 			}
 			System.out.println("Finished compiling " + wzFile + "!");
 			System.err.println("Compiled " + wzFile);

@@ -25,8 +25,7 @@ import kvjcompiler.Converter;
 import kvjcompiler.DataType;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
-import kvjcompiler.skill.structure.Skill;
-import kvjcompiler.skill.structure.SkillEffect;
+import kvjcompiler.skill.structure.*;
 
 /**
  *

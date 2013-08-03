@@ -23,6 +23,7 @@ import java.io.IOException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import kvjcompiler.Converter;
+import static kvjcompiler.Converter.isNumber;
 import kvjcompiler.DataType;
 import kvjcompiler.LittleEndianWriter;
 import kvjcompiler.Size;
@@ -32,7 +33,7 @@ import kvjcompiler.string.structure.*;
  *
  * @author GoldenKevin
  */
-public class StringConverter extends Converter {
+public class CashStringConverter extends Converter {
 	@Override
 	public String getWzName() {
 		return "String.wz";
@@ -61,22 +62,11 @@ public class StringConverter extends Converter {
 	}
 
 	@Override
-	public void compile(String outPath, String internalPath, String imgName, XMLStreamReader r) throws XMLStreamException, IOException {
-		//don't worry about not using a singleton, we're only instantiating each once (only one copy of each file)
-		if (imgName.equals("Cash.img"))
-			new CashStringConverter().compile(outPath, internalPath, imgName, r);
-		else if (imgName.equals("Map.img"))
-			new MapStringConverter().compile(outPath, internalPath, imgName, r);
-		else
-			super.compile(outPath, internalPath, imgName, r);
-	}
-
-	@Override
 	protected void handleDir(String nestedPath) throws XMLStreamException, IOException {
 		LittleEndianWriter lew;
 		int size;
 		if (isNumber(nestedPath)) {
-			StringEntry e = new StringEntry(Integer.parseInt(nestedPath));
+			CashStrings e = new CashStrings(Integer.parseInt(nestedPath));
 			for (int open = 1, event; open > 0;) {
 				event = r.next();
 				if (event == XMLStreamReader.START_ELEMENT) {
