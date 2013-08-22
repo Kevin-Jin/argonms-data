@@ -67,7 +67,8 @@ public class ItemConverter extends Converter {
 
 		PET_COMMAND = 24,
 		PET_HUNGER = 25,
-		PET_EVOLVE = 26
+		PET_PERIOD = 26,
+		PET_EVOLVE = 27
 	;
 
 	private File binDir;
@@ -379,6 +380,8 @@ public class ItemConverter extends Converter {
 		if (dirs[0].equals("info")) {
 			if (dirs[1].equals("hungry")) {
 				fos.write(new LittleEndianWriter(Size.HEADER + Size.INT, PET_HUNGER).writeInt(Integer.parseInt(value)).toArray());
+			} else if (dirs[1].equals("life")) {
+				fos.write(new LittleEndianWriter(Size.HEADER + Size.BYTE, PET_PERIOD).writeByte(Byte.parseByte(value)).toArray());
 			} else if (dirs[1].equals("evol")) {
 				//kinda unnecessary... if evolNo == 0, or is not in the file at all, then we know it's not evolvable...
 			} else if (dirs[1].equals("evolNo")) {

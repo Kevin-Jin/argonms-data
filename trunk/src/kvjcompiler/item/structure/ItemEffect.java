@@ -90,6 +90,8 @@ public class ItemEffect implements IStructure {
 			curse = Integer.parseInt(value) == 1;
 		} else if (key.equals("consumeOnPickup")) {
 			consumeOnPickup = Integer.parseInt(value) == 1;
+		} else if (key.equals("inc")) {
+			shortProps.put(Byte.valueOf(Effects.PET_FULLNESS_RECOVER), Short.parseShort(value));
 		} else if (Converter.isNumber(key)) {
 			consumableByPets.add(Integer.parseInt(value));
 		} else {

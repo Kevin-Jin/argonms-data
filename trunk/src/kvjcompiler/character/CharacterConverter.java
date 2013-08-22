@@ -44,7 +44,7 @@ public class CharacterConverter extends Converter {
 		REQ_STAT = 18,
 		UPGRADE_SLOTS = 19,
 
-		TAMING_MOB_ID = 27
+		TAMING_MOB_ID = 28
 	;
 
 	private String beautyCategory;
