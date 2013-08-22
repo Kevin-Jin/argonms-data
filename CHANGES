@@ -328,6 +328,10 @@
 	reduced up to 8.7%.
 	* Compile cash shop related files in Etc.wz.
 
+2013-08-22  GoldenKevin  (revision 45)
+
+	* Write pet life period and pet food fullness recover in Item.wz.
+
 Copyright 2010-2013 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.
