@@ -332,6 +332,10 @@
 
 	* Write pet life period and pet food fullness recover in Item.wz.
 
+2013-08-22  GoldenKevin  (revision 46)
+
+	* Fixed quest repeat interval not being written if it is zero.
+
 Copyright 2010-2013 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.
