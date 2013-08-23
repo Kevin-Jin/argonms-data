@@ -112,7 +112,7 @@ public class QuestRequirement extends QuestBehavior {
 			size += Size.BYTE + startScript.length() + Size.BYTE;
 		if (endScript != null)
 			size += Size.BYTE + endScript.length() + Size.BYTE;
-		if (repeatInterval != 0)
+		if (repeatInterval != -1)
 			size += Size.BYTE + Size.INT;
 		if (petTamenessMin != 0)
 			size += Size.BYTE + Size.SHORT;
@@ -151,7 +151,7 @@ public class QuestRequirement extends QuestBehavior {
 			lew.writeByte(QuestBehaviors.START_SCRIPT).writeNullTerminatedString(startScript);
 		if (endScript != null)
 			lew.writeByte(QuestBehaviors.END_SCRIPT).writeNullTerminatedString(endScript);
-		if (repeatInterval != 0)
+		if (repeatInterval != -1)
 			lew.writeByte(QuestBehaviors.REPEAT_INTERVAL).writeInt(repeatInterval);
 		if (petTamenessMin != 0)
 			lew.writeByte(QuestBehaviors.REQ_PET_TAMENESS).writeShort(petTamenessMin);

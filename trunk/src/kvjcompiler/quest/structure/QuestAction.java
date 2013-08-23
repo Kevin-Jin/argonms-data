@@ -93,7 +93,7 @@ public class QuestAction extends QuestBehavior {
 			size += Size.BYTE + Size.SHORT;
 		if (endDate != 0)
 			size += Size.BYTE + Size.INT;
-		if (repeatInterval != 0)
+		if (repeatInterval != -1)
 			size += Size.BYTE + Size.INT;
 		return size;
 	}
@@ -122,7 +122,7 @@ public class QuestAction extends QuestBehavior {
 			lew.writeByte(QuestBehaviors.FAME).writeShort(fame);
 		if (endDate != 0)
 			lew.writeByte(QuestBehaviors.QUEST_END_DATE).writeInt(endDate);
-		if (repeatInterval != 0)
+		if (repeatInterval != -1)
 			lew.writeByte(QuestBehaviors.REPEAT_INTERVAL).writeInt(repeatInterval);
 	}
 }

@@ -41,6 +41,7 @@ public abstract class QuestBehavior implements IStructure {
 		items = new ArrayList<QuestItem>();
 		quests = new ArrayList<QuestQuest>();
 		jobs = new ArrayList<Short>();
+		repeatInterval = -1;
 	}
 
 	public void addItem(QuestItem item) {
