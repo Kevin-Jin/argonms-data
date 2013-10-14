@@ -147,6 +147,17 @@
 # How to Become a Gunslinger quest
 9001005	4031857	1000000	# OctoPirate => Potent Wind Crystal
 
+# Magician's 3rd job advancement challenge
+9001001 4031059 1000000	# Grendel the Really Old's Clone => Black Charm
+# Warror's 3rd job advancement challenge
+9001000 4031059 1000000	# Dances with Balrog's Clone => Black Charm
+# Bowmen's 3rd job advancement challenge
+9001002 4031059 1000000	# Athena Pierce's Clone => Black Charm
+# Thief's 3rd job advancement challenge
+9001003 4031059 1000000	# Dark Lord's Clone => Black Charm
+# Pirate's 3rd job advancement challenge
+9001008 4031059 1000000	# Shadow Kyrin's Clone => Black Charm
+
 # Maple Items
 1130100	1472032			# Axe Stump => Maple Kandayo
 2110200	1382012			# Horny Mushroom => Maple Lama Staff
