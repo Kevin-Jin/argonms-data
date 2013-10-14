@@ -33,3 +33,10 @@
 9300081	# Flyeye
 9300082	# Stirge
 9300083	# Goblin Fire
+
+# 3rd job advancement challenges
+9001000 # Dances with Balrog's Clone
+9001001 # Grendel the Really Old's Clone
+9001002 # Athena Pierce's Clone
+9001003 # Dark Lord's Clone
+9001008 # Shadow Kyrin's Clone

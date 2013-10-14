@@ -336,6 +336,10 @@
 
 	* Fixed quest repeat interval not being written if it is zero.
 
+2013-10-13  GoldenKevin  (revision 47)
+
+	* Added Black Charm to custom_drops.txt.
+
 Copyright 2010-2013 GoldenKevin
 Copying and distribution of this file, with or without modification, are
 permitted provided the copyright notice and this notice are preserved.
