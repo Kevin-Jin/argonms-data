@@ -1,3 +1,5 @@
+# kvjcompiler
+
 If your XML WZ files are not in a folder named "wz" in your root directory, then
 you will have to edit the batch file (on Windows), or the bash file (on Linux).
 Likewise, you will have to edit those files if you want to change where the
@@ -6,6 +8,19 @@ file. Make sure that if you are using Windows and need to put backspaces in the
 path that you escape them (just double each backspace) so that Java understands
 that it is not an escape sequence. Unlike in earlier revisions, the paths do not
 have to have a trailing directory delimiter, but you should place one anyway.
+
+You may also run the compiler on the data directory using docker.
+
+```bash
+# Path to the XML WZ files
+export DATA_DIR=../wz
+export OUTPUT_DIR=../wz-kvj
+docker-compose build
+docker-compose run app
+```
+
+The environment variables may be put into a `.env` file at the root of the
+directory.
 
 No external libraries are necessary. The only API needed is StAX (Streaming API
 for XML), which should be included with JRE 6 and later. An independent
